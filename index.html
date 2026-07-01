@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WOW Home Transformations | Chicago Kitchen &amp; Bathroom Remodeling</title>
+  <meta name="description" content="Chicago area kitchen and bathroom remodeling experts. Expert craftsmanship, transparent pricing, stress-free experience. Serving Chicagoland. Free estimates.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    /* ===================================================
+       CSS VARIABLES — Edit colors here to restyle the site
+       =================================================== */
+    :root {
+      --navy:     #1A2B4A;
+      --navy-deep:#0D1830;
+      --navy-mid: #1E3A62;
+      --gold:     #C8882E;
+      --gold-h:   #A86E20;
+      --brown:    #A0622A;
+      --cream:    #F5EDE2;
+      --sand:     #EDE4D8;
+      --charcoal: #1C1C1C;
+      --ink:      #3A3028;
+      --stone:    #7A6E65;
+      --border:   #DDD3C6;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Inter', -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    /* === Reset === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--cream); color: var(--charcoal); -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { border: none; background: none; font-family: inherit; cursor: pointer; }
+    input, textarea, select { font-family: inherit; }
+
+    /* === Buttons === */
+    .btn-gold { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--gold); color: #fff; font-size: 15px; font-weight: 600; border-radius: var(--radius-sm); border: none; cursor: pointer; letter-spacing: .01em; transition: background .18s, transform .15s, box-shadow .18s; }
+    .btn-gold:hover { background: var(--gold-h); box-shadow: 0 6px 20px rgba(200,136,46,.35); transform: translateY(-1px); }
+    .btn-outline-dark { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: transparent; color: #fff; font-size: 15px; font-weight: 500; border-radius: var(--radius-sm); border: 1.5px solid rgba(255,255,255,.38); cursor: pointer; transition: background .18s; }
+    .btn-outline-dark:hover { background: rgba(255,255,255,.1); }
+    .btn-outline-light { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: transparent; color: var(--brown); font-size: 14px; font-weight: 600; border-radius: var(--radius-sm); border: 2px solid var(--brown); cursor: pointer; transition: background .18s, color .18s; }
+    .btn-outline-light:hover { background: var(--brown); color: #fff; }
+    .btn-submit { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px; background: var(--gold); color: #fff; font-size: 15px; font-weight: 600; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: background .18s; font-family: var(--font-sans); margin-top: 4px; }
+    .btn-submit:hover { background: var(--gold-h); }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* === Form inputs === */
+    .wow-label { display: block; font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 5px; letter-spacing: .03em; text-transform: uppercase; }
+    .wow-input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; color: var(--charcoal); background: #fff; outline: none; transition: border-color .18s, box-shadow .18s; }
+    .wow-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,136,46,.12); }
+    .optional-tag { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; color: #9A8A78; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field-group { display: flex; flex-direction: column; gap: 5px; }
+    .photo-upload-label { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border: 1.5px dashed var(--border); border-radius: var(--radius-sm); cursor: pointer; background: #fff; transition: border-color .18s; }
+    .photo-upload-label:hover { border-color: var(--gold); }
+    .photo-upload-text { font-size: 13px; color: var(--stone); }
+    .hidden { display: none !important; }
+
+    /* === Eyebrow === */
+    .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--brown); }
+    .eyebrow-rule { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .eyebrow-rule .line { width: 28px; height: 2px; background: var(--gold); }
+    .eyebrow-dark { color: rgba(200,136,46,.85); }
+
+    /* ===================================================
+       NAV
+       =================================================== */
+    #main-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--cream); box-shadow: 0 1px 0 rgba(26,43,74,.08); transition: box-shadow .3s; }
+    #main-nav.scrolled { box-shadow: 0 2px 16px rgba(26,43,74,.10); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo img { height: 42px; width: auto; object-fit: contain; }
+    .nav-logo-text { line-height: 1.2; }
+    .nav-logo-name { font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: .02em; }
+    .nav-logo-sub  { font-size: 11px; font-weight: 400; color: var(--stone); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-link { font-size: 14px; font-weight: 500; color: var(--ink); padding: 8px 10px; border-radius: 4px; transition: color .18s; }
+    .nav-link:hover { color: var(--gold); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-estimator { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: transparent; color: var(--brown); font-size: 13px; font-weight: 600; border: 1.5px solid var(--brown); border-radius: var(--radius-sm); transition: all .18s; }
+    .nav-estimator:hover { background: var(--brown); color: #fff; }
+    .nav-cta { padding: 10px 22px; font-size: 14px; border-radius: var(--radius-sm); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mobile-menu { display: none; border-top: 1px solid var(--border); background: var(--cream); padding: 16px 5% 24px; animation: slideDown .22s ease; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu-links { display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px; }
+    .mobile-menu-links a { padding: 12px 8px; font-size: 15px; font-weight: 500; color: var(--charcoal); border-bottom: 1px solid #EDE4D8; }
+    .mobile-menu-btns { display: flex; flex-direction: column; gap: 10px; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+    /* ===================================================
+       HERO
+       =================================================== */
+    #home { position: relative; background: linear-gradient(110deg, var(--navy-mid) 0%, var(--navy) 55%, var(--navy-deep) 100%); overflow: hidden; padding-top: 72px; }
+    .hero-grain { position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(200,136,46,.07) 31px 32px); pointer-events: none; }
+    .hero-glow  { position: absolute; top: -20%; right: -10%; width: 70%; height: 120%; background: radial-gradient(ellipse, rgba(200,136,46,.08) 0%, transparent 65%); pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 56px 5% 64px; display: grid; grid-template-columns: 1fr 460px; gap: 56px; align-items: start; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .hero-eyebrow .line { width: 32px; height: 1.5px; background: var(--gold); }
+    .hero-eyebrow span { font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(200,136,46,.9); }
+    .hero-h1 { font-family: var(--font-serif); font-size: clamp(42px,5.5vw,70px); font-weight: 700; line-height: 1.04; color: #fff; margin-bottom: 22px; text-wrap: pretty; }
+    .hero-p { font-size: clamp(15px,1.5vw,18px); color: rgba(255,255,255,.76); line-height: 1.8; margin-bottom: 36px; max-width: 500px; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 52px; }
+    .hero-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 420px; }
+    .trust-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.07); border: 1px solid rgba(200,136,46,.22); border-radius: 10px; padding: 12px 16px; }
+    .trust-badge span { font-size: 12px; font-weight: 600; color: #fff; }
+    .hero-form-col { background: #fff; border-radius: var(--radius-lg); padding: 32px 28px; box-shadow: 0 24px 64px rgba(0,0,0,.28); border: 1px solid rgba(200,136,46,.15); }
+    .form-header { margin-bottom: 20px; }
+    .form-title { font-family: var(--font-serif); font-size: 26px; font-weight: 700; color: var(--charcoal); line-height: 1.2; }
+    .form-sub { font-size: 13px; color: var(--stone); margin-top: 4px; line-height: 1.6; }
+    .form-body { display: flex; flex-direction: column; gap: 12px; }
+    .form-success { text-align: center; padding: 48px 8px; }
+    .success-icon { width: 60px; height: 60px; background: #EEF2FA; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .form-success h3 { font-family: var(--font-serif); font-size: 26px; font-weight: 700; color: var(--charcoal); margin-bottom: 10px; }
+    .form-success p  { font-size: 14px; color: var(--stone); line-height: 1.7; }
+
+    /* ===================================================
+       TRUST BAR
+       =================================================== */
+    .trust-bar-section { background: #fff; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); }
+    .trust-bar-inner { max-width: 1280px; margin: 0 auto; padding: 0 5%; height: 64px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
+    .trust-bar-item { display: flex; align-items: center; gap: 9px; padding: 0 28px; }
+    .trust-bar-item span { font-size: 13px; font-weight: 600; color: var(--charcoal); }
+    .trust-divider { width: 1px; height: 28px; background: var(--border); }
+
+    /* ===================================================
+       SERVICE SECTIONS (Kitchen / Bathroom)
+       =================================================== */
+    .service-section { padding: 96px 5%; }
+    .service-section.cream { background: var(--cream); }
+    .service-section.sand  { background: var(--sand); }
+    .service-split { display: flex; gap: 64px; align-items: center; max-width: 1280px; margin: 0 auto; }
+    .service-split.reverse { flex-direction: row-reverse; }
+    .service-img-wrap { flex: 1; min-width: 280px; border-radius: var(--radius-lg); overflow: hidden; position: relative; box-shadow: 0 16px 48px rgba(26,43,74,.14); }
+    .service-img-wrap img { width: 100%; height: 520px; object-fit: cover; transition: transform .5s ease; }
+    .service-img-wrap:hover img { transform: scale(1.03); }
+    .service-img-badge { position: absolute; bottom: 24px; left: 24px; background: rgba(26,43,74,.88); backdrop-filter: blur(8px); border-radius: 10px; padding: 12px 18px; border: 1px solid rgba(200,136,46,.3); }
+    .service-img-badge.right { left: auto; right: 24px; }
+    .service-img-badge-num  { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: #fff; }
+    .service-img-badge-label { font-size: 11px; color: rgba(255,255,255,.65); letter-spacing: .08em; text-transform: uppercase; }
+    .service-text { flex: 1; min-width: 280px; }
+    .service-text .eyebrow { display: block; margin-bottom: 4px; }
+    .service-text .rule { width: 36px; height: 2px; background: var(--gold); margin: 8px 0 20px; }
+    .service-h2 { font-family: var(--font-serif); font-size: clamp(30px,3vw,44px); font-weight: 700; color: var(--charcoal); line-height: 1.1; margin-bottom: 18px; text-wrap: pretty; }
+    .service-p  { font-size: 15px; color: var(--ink); line-height: 1.8; margin-bottom: 28px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #fff; border: 1px solid var(--border); border-radius: 100px; font-size: 13px; font-weight: 500; color: var(--ink); }
+
+    /* ===================================================
+       GALLERY
+       =================================================== */
+    .gallery-section { background: var(--cream); padding: 88px 5%; }
+    .gallery-section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-head { text-align: center; margin-bottom: 40px; }
+    .section-h2 { font-family: var(--font-serif); font-size: clamp(30px,3vw,44px); font-weight: 700; color: var(--charcoal); margin-top: 12px; line-height: 1.1; }
+    .section-sub { font-size: 15px; color: var(--stone); margin-top: 12px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+    .gal-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 32px; }
+    .gal-tab { padding: 10px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; transition: all .18s; border: 1.5px solid var(--border); background: #fff; color: var(--ink); font-family: var(--font-sans); }
+    .gal-tab:hover { border-color: var(--gold); color: var(--gold); }
+    .gal-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); font-weight: 600; }
+    .gal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .gal-item { overflow: hidden; border-radius: 10px; position: relative; background: var(--sand); cursor: pointer; }
+    .gal-item img { width: 100%; height: 260px; object-fit: cover; transition: transform .5s ease; }
+    .gal-item:hover img { transform: scale(1.06); }
+    .gal-overlay { position: absolute; inset: 0; background: rgba(26,43,74,.55); opacity: 0; transition: opacity .3s; display: flex; align-items: center; justify-content: center; }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+    .gal-zoom { width: 46px; height: 46px; background: rgba(255,255,255,.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .gallery-cta { text-align: center; margin-top: 40px; }
+
+    /* ===================================================
+       WHY CHOOSE US
+       =================================================== */
+    .why-section { background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 60%, var(--navy-deep) 100%); padding: 88px 5%; position: relative; overflow: hidden; }
+    .why-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(200,136,46,.07) 31px 32px); pointer-events: none; }
+    .why-inner { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; }
+    .why-h2 { font-family: var(--font-serif); font-size: clamp(30px,3vw,44px); font-weight: 700; color: #fff; margin-top: 12px; line-height: 1.1; }
+    .why-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-top: 56px; }
+    .why-item { flex: 0 0 calc(25% - 16px); min-width: 220px; background: rgba(255,255,255,.07); border: 1px solid rgba(200,136,46,.22); border-radius: var(--radius-md); padding: 28px 24px; }
+    .why-icon { width: 44px; height: 44px; background: rgba(200,136,46,.18); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .why-item h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .why-item p  { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.7; }
+
+    /* ===================================================
+       REVIEWS
+       =================================================== */
+    .reviews-section { background: var(--cream); padding: 88px 5%; }
+    .reviews-inner { max-width: 1280px; margin: 0 auto; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .rev-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px 26px; transition: transform .18s, box-shadow .18s; }
+    .rev-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(26,43,74,.09); }
+    .stars { display: flex; gap: 2px; margin-bottom: 12px; }
+    .rev-text { font-size: 14px; color: var(--ink); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
+    .rev-author { display: flex; align-items: center; gap: 12px; }
+    .rev-avatar { width: 38px; height: 38px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .rev-name { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+    .rev-role { font-size: 12px; color: var(--stone); }
+
+    /* ===================================================
+       FINAL CTA BAND
+       =================================================== */
+    .cta-band { background: linear-gradient(110deg, var(--navy-mid) 0%, var(--navy) 60%, var(--navy-deep) 100%); padding: 88px 5%; text-align: center; position: relative; overflow: hidden; }
+    .cta-band::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 31px, rgba(200,136,46,.06) 31px 32px); pointer-events: none; }
+    .cta-band-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .cta-band h2 { font-family: var(--font-serif); font-size: clamp(36px,4vw,58px); font-weight: 700; color: #fff; margin-top: 14px; line-height: 1.06; }
+    .cta-band p  { font-size: 17px; color: rgba(255,255,255,.65); margin: 18px auto 36px; max-width: 480px; line-height: 1.75; }
+    .cta-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+    /* ===================================================
+       CONTACT FORM SECTION
+       =================================================== */
+    .contact-section { background: var(--sand); padding: 88px 5%; }
+    .contact-inner { max-width: 900px; margin: 0 auto; }
+    .contact-card { background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 48px 44px; box-shadow: 0 4px 24px rgba(26,43,74,.06); }
+    .contact-form-body { display: flex; flex-direction: column; gap: 20px; }
+    .contact-form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .contact-submit { width: 100%; padding: 17px; font-size: 16px; border-radius: var(--radius-sm); }
+    .contact-note { font-size: 12px; color: var(--stone); text-align: center; line-height: 1.6; margin-top: -8px; }
+    .contact-success { text-align: center; padding: 48px 0; }
+    .contact-success h3 { font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--charcoal); margin-bottom: 10px; }
+    .contact-success p  { font-size: 15px; color: var(--stone); line-height: 1.7; max-width: 340px; margin: 0 auto; }
+
+    /* ===================================================
+       FOOTER
+       =================================================== */
+    footer { background: var(--navy-deep); color: #fff; padding: 60px 5% 28px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
+    .footer-brand { flex: 1.4; min-width: 220px; }
+    .footer-brand img { height: 38px; width: auto; filter: brightness(0) invert(1); opacity: .85; }
+    .footer-brand-name { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.9); }
+    .footer-brand-sub  { font-size: 11px; color: rgba(255,255,255,.45); letter-spacing: .06em; }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,.5); line-height: 1.8; max-width: 280px; margin: 16px 0 20px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-social-btn { width: 34px; height: 34px; background: rgba(255,255,255,.08); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; }
+    .footer-col { flex: 1; min-width: 160px; }
+    .footer-col h4 { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .15em; margin-bottom: 18px; }
+    .footer-col a, .footer-col div { display: block; font-size: 14px; color: rgba(255,255,255,.6); margin-bottom: 10px; line-height: 1.6; }
+    .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,.3); }
+
+    /* ===================================================
+       RESPONSIVE
+       =================================================== */
+    @media (max-width: 960px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-form-col { display: none; }
+      .service-split, .service-split.reverse { flex-direction: column; }
+    }
+    @media (max-width: 700px) {
+      .gal-grid { grid-template-columns: 1fr 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .trust-bar-inner { flex-wrap: wrap; justify-content: center; gap: 16px; height: auto; padding: 14px 5%; }
+      .why-item { flex: 0 0 calc(50% - 12px); min-width: 160px; }
+      .footer-inner { flex-direction: column; gap: 36px; }
+      .contact-form-2col { grid-template-columns: 1fr; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .contact-card { padding: 32px 20px; }
+    }
+    @media (max-width: 480px) {
+      .gal-grid { grid-template-columns: 1fr; }
+      .why-item { flex: 0 0 100%; }
+      .hero-btns { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================================================
+       NAV
+       =================================================== -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <!-- EDIT: Replace the src below with your logo URL if you host it elsewhere -->
+      <a href="#home" class="nav-logo">
+        <img src="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png" alt="WOW Home Transformations">
+        <div class="nav-logo-text">
+          <div class="nav-logo-name">WOW Home</div>
+          <div class="nav-logo-sub">Transformations</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#home"     class="nav-link">Home</a>
+        <a href="#kitchen"  class="nav-link">Kitchen</a>
+        <a href="#bathroom" class="nav-link">Bathroom</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact"  class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="price-estimator.html" class="nav-estimator">Price Estimator</a>
+        <a href="#contact" class="btn-gold nav-cta">Get Free Estimate</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-links">
+        <a href="#home">Home</a>
+        <a href="#kitchen">Kitchen Remodeling</a>
+        <a href="#bathroom">Bathroom Remodeling</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="mobile-menu-btns">
+        <a href="#contact" class="btn-gold" style="justify-content:center;">Get Free Estimate</a>
+        <a href="price-estimator.html" class="btn-outline-light" style="justify-content:center;">Price Estimator</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================================================
+       HERO
+       =================================================== -->
+  <section id="home">
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="hero-glow"  aria-hidden="true"></div>
+    <div class="hero-inner">
+
+      <!-- Left: content -->
+      <div style="padding-top:16px;">
+        <div class="hero-eyebrow">
+          <div class="line"></div>
+          <!-- EDIT: Change this tagline if needed -->
+          <span>Chicagoland Kitchen &amp; Bathroom Experts</span>
+        </div>
+        <!-- EDIT: Main headline -->
+        <h1 class="hero-h1">Chicago Area<br>Kitchen &amp; Bathroom<br>Remodeling Experts</h1>
+        <!-- EDIT: Sub-headline -->
+        <p class="hero-p">Transform your kitchen or bathroom with expert craftsmanship, transparent pricing, and a stress-free remodeling experience.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-gold" style="font-size:16px; padding:16px 34px;">
+            Get Free Estimate
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="price-estimator.html" class="btn-outline-dark" style="font-size:16px; padding:16px 34px;">Try Price Estimator</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-badge">
+            <div style="display:flex; gap:1px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <span>Customer Rated</span>
+          </div>
+          <div class="trust-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Licensed &amp; Insured</span>
+          </div>
+          <div class="trust-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>100+ Projects Done</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: hero lead form -->
+      <div class="hero-form-col">
+
+        <!-- Success state (hidden initially) -->
+        <div class="form-success hidden" id="hero-success">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>We'll be in touch!</h3>
+          <p>Expect a call within 24 hours to discuss your project and schedule your free estimate.</p>
+        </div>
+
+        <!-- Form -->
+        <div id="hero-form-wrap">
+          <div class="form-header">
+            <div class="eyebrow-rule">
+              <div class="line"></div>
+              <span class="eyebrow">Free Consultation</span>
+            </div>
+            <h2 class="form-title">Get My Free Estimate</h2>
+            <p class="form-sub">We respond within 24 hours. No obligation.</p>
+          </div>
+          <form id="hero-form" class="form-body" novalidate>
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label class="wow-label" for="h-name">Name</label>
+                <input id="h-name" name="name" type="text" required placeholder="John Smith" class="wow-input" style="font-size:13px;">
+              </div>
+              <div class="field-group">
+                <label class="wow-label" for="h-phone">Phone</label>
+                <input id="h-phone" name="phone" type="tel" required placeholder="(224) 000-0000" class="wow-input" style="font-size:13px;">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="wow-label" for="h-email">Email</label>
+              <input id="h-email" name="email" type="email" required placeholder="you@example.com" class="wow-input" style="font-size:13px;">
+            </div>
+            <div class="field-group">
+              <label class="wow-label" for="h-project">Project Type</label>
+              <select id="h-project" name="project_type" required class="wow-input" style="font-size:13px; appearance:auto;">
+                <option value="">Select project...</option>
+                <option value="Full Bathroom Remodel">Full Bathroom Remodel</option>
+                <option value="Tub to Walk-in Shower">Tub to Walk-in Shower Conversion</option>
+                <option value="New Bathroom Addition">New Bathroom Addition</option>
+                <option value="Kitchen Remodeling">Kitchen Remodeling</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="wow-label" for="h-timeline">When to Start?</label>
+              <select id="h-timeline" name="timeline" class="wow-input" style="font-size:13px; appearance:auto;">
+                <option value="">Select timeline...</option>
+                <option value="ASAP">ASAP</option>
+                <option value="1-2 Months">1–2 Months</option>
+                <option value="Discovery Phase">Discovery Phase (3+ Months)</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="wow-label" for="h-message">Project Details <span class="optional-tag">(Optional)</span></label>
+              <textarea id="h-message" name="message" placeholder="Enter project details and your vision for this transformation..." class="wow-input" style="resize:vertical; min-height:60px; font-size:13px;"></textarea>
+            </div>
+            <div class="field-group">
+              <label class="wow-label">Photos of Your Space <span class="optional-tag">(Optional)</span></label>
+              <label class="photo-upload-label" for="h-photos">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A0622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span class="photo-upload-text" id="h-photo-label">Add photos of your space</span>
+                <input id="h-photos" type="file" accept="image/*" multiple style="display:none;" onchange="updatePhotoLabel(this,'h-photo-label')">
+              </label>
+            </div>
+            <button type="submit" class="btn-submit" id="hero-submit-btn">
+              Get My Free Estimate
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       TRUST BAR
+       =================================================== -->
+  <section class="trust-bar-section">
+    <div class="trust-bar-inner">
+      <div class="trust-bar-item">
+        <div class="stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span>5-Star Rated</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-bar-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Licensed &amp; Insured</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-bar-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>100+ Projects Completed</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-bar-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Free Estimates</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       KITCHEN SECTION
+       =================================================== -->
+  <section id="kitchen" class="service-section cream">
+    <div class="service-split">
+      <div class="service-img-wrap">
+        <!-- EDIT: Replace with your kitchen photo -->
+        <img src="https://static.wixstatic.com/media/c8469c_8c55b70b1f1945e48bdd098a8e23b2b1~mv2.jpg/v1/fill/w_900,h_700,al_c,q_85,enc_avif,quality_auto/c8469c_8c55b70b1f1945e48bdd098a8e23b2b1~mv2.jpg" alt="Beautiful Kitchen Remodel Chicago" loading="lazy">
+        <div class="service-img-badge">
+          <div class="service-img-badge-num">100+</div>
+          <div class="service-img-badge-label">Kitchens Completed</div>
+        </div>
+      </div>
+      <div class="service-text">
+        <span class="eyebrow">Kitchen Remodeling</span>
+        <div class="rule"></div>
+        <!-- EDIT: Kitchen headline -->
+        <h2 class="service-h2">Beautiful Kitchens Designed Around Your Lifestyle</h2>
+        <p class="service-p">From custom cabinetry and quartz countertops to open-concept layouts and designer lighting — we create kitchens that are as functional as they are stunning.</p>
+        <div class="chips">
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Cabinets</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Countertops</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Backsplashes</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Flooring</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lighting</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Open Concept</div>
+        </div>
+        <a href="#contact" class="btn-gold">Get Kitchen Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       BATHROOM SECTION
+       =================================================== -->
+  <section id="bathroom" class="service-section sand">
+    <div class="service-split reverse">
+      <div class="service-img-wrap">
+        <!-- EDIT: Replace with your bathroom photo -->
+        <img src="https://static.wixstatic.com/media/c8469c_3ea82b4253564f248325d02e424fcbe4~mv2.jpg/v1/fill/w_900,h_700,al_c,q_85,enc_avif,quality_auto/c8469c_3ea82b4253564f248325d02e424fcbe4~mv2.jpg" alt="Luxury Bathroom Remodel Chicago" loading="lazy">
+        <div class="service-img-badge right">
+          <div class="service-img-badge-num">Spa</div>
+          <div class="service-img-badge-label">Quality Finishes</div>
+        </div>
+      </div>
+      <div class="service-text">
+        <span class="eyebrow">Bathroom Remodeling</span>
+        <div class="rule"></div>
+        <h2 class="service-h2">Luxury Bathrooms Built for Comfort</h2>
+        <p class="service-p">Turn your bathroom into a personal retreat. From spa-inspired walk-in showers to elegant vanities and premium tile work — every detail crafted to perfection.</p>
+        <div class="chips">
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Walk-In Showers</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Tile Work</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Vanities</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lighting</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Flooring</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Spa Upgrades</div>
+        </div>
+        <a href="#contact" class="btn-gold">Get Bathroom Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       GALLERY
+       =================================================== -->
+  <section id="projects" class="gallery-section">
+    <div class="gallery-section-inner">
+      <div class="section-head">
+        <span class="eyebrow">Portfolio</span>
+        <h2 class="section-h2">Recent Transformations</h2>
+        <p class="section-sub">All photos are real projects completed right here in Chicagoland.</p>
+      </div>
+      <div class="gal-tabs">
+        <button class="gal-tab active" data-tab="kitchen" onclick="switchTab('kitchen')">Kitchen Projects</button>
+        <button class="gal-tab" data-tab="bathroom" onclick="switchTab('bathroom')">Bathroom Projects</button>
+      </div>
+      <div class="gal-grid" id="gallery-grid">
+        <!-- Populated by JavaScript -->
+      </div>
+      <div class="gallery-cta">
+        <a href="#contact" class="btn-gold" style="font-size:15px; padding:15px 36px;">Start Your Project Today</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       WHY CHOOSE US
+       =================================================== -->
+  <section class="why-section">
+    <div class="why-inner" style="text-align:center;">
+      <span class="eyebrow eyebrow-dark">Why Homeowners Choose Us</span>
+      <h2 class="why-h2">The WOW Difference</h2>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>100+ Projects Completed</h3>
+          <p>Proven experience delivering stunning kitchens and bathrooms across Chicagoland.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Licensed &amp; Insured</h3>
+          <p>Fully licensed, bonded, and insured for your complete peace of mind.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h3>High Quality Materials</h3>
+          <p>We source premium materials that look exceptional and stand the test of time.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Excellent Communication</h3>
+          <p>Regular updates so you're always informed and confident throughout.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>Fast Turnaround Times</h3>
+          <p>Projects planned carefully and completed on schedule — we respect your home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       REVIEWS SECTION
+       EDIT: Replace reviews with real customer reviews
+       =================================================== -->
+  <section class="reviews-section">
+    <div class="reviews-inner">
+      <div class="section-head">
+        <div class="stars" style="justify-content:center; margin-bottom:12px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span style="font-size:13px; font-weight:600; color:#7A6E65; margin-left:8px;">5.0 on Google</span>
+        </div>
+        <span class="eyebrow">Client Reviews</span>
+        <h2 class="section-h2">What Our Clients Say</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="rev-card">
+          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="rev-text">"WOW completely transformed our kitchen. From the first consultation to the final walkthrough, they were professional, clean, and finished exactly on time."</p>
+          <div class="rev-author"><div class="rev-avatar">SM</div><div><div class="rev-name">Sarah M.</div><div class="rev-role">Kitchen Remodel · Naperville</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="rev-text">"Stunning bathroom transformation. They listened to exactly what we wanted and delivered beyond our expectations. Highly recommend WOW!"</p>
+          <div class="rev-author"><div class="rev-avatar">JL</div><div><div class="rev-name">Jennifer L.</div><div class="rev-role">Bathroom Remodel · Westmont</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="rev-text">"Best investment we made in our home. The kitchen is now the heart of our home. They stayed perfectly on schedule. Five stars, no question."</p>
+          <div class="rev-author"><div class="rev-avatar">MS</div><div><div class="rev-name">Maria S.</div><div class="rev-role">Kitchen Remodel · Chicago</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="rev-text">"They turned our outdated bathroom into a modern spa. The whole process was smooth, clean, and stress-free."</p>
+          <div class="rev-author"><div class="rev-avatar">DT</div><div><div class="rev-name">David T.</div><div class="rev-role">Bathroom Remodel · Downers Grove</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="rev-text">"Our kitchen is completely unrecognizable — in the best way. Communication was excellent the entire time. Truly a WOW experience."</p>
+          <div class="rev-author"><div class="rev-avatar">RK</div><div><div class="rev-name">Robert K.</div><div class="rev-role">Kitchen Remodel · Joliet</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="rev-text">"Our master bath is now a sanctuary. The craftsmanship is second to none. WOW exceeded every expectation."</p>
+          <div class="rev-author"><div class="rev-avatar">AP</div><div><div class="rev-name">Amanda P.</div><div class="rev-role">Bathroom Remodel · Bolingbrook</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       CTA BAND
+       =================================================== -->
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <span class="eyebrow eyebrow-dark">Take the First Step</span>
+      <h2>Ready to Transform Your<br>Kitchen or Bathroom?</h2>
+      <p>Get your free consultation and preliminary estimate today. No obligation.</p>
+      <div class="cta-btns">
+        <a href="#contact" class="btn-gold" style="font-size:16px; padding:18px 40px;">Get Free Estimate</a>
+        <!-- EDIT: Update phone number here -->
+        <a href="tel:2247047014" class="btn-outline-dark" style="font-size:16px; padding:18px 40px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.22 16.92z"/></svg>
+          Call Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       CONTACT FORM
+       =================================================== -->
+  <section id="contact" class="contact-section">
+    <div class="contact-inner">
+      <div class="section-head">
+        <span class="eyebrow">Free Consultation</span>
+        <h2 class="section-h2">Let's Discuss Your Project</h2>
+        <p class="section-sub">Tell us about your dream space — we'll get back to you within 24 hours.</p>
+      </div>
+      <div class="contact-card">
+
+        <!-- Success state (hidden initially) -->
+        <div class="contact-success hidden" id="contact-success">
+          <div class="success-icon" style="margin:0 auto 20px;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Thank You!</h3>
+          <p>We received your request and will be in touch within 24 hours to schedule your free estimate.</p>
+        </div>
+
+        <!-- Form -->
+        <form id="contact-form" class="contact-form-body" novalidate>
+          <div class="contact-form-2col">
+            <div class="field-group">
+              <label class="wow-label" for="c-name">Full Name *</label>
+              <input id="c-name" name="name" type="text" required placeholder="John Smith" class="wow-input">
+            </div>
+            <div class="field-group">
+              <label class="wow-label" for="c-phone">Phone Number *</label>
+              <input id="c-phone" name="phone" type="tel" required placeholder="(224) 000-0000" class="wow-input">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="wow-label" for="c-email">Email Address *</label>
+            <input id="c-email" name="email" type="email" required placeholder="you@example.com" class="wow-input">
+          </div>
+          <div class="contact-form-2col">
+            <div class="field-group">
+              <label class="wow-label" for="c-project">Project Type *</label>
+              <select id="c-project" name="project_type" required class="wow-input" style="appearance:auto;">
+                <option value="">Select project...</option>
+                <option value="Full Bathroom Remodel">Full Bathroom Remodel</option>
+                <option value="Tub to Walk-in Shower">Tub to Walk-in Shower Conversion</option>
+                <option value="New Bathroom Addition">New Bathroom Addition</option>
+                <option value="Kitchen Remodeling">Kitchen Remodeling</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="wow-label" for="c-timeline">When to Start?</label>
+              <select id="c-timeline" name="timeline" class="wow-input" style="appearance:auto;">
+                <option value="">Select timeline...</option>
+                <option value="ASAP">ASAP</option>
+                <option value="1-2 Months">1–2 Months</option>
+                <option value="Discovery Phase">Discovery Phase (3+ Months)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="wow-label" for="c-message">Project Details</label>
+            <textarea id="c-message" name="message" placeholder="Enter project details and your vision for this transformation..." class="wow-input" style="resize:vertical; min-height:100px;"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="wow-label">Photos of Your Space <span class="optional-tag">(Optional)</span></label>
+            <label class="photo-upload-label" for="c-photos" style="padding:18px 20px; border-width:2px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A0622A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <div>
+                <div class="photo-upload-text" id="c-photo-label" style="font-size:14px; font-weight:500; color:#3A3028;">Add photos of your space</div>
+                <div style="font-size:12px; color:#9A8A78; margin-top:3px;">JPG, PNG · Multiple files accepted</div>
+              </div>
+              <input id="c-photos" type="file" accept="image/*" multiple style="display:none;" onchange="updatePhotoLabel(this,'c-photo-label')">
+            </label>
+          </div>
+          <button type="submit" class="btn-submit contact-submit" id="contact-submit-btn">
+            Submit Estimate Request
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <p class="contact-note">We respond within 24 hours &middot; Free estimates &middot; No obligation</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       FOOTER
+       =================================================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+          <img src="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png" alt="WOW" style="height:38px; width:auto;">
+          <div>
+            <!-- EDIT: Business name -->
+            <div class="footer-brand-name">WOW Home Transformations</div>
+            <div class="footer-brand-sub">Kitchen &amp; Bathroom Specialists</div>
+          </div>
+        </div>
+        <p>Chicagoland's trusted kitchen &amp; bathroom remodeling contractor. Expert craftsmanship, transparent pricing.</p>
+        <div class="footer-socials">
+          <!-- EDIT: Update social links -->
+          <a href="https://www.facebook.com/wowhometransformations" target="_blank" rel="noopener" class="footer-social-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/wowhometransformation/" target="_blank" rel="noopener" class="footer-social-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#kitchen">Kitchen Remodeling</a>
+        <a href="#bathroom">Bathroom Remodeling</a>
+        <a href="price-estimator.html">Price Estimator</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <!-- EDIT: Update contact info -->
+        <a href="tel:2247047014">(224) 704-7014</a>
+        <a href="mailto:info@wowhometransformations.com" style="font-size:13px; word-break:break-all;">info@wowhometransformations.com</a>
+        <div>Chicago &amp; All Suburbs</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <!-- EDIT: Update copyright year and LLC name if needed -->
+      <p>&copy; 2025 GMRH Construction Services LLC &middot; WOW Home Transformations. All rights reserved.</p>
+      <p>Licensed &amp; Insured &middot; Serving Chicagoland, IL</p>
+    </div>
+  </footer>
+
+  <!-- ===================================================
+       JAVASCRIPT
+       =================================================== -->
+  <script>
+    // ============================================================
+    // SUPABASE CONFIGURATION
+    // 1. Go to https://app.supabase.com → your project → Settings → API
+    // 2. Copy "Project URL" and "anon/public" key and paste below
+    // ============================================================
+    const SUPABASE_URL      = 'https://pydiopoywewqgyxsqvom.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5ZGlvcG95d2V3cWd5eHNxdm9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4NzEwOTQsImV4cCI6MjA5ODQ0NzA5NH0.-pM5CHkV7TV2R65P0xLfbSf_p8wdnGLKqXn1q8HwxTk';
+    const PHOTO_BUCKET      = 'project-photos'; // Your Supabase storage bucket name
+
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ============================================================
+    // BUSINESS CONFIG — Edit these
+    // ============================================================
+    // (Phone/email are in the HTML above — search for EDIT comments)
+
+    // ============================================================
+    // GALLERY PHOTOS
+    // Add more by adding { src: 'URL', alt: 'Description' } to either array
+    // ============================================================
+    const KITCHEN_PHOTOS = [
+      { src: 'https://static.wixstatic.com/media/c8469c_8c55b70b1f1945e48bdd098a8e23b2b1~mv2.jpg/v1/fill/w_900,h_700,al_c,q_85,enc_avif,quality_auto/c8469c_8c55b70b1f1945e48bdd098a8e23b2b1~mv2.jpg', alt: 'Modern Kitchen Remodel Chicago' },
+      { src: 'https://static.wixstatic.com/media/c8469c_c36eb302f2754da595b1a3a5422cac0c~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_c36eb302f2754da595b1a3a5422cac0c~mv2.jpg', alt: 'Kitchen Transformation Chicagoland' },
+      { src: 'https://static.wixstatic.com/media/c8469c_aca608cc08244ec38a75809e647078c8~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_aca608cc08244ec38a75809e647078c8~mv2.jpg', alt: 'Kitchen Renovation Illinois' },
+      { src: 'https://static.wixstatic.com/media/c8469c_81fa4a667e90468cae48c1d520b922a2~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_81fa4a667e90468cae48c1d520b922a2~mv2.jpg', alt: 'Custom Kitchen Design Naperville' },
+      { src: 'https://static.wixstatic.com/media/c8469c_b1f717541ab942588a5cc9f41c134e81~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_b1f717541ab942588a5cc9f41c134e81~mv2.jpg', alt: 'Kitchen Upgrade Bolingbrook' },
+      { src: 'https://static.wixstatic.com/media/c8469c_54134aea766149d9ab102a50faef7196~mv2.webp/v1/fill/w_900,h_700,al_c,q_85,enc_avif,quality_auto/c8469c_54134aea766149d9ab102a50faef7196~mv2.webp', alt: 'Kitchen Makeover Chicago Area' }
+    ];
+
+    const BATHROOM_PHOTOS = [
+      { src: 'https://static.wixstatic.com/media/c8469c_3ea82b4253564f248325d02e424fcbe4~mv2.jpg/v1/fill/w_900,h_700,al_c,q_85,enc_avif,quality_auto/c8469c_3ea82b4253564f248325d02e424fcbe4~mv2.jpg', alt: 'Luxury Bathroom Remodel Chicago' },
+      { src: 'https://static.wixstatic.com/media/c8469c_2da733a1d8c44e90b7feda044c4d0d07~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_2da733a1d8c44e90b7feda044c4d0d07~mv2.jpg', alt: 'Bathroom Renovation Illinois' },
+      { src: 'https://static.wixstatic.com/media/c8469c_15cc276bd6bf4175b1ce75f99daf40a3~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_15cc276bd6bf4175b1ce75f99daf40a3~mv2.jpg', alt: 'Modern Bathroom Design Naperville' },
+      { src: 'https://static.wixstatic.com/media/c8469c_008ee74da5c24edb99aae6efa174e18e~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_008ee74da5c24edb99aae6efa174e18e~mv2.jpg', alt: 'Bathroom Transformation Chicagoland' },
+      { src: 'https://static.wixstatic.com/media/c8469c_4168337e7e3748a4a17797f994866836~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_4168337e7e3748a4a17797f994866836~mv2.jpg', alt: 'Spa Bathroom Remodel Westmont' },
+      { src: 'https://static.wixstatic.com/media/c8469c_795d5a0f2045494097e8307b66a79b9c~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_795d5a0f2045494097e8307b66a79b9c~mv2.jpg', alt: 'Bathroom Upgrade Downers Grove' }
+    ];
+
+    // ============================================================
+    // NAVIGATION
+    // ============================================================
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    });
+
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.remove('open');
+      });
+    });
+
+    // ============================================================
+    // GALLERY
+    // ============================================================
+    let activeTab = 'kitchen';
+
+    function switchTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll('.gal-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+      });
+      renderGallery(tab);
+    }
+
+    function renderGallery(tab) {
+      const photos = tab === 'kitchen' ? KITCHEN_PHOTOS : BATHROOM_PHOTOS;
+      const grid = document.getElementById('gallery-grid');
+      grid.innerHTML = photos.map(p => `
+        <div class="gal-item">
+          <img src="${p.src}" alt="${p.alt}" loading="lazy">
+          <div class="gal-overlay">
+            <div class="gal-zoom">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    renderGallery('kitchen'); // Load kitchen photos on page load
+
+    // ============================================================
+    // PHOTO UPLOAD — updates label text when files are selected
+    // ============================================================
+    function updatePhotoLabel(input, labelId) {
+      const count = input.files.length;
+      const el = document.getElementById(labelId);
+      el.textContent = count > 0
+        ? `${count} photo${count > 1 ? 's' : ''} selected`
+        : 'Add photos of your space';
+    }
+
+    // ============================================================
+    // SUPABASE — Upload photos to storage, returns array of URLs
+    // ============================================================
+    async function uploadPhotos(files) {
+      const urls = [];
+      const timestamp = Date.now();
+      for (const file of files) {
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const path = `leads/${timestamp}/${safeName}`;
+        const { error } = await db.storage.from(PHOTO_BUCKET).upload(path, file);
+        if (!error) {
+          const { data } = db.storage.from(PHOTO_BUCKET).getPublicUrl(path);
+          urls.push(data.publicUrl);
+        }
+      }
+      return urls;
+    }
+
+    // ============================================================
+    // HERO FORM SUBMISSION
+    // ============================================================
+    document.getElementById('hero-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('hero-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const form = e.target;
+        const photoInput = document.getElementById('h-photos');
+        let photoUrls = [];
+        if (photoInput.files.length > 0) {
+          photoUrls = await uploadPhotos(Array.from(photoInput.files));
+        }
+
+        const { error } = await db.from('leads').insert([{
+          name:         form.name.value.trim(),
+          phone:        form.phone.value.trim(),
+          email:        form.email.value.trim(),
+          project_type: form.project_type.value || null,
+          timeline:     form.timeline.value || null,
+          message:      form.message.value.trim() || null,
+          photo_urls:   photoUrls.length > 0 ? photoUrls : null,
+          source:       'hero_form'
+        }]);
+
+        if (error) throw error;
+        document.getElementById('hero-form-wrap').classList.add('hidden');
+        document.getElementById('hero-success').classList.remove('hidden');
+
+      } catch (err) {
+        console.error('Submission error:', err);
+        alert('There was an error. Please call us at (224) 704-7014 or try again.');
+        btn.disabled = false;
+        btn.textContent = 'Get My Free Estimate';
+      }
+    });
+
+    // ============================================================
+    // CONTACT FORM SUBMISSION
+    // ============================================================
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('contact-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const form = e.target;
+        const photoInput = document.getElementById('c-photos');
+        let photoUrls = [];
+        if (photoInput.files.length > 0) {
+          photoUrls = await uploadPhotos(Array.from(photoInput.files));
+        }
+
+        const { error } = await db.from('leads').insert([{
+          name:         form.name.value.trim(),
+          phone:        form.phone.value.trim(),
+          email:        form.email.value.trim(),
+          project_type: form.project_type.value || null,
+          timeline:     form.timeline.value || null,
+          message:      form.message.value.trim() || null,
+          photo_urls:   photoUrls.length > 0 ? photoUrls : null,
+          source:       'contact_form'
+        }]);
+
+        if (error) throw error;
+        document.getElementById('contact-form').classList.add('hidden');
+        document.getElementById('contact-success').classList.remove('hidden');
+
+      } catch (err) {
+        console.error('Submission error:', err);
+        alert('There was an error. Please call us at (224) 704-7014 or try again.');
+        btn.disabled = false;
+        btn.textContent = 'Submit Estimate Request';
+      }
+    });
+  </script>
+</body>
+</html>
