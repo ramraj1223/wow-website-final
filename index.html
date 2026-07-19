@@ -58,6 +58,10 @@
     .wow-label { display: block; font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 5px; letter-spacing: .03em; text-transform: uppercase; }
     .wow-input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; color: var(--charcoal); background: #fff; outline: none; transition: border-color .18s, box-shadow .18s; }
     .wow-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,136,46,.12); }
+    .wow-input.invalid { border-color: #C0392B; }
+    .wow-input.invalid:focus { border-color: #C0392B; box-shadow: 0 0 0 3px rgba(192,57,43,.12); }
+    .form-error { display: none; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #C0392B; background: rgba(192,57,43,.08); border: 1px solid rgba(192,57,43,.25); border-radius: 8px; padding: 10px 14px; }
+    .form-error.show { display: flex; }
     .optional-tag { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; color: #9A8A78; }
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .field-group { display: flex; flex-direction: column; gap: 5px; }
@@ -89,7 +93,10 @@
     .nav-actions { display: flex; align-items: center; gap: 10px; }
     .nav-estimator { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: transparent; color: var(--brown); font-size: 13px; font-weight: 600; border: 1.5px solid var(--brown); border-radius: var(--radius-sm); transition: all .18s; }
     .nav-estimator:hover { background: var(--brown); color: #fff; }
-    .nav-cta { padding: 10px 22px; font-size: 14px; border-radius: var(--radius-sm); }
+    .nav-phone { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink); padding: 8px 10px; border-radius: 4px; transition: color .18s; }
+    .nav-phone:hover { color: var(--gold); }
+    .nav-phone-mobile { display: none; align-items: center; justify-content: center; padding: 9px 14px; font-size: 13px; font-weight: 700; color: #fff; background: var(--brown); border-radius: var(--radius-sm); white-space: nowrap; transition: background .18s; }
+    .nav-phone-mobile:hover { background: var(--gold); }
     .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; }
     .mobile-menu { display: none; border-top: 1px solid var(--border); background: var(--cream); padding: 16px 5% 24px; animation: slideDown .22s ease; }
@@ -111,7 +118,7 @@
     .hero-eyebrow span { font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(200,136,46,.9); }
     .hero-h1 { font-family: var(--font-serif); font-size: clamp(42px,5.5vw,70px); font-weight: 700; line-height: 1.04; color: #fff; margin-bottom: 22px; text-wrap: pretty; }
     .hero-p { font-size: clamp(15px,1.5vw,18px); color: rgba(255,255,255,.76); line-height: 1.8; margin-bottom: 36px; max-width: 500px; }
-    .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 52px; }
+    .hero-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 52px; max-width: 500px; }
     .hero-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 420px; }
     .trust-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.07); border: 1px solid rgba(200,136,46,.22); border-radius: 10px; padding: 12px 16px; }
     .trust-badge span { font-size: 12px; font-weight: 600; color: #fff; }
@@ -120,10 +127,6 @@
     .form-title { font-family: var(--font-serif); font-size: 26px; font-weight: 700; color: var(--charcoal); line-height: 1.2; }
     .form-sub { font-size: 13px; color: var(--stone); margin-top: 4px; line-height: 1.6; }
     .form-body { display: flex; flex-direction: column; gap: 12px; }
-    .form-success { text-align: center; padding: 48px 8px; }
-    .success-icon { width: 60px; height: 60px; background: #EEF2FA; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
-    .form-success h3 { font-family: var(--font-serif); font-size: 26px; font-weight: 700; color: var(--charcoal); margin-bottom: 10px; }
-    .form-success p  { font-size: 14px; color: var(--stone); line-height: 1.7; }
 
     /* ===================================================
        TRUST BAR
@@ -170,12 +173,9 @@
     .gal-tab:hover { border-color: var(--gold); color: var(--gold); }
     .gal-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); font-weight: 600; }
     .gal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-    .gal-item { overflow: hidden; border-radius: 10px; position: relative; background: var(--sand); cursor: pointer; }
+    .gal-item { overflow: hidden; border-radius: 10px; position: relative; background: var(--sand); }
     .gal-item img { width: 100%; height: 260px; object-fit: cover; transition: transform .5s ease; }
     .gal-item:hover img { transform: scale(1.06); }
-    .gal-overlay { position: absolute; inset: 0; background: rgba(26,43,74,.55); opacity: 0; transition: opacity .3s; display: flex; align-items: center; justify-content: center; }
-    .gal-item:hover .gal-overlay { opacity: 1; }
-    .gal-zoom { width: 46px; height: 46px; background: rgba(255,255,255,.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .gallery-cta { text-align: center; margin-top: 40px; }
 
     /* ===================================================
@@ -186,7 +186,7 @@
     .why-inner { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; }
     .why-h2 { font-family: var(--font-serif); font-size: clamp(30px,3vw,44px); font-weight: 700; color: #fff; margin-top: 12px; line-height: 1.1; }
     .why-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-top: 56px; }
-    .why-item { flex: 0 0 calc(25% - 16px); min-width: 220px; background: rgba(255,255,255,.07); border: 1px solid rgba(200,136,46,.22); border-radius: var(--radius-md); padding: 28px 24px; }
+    .why-item { flex: 0 0 calc(33.333% - 14px); min-width: 220px; background: rgba(255,255,255,.07); border: 1px solid rgba(200,136,46,.22); border-radius: var(--radius-md); padding: 28px 24px; }
     .why-icon { width: 44px; height: 44px; background: rgba(200,136,46,.18); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
     .why-item h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
     .why-item p  { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.7; }
@@ -217,20 +217,6 @@
     .cta-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
     /* ===================================================
-       CONTACT FORM SECTION
-       =================================================== */
-    .contact-section { background: var(--sand); padding: 88px 5%; }
-    .contact-inner { max-width: 900px; margin: 0 auto; }
-    .contact-card { background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 48px 44px; box-shadow: 0 4px 24px rgba(26,43,74,.06); }
-    .contact-form-body { display: flex; flex-direction: column; gap: 20px; }
-    .contact-form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .contact-submit { width: 100%; padding: 17px; font-size: 16px; border-radius: var(--radius-sm); }
-    .contact-note { font-size: 12px; color: var(--stone); text-align: center; line-height: 1.6; margin-top: -8px; }
-    .contact-success { text-align: center; padding: 48px 0; }
-    .contact-success h3 { font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--charcoal); margin-bottom: 10px; }
-    .contact-success p  { font-size: 15px; color: var(--stone); line-height: 1.7; max-width: 340px; margin: 0 auto; }
-
-    /* ===================================================
        FOOTER
        =================================================== */
     footer { background: var(--navy-deep); color: #fff; padding: 60px 5% 28px; }
@@ -253,6 +239,7 @@
        =================================================== */
     @media (max-width: 960px) {
       .nav-links, .nav-actions { display: none; }
+      .nav-phone-mobile { display: inline-flex; }
       .hamburger { display: flex; }
       .hero-inner { grid-template-columns: 1fr; }
       .hero-form-col { display: none; }
@@ -264,9 +251,7 @@
       .trust-bar-inner { flex-wrap: wrap; justify-content: center; gap: 16px; height: auto; padding: 14px 5%; }
       .why-item { flex: 0 0 calc(50% - 12px); min-width: 160px; }
       .footer-inner { flex-direction: column; gap: 36px; }
-      .contact-form-2col { grid-template-columns: 1fr; }
       .form-grid-2 { grid-template-columns: 1fr; }
-      .contact-card { padding: 32px 20px; }
     }
     @media (max-width: 480px) {
       .gal-grid { grid-template-columns: 1fr; }
@@ -295,12 +280,16 @@
         <a href="#kitchen"  class="nav-link">Kitchen</a>
         <a href="#bathroom" class="nav-link">Bathroom</a>
         <a href="#projects" class="nav-link">Projects</a>
-        <a href="#contact"  class="nav-link">Contact</a>
+        <a href="#home"  class="nav-link">Contact</a>
       </div>
       <div class="nav-actions">
-        <a href="price-estimator.html" class="nav-estimator">Price Estimator</a>
-        <a href="#contact" class="btn-gold nav-cta">Get Free Estimate</a>
+        <a href="tel:2247047014" class="nav-phone">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.22 16.92z"/></svg>
+          (224) 704-7014
+        </a>
+        <a href="price-estimator.html" class="nav-estimator">Use Our Free Estimator</a>
       </div>
+      <a href="tel:2247047014" class="nav-phone-mobile">(224) 704-7014</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -311,11 +300,11 @@
         <a href="#kitchen">Kitchen Remodeling</a>
         <a href="#bathroom">Bathroom Remodeling</a>
         <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="#home">Contact</a>
       </div>
       <div class="mobile-menu-btns">
-        <a href="#contact" class="btn-gold" style="justify-content:center;">Get Free Estimate</a>
-        <a href="price-estimator.html" class="btn-outline-light" style="justify-content:center;">Price Estimator</a>
+        <a href="price-estimator.html" class="btn-outline-light" style="justify-content:center;">Use Our Free Estimator</a>
+        <a href="tel:2247047014" class="btn-outline-light" style="justify-content:center;">(224) 704-7014</a>
       </div>
     </div>
   </nav>
@@ -340,11 +329,7 @@
         <!-- EDIT: Sub-headline -->
         <p class="hero-p">Transform your kitchen or bathroom with expert craftsmanship, transparent pricing, and a stress-free remodeling experience.</p>
         <div class="hero-btns">
-          <a href="#contact" class="btn-gold" style="font-size:16px; padding:16px 34px;">
-            Get Free Estimate
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="price-estimator.html" class="btn-outline-dark" style="font-size:16px; padding:16px 34px;">Try Price Estimator</a>
+          <a href="price-estimator.html" class="btn-outline-dark" style="font-size:16px; padding:16px 34px;">Use Our Free Estimator</a>
         </div>
         <div class="hero-trust">
           <div class="trust-badge">
@@ -370,15 +355,6 @@
 
       <!-- Right: hero lead form -->
       <div class="hero-form-col">
-
-        <!-- Success state (hidden initially) -->
-        <div class="form-success hidden" id="hero-success">
-          <div class="success-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3>We'll be in touch!</h3>
-          <p>Expect a call within 24 hours to discuss your project and schedule your free estimate.</p>
-        </div>
 
         <!-- Form -->
         <div id="hero-form-wrap">
@@ -417,7 +393,7 @@
             </div>
             <div class="field-group">
               <label class="wow-label" for="h-timeline">When to Start?</label>
-              <select id="h-timeline" name="timeline" class="wow-input" style="font-size:13px; appearance:auto;">
+              <select id="h-timeline" name="timeline" required class="wow-input" style="font-size:13px; appearance:auto;">
                 <option value="">Select timeline...</option>
                 <option value="ASAP">ASAP</option>
                 <option value="1-2 Months">1–2 Months</option>
@@ -425,8 +401,8 @@
               </select>
             </div>
             <div class="field-group">
-              <label class="wow-label" for="h-message">Project Details <span class="optional-tag">(Optional)</span></label>
-              <textarea id="h-message" name="message" placeholder="Enter project details and your vision for this transformation..." class="wow-input" style="resize:vertical; min-height:60px; font-size:13px;"></textarea>
+              <label class="wow-label" for="h-message">Project Details</label>
+              <textarea id="h-message" name="message" required placeholder="Enter project details and your vision for this transformation..." class="wow-input" style="resize:vertical; min-height:60px; font-size:13px;"></textarea>
             </div>
             <div class="field-group">
               <label class="wow-label">Photos of Your Space <span class="optional-tag">(Optional)</span></label>
@@ -435,6 +411,9 @@
                 <span class="photo-upload-text" id="h-photo-label">Add photos of your space</span>
                 <input id="h-photos" type="file" accept="image/*" multiple style="display:none;" onchange="updatePhotoLabel(this,'h-photo-label')">
               </label>
+            </div>
+            <div id="hero-form-error" class="form-error">
+              <span>Please fill the information correctly.</span>
             </div>
             <button type="submit" class="btn-submit" id="hero-submit-btn">
               Get My Free Estimate
@@ -506,7 +485,7 @@
           <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lighting</div>
           <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Open Concept</div>
         </div>
-        <a href="#contact" class="btn-gold">Get Kitchen Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="tel:2247047014" class="btn-gold">Call for Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
   </section>
@@ -537,7 +516,7 @@
           <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Flooring</div>
           <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Spa Upgrades</div>
         </div>
-        <a href="#contact" class="btn-gold">Get Bathroom Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="price-estimator.html" class="btn-gold">Get Bathroom Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
   </section>
@@ -553,14 +532,14 @@
         <p class="section-sub">All photos are real projects completed right here in Chicagoland.</p>
       </div>
       <div class="gal-tabs">
-        <button class="gal-tab active" data-tab="kitchen" onclick="switchTab('kitchen')">Kitchen Projects</button>
-        <button class="gal-tab" data-tab="bathroom" onclick="switchTab('bathroom')">Bathroom Projects</button>
+        <button class="gal-tab" data-tab="kitchen" onclick="switchTab('kitchen')">Kitchen Projects</button>
+        <button class="gal-tab active" data-tab="bathroom" onclick="switchTab('bathroom')">Bathroom Projects</button>
       </div>
       <div class="gal-grid" id="gallery-grid">
         <!-- Populated by JavaScript -->
       </div>
       <div class="gallery-cta">
-        <a href="#contact" class="btn-gold" style="font-size:15px; padding:15px 36px;">Start Your Project Today</a>
+        <a href="price-estimator.html" class="btn-gold" style="font-size:15px; padding:15px 36px;">Start Your Project Today</a>
       </div>
     </div>
   </section>
@@ -584,19 +563,9 @@
           <p>Fully licensed, bonded, and insured for your complete peace of mind.</p>
         </div>
         <div class="why-item">
-          <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <h3>High Quality Materials</h3>
-          <p>We source premium materials that look exceptional and stand the test of time.</p>
-        </div>
-        <div class="why-item">
           <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-          <h3>Excellent Communication</h3>
-          <p>Regular updates so you're always informed and confident throughout.</p>
-        </div>
-        <div class="why-item">
-          <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <h3>Fast Turnaround Times</h3>
-          <p>Projects planned carefully and completed on schedule — we respect your home.</p>
+          <h3>Clear Communication, Fast Turnaround</h3>
+          <p>You'll always know where your project stands, and we move efficiently so your bathroom is back in use as soon as possible.</p>
         </div>
       </div>
     </div>
@@ -664,95 +633,12 @@
       <h2>Ready to Transform Your<br>Kitchen or Bathroom?</h2>
       <p>Get your free consultation and preliminary estimate today. No obligation.</p>
       <div class="cta-btns">
-        <a href="#contact" class="btn-gold" style="font-size:16px; padding:18px 40px;">Get Free Estimate</a>
+        <a href="price-estimator.html" class="btn-gold" style="font-size:16px; padding:18px 40px;">Get Free Estimate</a>
         <!-- EDIT: Update phone number here -->
         <a href="tel:2247047014" class="btn-outline-dark" style="font-size:16px; padding:18px 40px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.22 16.92z"/></svg>
           Call Now
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================================================
-       CONTACT FORM
-       =================================================== -->
-  <section id="contact" class="contact-section">
-    <div class="contact-inner">
-      <div class="section-head">
-        <span class="eyebrow">Free Consultation</span>
-        <h2 class="section-h2">Let's Discuss Your Project</h2>
-        <p class="section-sub">Tell us about your dream space — we'll get back to you within 24 hours.</p>
-      </div>
-      <div class="contact-card">
-
-        <!-- Success state (hidden initially) -->
-        <div class="contact-success hidden" id="contact-success">
-          <div class="success-icon" style="margin:0 auto 20px;">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3>Thank You!</h3>
-          <p>We received your request and will be in touch within 24 hours to schedule your free estimate.</p>
-        </div>
-
-        <!-- Form -->
-        <form id="contact-form" class="contact-form-body" novalidate>
-          <div class="contact-form-2col">
-            <div class="field-group">
-              <label class="wow-label" for="c-name">Full Name *</label>
-              <input id="c-name" name="name" type="text" required placeholder="John Smith" class="wow-input">
-            </div>
-            <div class="field-group">
-              <label class="wow-label" for="c-phone">Phone Number *</label>
-              <input id="c-phone" name="phone" type="tel" required placeholder="(224) 000-0000" class="wow-input">
-            </div>
-          </div>
-          <div class="field-group">
-            <label class="wow-label" for="c-email">Email Address *</label>
-            <input id="c-email" name="email" type="email" required placeholder="you@example.com" class="wow-input">
-          </div>
-          <div class="contact-form-2col">
-            <div class="field-group">
-              <label class="wow-label" for="c-project">Project Type *</label>
-              <select id="c-project" name="project_type" required class="wow-input" style="appearance:auto;">
-                <option value="">Select project...</option>
-                <option value="Full Bathroom Remodel">Full Bathroom Remodel</option>
-                <option value="Tub to Walk-in Shower">Tub to Walk-in Shower Conversion</option>
-                <option value="New Bathroom Addition">New Bathroom Addition</option>
-                <option value="Kitchen Remodeling">Kitchen Remodeling</option>
-              </select>
-            </div>
-            <div class="field-group">
-              <label class="wow-label" for="c-timeline">When to Start?</label>
-              <select id="c-timeline" name="timeline" class="wow-input" style="appearance:auto;">
-                <option value="">Select timeline...</option>
-                <option value="ASAP">ASAP</option>
-                <option value="1-2 Months">1–2 Months</option>
-                <option value="Discovery Phase">Discovery Phase (3+ Months)</option>
-              </select>
-            </div>
-          </div>
-          <div class="field-group">
-            <label class="wow-label" for="c-message">Project Details</label>
-            <textarea id="c-message" name="message" placeholder="Enter project details and your vision for this transformation..." class="wow-input" style="resize:vertical; min-height:100px;"></textarea>
-          </div>
-          <div class="field-group">
-            <label class="wow-label">Photos of Your Space <span class="optional-tag">(Optional)</span></label>
-            <label class="photo-upload-label" for="c-photos" style="padding:18px 20px; border-width:2px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A0622A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <div>
-                <div class="photo-upload-text" id="c-photo-label" style="font-size:14px; font-weight:500; color:#3A3028;">Add photos of your space</div>
-                <div style="font-size:12px; color:#9A8A78; margin-top:3px;">JPG, PNG · Multiple files accepted</div>
-              </div>
-              <input id="c-photos" type="file" accept="image/*" multiple style="display:none;" onchange="updatePhotoLabel(this,'c-photo-label')">
-            </label>
-          </div>
-          <button type="submit" class="btn-submit contact-submit" id="contact-submit-btn">
-            Submit Estimate Request
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-          <p class="contact-note">We respond within 24 hours &middot; Free estimates &middot; No obligation</p>
-        </form>
       </div>
     </div>
   </section>
@@ -786,7 +672,7 @@
         <h4>Services</h4>
         <a href="#kitchen">Kitchen Remodeling</a>
         <a href="#bathroom">Bathroom Remodeling</a>
-        <a href="price-estimator.html">Price Estimator</a>
+        <a href="price-estimator.html">Use Our Free Estimator</a>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
@@ -867,7 +753,7 @@
     // ============================================================
     // GALLERY
     // ============================================================
-    let activeTab = 'kitchen';
+    let activeTab = 'bathroom';
 
     function switchTab(tab) {
       activeTab = tab;
@@ -883,18 +769,11 @@
       grid.innerHTML = photos.map(p => `
         <div class="gal-item">
           <img src="${p.src}" alt="${p.alt}" loading="lazy">
-          <div class="gal-overlay">
-            <div class="gal-zoom">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-              </svg>
-            </div>
-          </div>
         </div>
       `).join('');
     }
 
-    renderGallery('kitchen'); // Load kitchen photos on page load
+    renderGallery('bathroom'); // Load bathroom photos on page load
 
     // ============================================================
     // PHOTO UPLOAD — updates label text when files are selected
@@ -926,16 +805,73 @@
     }
 
     // ============================================================
+    // HERO FORM VALIDATION
+    // ============================================================
+    const HERO_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+
+    function heroDigitsOnly(str) {
+      return str.replace(/\D/g, '');
+    }
+
+    function heroIsValidPhone(str) {
+      const d = heroDigitsOnly(str);
+      return d.length === 10 || (d.length === 11 && d[0] === '1');
+    }
+
+    function heroSetFieldValid(input, valid) {
+      input.classList.toggle('invalid', !valid);
+    }
+
+    function validateHeroForm(form) {
+      const nameValid     = form.name.value.trim().length > 0;
+      const phoneValid    = heroIsValidPhone(form.phone.value.trim());
+      const emailValid    = HERO_EMAIL_RE.test(form.email.value.trim());
+      const projectValid  = form.project_type.value.trim().length > 0;
+      const timelineValid = form.timeline.value.trim().length > 0;
+      const messageValid  = form.message.value.trim().length > 0;
+
+      heroSetFieldValid(form.name, nameValid);
+      heroSetFieldValid(form.phone, phoneValid);
+      heroSetFieldValid(form.email, emailValid);
+      heroSetFieldValid(form.project_type, projectValid);
+      heroSetFieldValid(form.timeline, timelineValid);
+      heroSetFieldValid(form.message, messageValid);
+
+      return nameValid && phoneValid && emailValid && projectValid && timelineValid && messageValid;
+    }
+
+    ['h-name', 'h-phone', 'h-email', 'h-project', 'h-timeline', 'h-message'].forEach(id => {
+      document.getElementById(id).addEventListener('input', (e) => {
+        e.target.classList.remove('invalid');
+        document.getElementById('hero-form-error').classList.remove('show');
+      });
+      document.getElementById(id).addEventListener('change', (e) => {
+        e.target.classList.remove('invalid');
+        document.getElementById('hero-form-error').classList.remove('show');
+      });
+    });
+
+    // ============================================================
     // HERO FORM SUBMISSION
     // ============================================================
     document.getElementById('hero-form').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const form = e.target;
+      const errorBox = document.getElementById('hero-form-error');
+
+      if (!validateHeroForm(form)) {
+        errorBox.classList.add('show');
+        const firstInvalid = form.querySelector('.wow-input.invalid');
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+      errorBox.classList.remove('show');
+
       const btn = document.getElementById('hero-submit-btn');
       btn.disabled = true;
       btn.textContent = 'Sending...';
 
       try {
-        const form = e.target;
         const photoInput = document.getElementById('h-photos');
         let photoUrls = [];
         if (photoInput.files.length > 0) {
@@ -954,54 +890,13 @@
         }]);
 
         if (error) throw error;
-        document.getElementById('hero-form-wrap').classList.add('hidden');
-        document.getElementById('hero-success').classList.remove('hidden');
+        window.location.href = 'thank-you.html?name=' + encodeURIComponent(form.name.value.trim());
 
       } catch (err) {
         console.error('Submission error:', err);
         alert('There was an error. Please call us at (224) 704-7014 or try again.');
         btn.disabled = false;
         btn.textContent = 'Get My Free Estimate';
-      }
-    });
-
-    // ============================================================
-    // CONTACT FORM SUBMISSION
-    // ============================================================
-    document.getElementById('contact-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('contact-submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-
-      try {
-        const form = e.target;
-        const photoInput = document.getElementById('c-photos');
-        let photoUrls = [];
-        if (photoInput.files.length > 0) {
-          photoUrls = await uploadPhotos(Array.from(photoInput.files));
-        }
-
-        const { error } = await db.from('leads').insert([{
-          name:         form.name.value.trim(),
-          phone:        form.phone.value.trim(),
-          email:        form.email.value.trim(),
-          project_type: form.project_type.value || null,
-          timeline:     form.timeline.value || null,
-          message:      form.message.value.trim() || null,
-          photo_urls:   photoUrls.length > 0 ? photoUrls : null,
-          source:       'contact_form'
-        }]);
-
-        if (error) throw error;
-        document.getElementById('contact-form').classList.add('hidden');
-        document.getElementById('contact-success').classList.remove('hidden');
-
-      } catch (err) {
-        console.error('Submission error:', err);
-        alert('There was an error. Please call us at (224) 704-7014 or try again.');
-        btn.disabled = false;
-        btn.textContent = 'Submit Estimate Request';
       }
     });
   </script>

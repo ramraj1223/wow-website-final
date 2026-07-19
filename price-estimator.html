@@ -32,9 +32,12 @@
 
     /* === Nav === */
     .top-nav { background: var(--navy); padding: 0 5%; }
-    .top-nav-inner { max-width: 1020px; margin: 0 auto; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-    .back-link { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,.75); transition: color .18s; }
-    .back-link:hover { color: #fff; }
+    .top-nav-inner { max-width: 1020px; margin: 0 auto; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo img { height: 34px; width: auto; object-fit: contain; }
+    .nav-logo-text { line-height: 1.2; }
+    .nav-logo-name { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: .02em; }
+    .nav-logo-sub  { font-size: 10px; font-weight: 400; color: rgba(255,255,255,.6); letter-spacing: .06em; text-transform: uppercase; }
     .nav-cta { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: var(--gold); color: #fff; font-size: 13px; font-weight: 600; border-radius: 7px; transition: background .18s; }
     .nav-cta:hover { background: var(--gold-h); }
 
@@ -54,7 +57,7 @@
 
     /* === Estimator Body === */
     .est-body { max-width: 1020px; margin: 0 auto; padding: 48px 20px 80px; }
-    .est-card { background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(26,43,74,.10); border: 1px solid var(--border); overflow: hidden; }
+    .est-card { }
     .est-card-inner { padding: 28px 28px 0; }
 
     /* Base row */
@@ -91,16 +94,27 @@
     .mat-opt.selected .mat-dot { display: block; }
 
     /* Total bar */
-    .total-bar { background: var(--cream); border-top: 1.5px solid var(--border); padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
-    .total-left { display: flex; align-items: center; gap: 16px; }
+    .total-bar { padding: 28px 28px 22px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; }
+    .total-left { display: flex; align-items: center; gap: 14px; }
     .total-label { font-size: 14px; color: var(--stone); font-weight: 500; }
     .total-badge { background: var(--navy); border-radius: 10px; padding: 11px 24px; }
     .total-amount { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .01em; }
-    .total-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .btn-gold { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--gold); color: #fff; font-size: 14px; font-weight: 600; border-radius: 9px; border: none; cursor: pointer; transition: background .18s; }
-    .btn-gold:hover { background: var(--gold-h); }
-    .btn-reset { padding: 12px 22px; background: #fff; border: 1.5px solid var(--border); color: var(--ink); font-size: 14px; font-weight: 600; border-radius: 9px; cursor: pointer; transition: all .15s; font-family: var(--font-sans); }
-    .btn-reset:hover { border-color: var(--stone); }
+    .btn-reset { padding: 6px 4px; background: transparent; border: none; color: var(--stone); font-size: 12px; font-weight: 600; cursor: pointer; transition: color .15s; font-family: var(--font-sans); text-decoration: underline; }
+    .btn-reset:hover { color: var(--ink); }
+    .get-guide-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; padding: 15px 32px; background: var(--gold); color: #fff; font-size: 15px; font-weight: 700; border: none; border-radius: 9px; cursor: pointer; transition: background .18s; font-family: var(--font-sans); }
+    .get-guide-btn:hover { background: var(--gold-h); }
+
+    /* Guide section */
+    .guide-section { padding: 8px 28px 32px; }
+    .guide-section h3 { font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: var(--charcoal); margin-bottom: 14px; }
+    .guide-section p { font-size: 16px; color: var(--stone); line-height: 1.8; margin-bottom: 14px; }
+    .guide-section .guide-cta { font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 0; }
+    .guide-list { list-style: none; margin: 0 0 16px; padding: 0; }
+    .guide-list li { position: relative; padding-left: 22px; font-size: 14px; color: var(--stone); line-height: 1.7; margin-bottom: 6px; }
+    .guide-list li::before { content: '•'; position: absolute; left: 4px; color: var(--gold); font-weight: 700; }
+    .guide-checklist { list-style: none; margin: 4px 0 16px; padding: 0; }
+    .guide-checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; color: var(--ink); font-weight: 500; line-height: 1.7; margin-bottom: 10px; }
+    .guide-checklist .check { color: var(--gold); font-weight: 700; flex-shrink: 0; }
 
     /* Lead form */
     .lead-form-wrap { margin-top: 28px; background: #fff; border-radius: 16px; border: 1px solid var(--border); padding: 36px; box-shadow: 0 4px 24px rgba(26,43,74,.08); }
@@ -113,18 +127,16 @@
     .wow-label { display: block; font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 5px; letter-spacing: .03em; text-transform: uppercase; }
     .wow-input { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: var(--font-sans); color: var(--charcoal); background: #fff; outline: none; transition: border-color .18s, box-shadow .18s; }
     .wow-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,136,46,.12); }
+    .wow-input.invalid { border-color: #C0392B; }
+    .wow-input.invalid:focus { border-color: #C0392B; box-shadow: 0 0 0 3px rgba(192,57,43,.12); }
+    .form-error { display: none; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #C0392B; background: rgba(192,57,43,.08); border: 1px solid rgba(192,57,43,.25); border-radius: 8px; padding: 10px 14px; margin-top: 4px; }
+    .form-error.show { display: flex; }
     .optional-tag { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; color: #9A8A78; }
     .form-group { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
     .submit-btn-full { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px 28px; background: var(--gold); color: #fff; font-size: 15px; font-weight: 600; border-radius: 9px; border: none; cursor: pointer; transition: background .18s; font-family: var(--font-sans); margin-top: 4px; }
     .submit-btn-full:hover { background: var(--gold-h); }
     .submit-btn-full:disabled { opacity: .6; cursor: not-allowed; }
 
-    /* Success state */
-    .success-state { text-align: center; padding: 36px 0; }
-    .success-icon { width: 58px; height: 58px; background: #EEF2FA; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-    .success-state h3 { font-family: var(--font-serif); font-size: 26px; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; }
-    .success-state p { font-size: 14px; color: var(--stone); line-height: 1.7; max-width: 380px; margin: 0 auto; }
-    .success-estimate { margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; background: var(--cream); border-radius: 10px; padding: 14px 20px; }
     .hidden { display: none !important; }
 
     /* Disclaimer */
@@ -136,8 +148,9 @@
       .addon-grid { grid-template-columns: 1fr; }
       .mat-opt { min-width: unset; width: 100%; }
       .form-grid-2 { grid-template-columns: 1fr; }
-      .total-bar { flex-direction: column; align-items: flex-start; }
+      .total-bar { flex-direction: column; align-items: center; padding: 24px 16px 18px; }
       .est-card-inner { padding: 20px 16px 0; }
+      .guide-section { padding: 8px 16px 24px; }
       .lead-form-wrap { padding: 24px 16px; }
     }
   </style>
@@ -147,11 +160,14 @@
   <!-- NAV -->
   <div class="top-nav">
     <div class="top-nav-inner">
-      <a href="index.html" class="back-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Back to Home
+      <a href="index.html" class="nav-logo">
+        <img src="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png" alt="WOW Home Transformations">
+        <div class="nav-logo-text">
+          <div class="nav-logo-name">WOW Home</div>
+          <div class="nav-logo-sub">Transformations</div>
+        </div>
       </a>
-      <a href="index.html#contact" class="nav-cta">Get Free Estimate</a>
+      <a href="tel:2247047014" class="nav-cta">(224) 704-7014</a>
     </div>
   </div>
 
@@ -159,24 +175,8 @@
   <div class="est-header">
     <div class="est-header-content">
       <div class="eyebrow">Transparent Pricing</div>
-      <h1>Bathroom Remodel Price Estimator</h1>
-      <p>Select your add-ons and material grade to build your custom estimate. Share it with us to get an exact quote.</p>
-      <div class="range-bar">
-        <div class="range-item">
-          <div class="range-label">Basic</div>
-          <div class="range-value">$10,000 – $20,000</div>
-        </div>
-        <div class="range-divider"></div>
-        <div class="range-item">
-          <div class="range-label">Mid Range</div>
-          <div class="range-value gold">$20,000 – $35,000</div>
-        </div>
-        <div class="range-divider"></div>
-        <div class="range-item">
-          <div class="range-label">Luxury</div>
-          <div class="range-value">$35,000+</div>
-        </div>
-      </div>
+      <h1>See Your Bathroom Remodel Price in 60 Seconds</h1>
+      <div style="font-size:12px; font-weight:600; color:rgba(255,255,255,.75); margin-top:14px;">We proudly serve up to 30 miles from downtown Chicago.</div>
     </div>
   </div>
 
@@ -192,11 +192,17 @@
             <div class="base-row-desc">Includes demo, installation, lighting, waterproofing, plumbing, tile, vanity, painting, mirrors, and baseboards</div>
           </div>
           <div class="base-row-right">
-            <span class="base-price">$9,999</span>
+            <span class="base-price">$9,500</span>
             <div class="base-check">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
           </div>
+        </div>
+
+        <!-- Bathroom Size -->
+        <h3 class="section-heading">Bathroom Size (choose one)</h3>
+        <div class="mat-row" id="size-options">
+          <!-- Populated by JS -->
         </div>
 
         <!-- Shower Add-ons -->
@@ -208,6 +214,12 @@
         <!-- Other Add-ons -->
         <h3 class="section-heading">Other Bathroom Add-ons</h3>
         <div class="addon-grid" id="other-addons">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Tile Customizations -->
+        <h3 class="section-heading">Tile Customizations</h3>
+        <div class="addon-grid" id="tile-addons">
           <!-- Populated by JS -->
         </div>
 
@@ -224,34 +236,31 @@
         <div class="total-left">
           <span class="total-label">Estimated Total:</span>
           <div class="total-badge">
-            <span class="total-amount" id="total-display">$9,999</span>
+            <span class="total-amount" id="total-display">$9,500</span>
           </div>
-        </div>
-        <div class="total-actions">
-          <button class="btn-gold" id="request-btn">
-            Request This Estimate
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
           <button class="btn-reset" id="reset-btn">Reset</button>
         </div>
+        <button class="get-guide-btn" onclick="document.getElementById('lead-form-section').scrollIntoView({behavior:'smooth', block:'start'});">
+          Get My <strong style="text-decoration:underline;">FREE</strong> Guide + Checklist
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </button>
+        <p style="width:100%; text-align:center; font-size:12px; color:var(--stone); margin:2px 0 0;">This reflects a fair, transparent price for quality bathroom renovation here in the Chicago suburbs — the kind of investment you can expect from a contractor who won't cut corners you can't see.</p>
+      </div>
+
+      <!-- Free Guide Section -->
+      <div class="guide-section">
+        <h3>What's Really Behind That Number?</h3>
+        <p>Get the full material breakdown — what we buy, what you'll pick out, and what a fair contractor actually looks like. Free, straight to your inbox.</p>
+        <ul class="guide-checklist">
+          <li><span class="check">✓</span> Every material, itemized</li>
+          <li><span class="check">✓</span> What you'll need to buy</li>
+          <li><span class="check">✓</span> What a fair contractor offers</li>
+        </ul>
       </div>
     </div><!-- /est-card -->
 
-    <!-- Lead Capture Form (hidden until Request is clicked) -->
-    <div class="lead-form-wrap hidden" id="lead-form-section">
-
-      <!-- Success state (hidden initially) -->
-      <div class="success-state hidden" id="lead-success">
-        <div class="success-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h3>Estimate Sent!</h3>
-        <p>We'll review your estimate and call you within 24 hours to discuss your project in detail.</p>
-        <div class="success-estimate">
-          <span style="font-size:13px; color:#7A6E65;">Your estimate:</span>
-          <span style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:700; color:#1A2B4A; margin-left:8px;" id="success-total"></span>
-        </div>
-      </div>
+    <!-- Lead Capture Form -->
+    <div class="lead-form-wrap" id="lead-form-section">
 
       <!-- Form -->
       <div id="lead-form-fields">
@@ -259,8 +268,8 @@
           <div class="form-eyebrow-line"></div>
           <span class="form-eyebrow-text">One Last Step</span>
         </div>
-        <h3 class="lead-form-title" style="margin-top:4px;">Send Me This Estimate</h3>
-        <p class="lead-form-sub">Your estimated range is <strong style="color:#1A2B4A;" id="form-total-display"></strong>. Leave your details and we'll follow up with a precise quote.</p>
+        <h3 class="lead-form-title" style="margin-top:4px;">Get Your Free Guide + Checklist</h3>
+        <p class="lead-form-sub">Enter your email below for your free material breakdown and best-practices checklist.</p>
 
         <form id="lead-form" novalidate>
           <div class="form-grid-2" style="margin-top:20px;">
@@ -292,8 +301,11 @@
               <label class="wow-label" for="l-address">Property Address <span class="optional-tag">(Optional — helps us prepare)</span></label>
               <input id="l-address" name="address" type="text" placeholder="123 Main St, Naperville, IL" class="wow-input" autocomplete="street-address">
             </div>
+            <div id="lead-form-error" class="form-error">
+              <span>Please fill the information correctly.</span>
+            </div>
             <button type="submit" class="submit-btn-full" id="lead-submit-btn">
-              Send My Estimate &amp; Request Consultation
+              Send Me My Free Guide + Checklist
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
@@ -303,7 +315,7 @@
 
     <p class="disclaimer">
       Estimates are approximate and may vary based on project scope, site conditions, and material availability.<br>
-      Call us: <a href="tel:2247047014">(224) 704-7014</a> &middot; <a href="index.html#contact">Request Free In-Home Estimate</a>
+      Call us: <a href="tel:2247047014">(224) 704-7014</a>
     </p>
   </div><!-- /est-body -->
 
@@ -321,7 +333,7 @@
     // ============================================================
     // ESTIMATOR DATA — Edit prices here if they change
     // ============================================================
-    const BASE_PRICE = 9999;
+    const BASE_PRICE = 9500;
 
     const SHOWER_ADDONS = [
       { label: 'Custom tiled niche in shower',   price: 600  },
@@ -329,7 +341,8 @@
       { label: 'LED lights in niche',             price: 500  },
       { label: 'Additional LED lights',           price: 500  },
       { label: 'Rain shower head',                price: 600  },
-      { label: 'Zero entry (curbless) shower',    price: 1500 }
+      { label: 'Zero entry (curbless) shower',    price: 1500 },
+      { label: 'Tile Shower Base',                price: 2000 }
     ];
 
     const OTHER_ADDONS = [
@@ -339,10 +352,23 @@
       { label: 'Frameless shower door',   price: 400  }
     ];
 
+    const TILE_ADDONS = [
+      { label: 'Herringbone Pattern',                      price: 1500 },
+      { label: 'Small Penny Tile Flooring',                price: 2000 },
+      { label: 'Large-Format Tile (larger than 48"×48")',  price: 4000 },
+      { label: 'Custom Complex Design',                    price: 3500 }
+    ];
+
     const MATERIALS = [
-      { label: 'Low cost finishes and fixtures',    price: 3800 },
-      { label: 'Medium grade finishes and fixtures', price: 6500 },
-      { label: 'High grade finishes and fixtures',  price: 8000 }
+      { label: 'The Minimum Package',        price: 3800 },
+      { label: 'The Middle Tier',            price: 6500 },
+      { label: 'The Ultra Transformation Tier', price: 12000 }
+    ];
+
+    const BATHROOM_SIZES = [
+      { label: 'Small Bathroom',  desc: 'Usually a 5×7 layout with just a tub, small vanity, and toilet.', price: 0 },
+      { label: 'Medium Bathroom', desc: 'A bit more square footage than a standard 5×7 — room for a larger vanity or extra storage.', price: 1500 },
+      { label: 'Large Bathroom',  desc: 'Typically includes both a shower and a tub, a 72" vanity, and more overall space.', price: 4000 }
     ];
 
     // ============================================================
@@ -366,14 +392,30 @@
       el.innerHTML = MATERIALS.map(m => `
         <div class="mat-opt" data-price="${m.price}" onclick="selectMaterial(this)">
           <div class="mat-radio"><div class="mat-dot"></div></div>
-          <span style="font-size:13px; color:#2A2018; line-height:1.4;">${m.label} (+$${m.price.toLocaleString('en-US')})</span>
+          <span style="font-size:13px; color:#2A2018; line-height:1.4;">${m.label} — +$${m.price.toLocaleString('en-US')}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderSizes() {
+      const el = document.getElementById('size-options');
+      el.innerHTML = BATHROOM_SIZES.map(s => `
+        <div class="mat-opt" data-price="${s.price}" onclick="selectSize(this)">
+          <div class="mat-radio"><div class="mat-dot"></div></div>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#2A2018;">${s.label}${s.price > 0 ? ' — +$' + s.price.toLocaleString('en-US') : ' — Included'}</div>
+            <div style="font-size:12px; color:#9A8A78; margin-top:2px; line-height:1.4;">${s.desc}</div>
+          </div>
         </div>
       `).join('');
     }
 
     renderAddons(SHOWER_ADDONS, 'shower-addons');
     renderAddons(OTHER_ADDONS, 'other-addons');
+    renderAddons(TILE_ADDONS, 'tile-addons');
     renderMaterials();
+    renderSizes();
+    updateTotal();
 
     // ============================================================
     // ESTIMATOR LOGIC
@@ -385,7 +427,14 @@
 
     function selectMaterial(opt) {
       const wasSelected = opt.classList.contains('selected');
-      document.querySelectorAll('.mat-opt').forEach(o => o.classList.remove('selected'));
+      document.querySelectorAll('#material-options .mat-opt').forEach(o => o.classList.remove('selected'));
+      if (!wasSelected) opt.classList.add('selected');
+      updateTotal();
+    }
+
+    function selectSize(opt) {
+      const wasSelected = opt.classList.contains('selected');
+      document.querySelectorAll('#size-options .mat-opt').forEach(o => o.classList.remove('selected'));
       if (!wasSelected) opt.classList.add('selected');
       updateTotal();
     }
@@ -395,8 +444,10 @@
       document.querySelectorAll('.addon-row.checked').forEach(row => {
         total += parseInt(row.dataset.price);
       });
-      const mat = document.querySelector('.mat-opt.selected');
+      const mat = document.querySelector('#material-options .mat-opt.selected');
       if (mat) total += parseInt(mat.dataset.price);
+      const size = document.querySelector('#size-options .mat-opt.selected');
+      if (size) total += parseInt(size.dataset.price);
       return total;
     }
 
@@ -406,27 +457,60 @@
 
     function updateTotal() {
       const total = getTotal();
-      document.getElementById('total-display').textContent    = fmtMoney(total);
-      document.getElementById('form-total-display').textContent = fmtMoney(total);
-      document.getElementById('success-total').textContent    = fmtMoney(total);
+      document.getElementById('total-display').textContent = fmtMoney(total);
     }
-
-    // Show lead form when Request Estimate is clicked
-    document.getElementById('request-btn').addEventListener('click', () => {
-      document.getElementById('lead-form-section').classList.remove('hidden');
-      document.getElementById('form-total-display').textContent = fmtMoney(getTotal());
-      document.getElementById('lead-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
 
     // Reset button
     document.getElementById('reset-btn').addEventListener('click', () => {
       document.querySelectorAll('.addon-row').forEach(r => r.classList.remove('checked'));
       document.querySelectorAll('.mat-opt').forEach(o => o.classList.remove('selected'));
-      document.getElementById('lead-form-section').classList.add('hidden');
-      document.getElementById('lead-success').classList.add('hidden');
-      document.getElementById('lead-form-fields').classList.remove('hidden');
       document.getElementById('lead-form').reset();
       updateTotal();
+    });
+
+    // ============================================================
+    // VALIDATION
+    // ============================================================
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+
+    function digitsOnly(str) {
+      return str.replace(/\D/g, '');
+    }
+
+    function isValidPhone(str) {
+      const d = digitsOnly(str);
+      return d.length === 10 || (d.length === 11 && d[0] === '1');
+    }
+
+    function isValidEmail(str) {
+      return EMAIL_RE.test(str.trim());
+    }
+
+    function setFieldValid(input, valid) {
+      input.classList.toggle('invalid', !valid);
+    }
+
+    function validateLeadForm(form) {
+      const name  = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      const email = form.email.value.trim();
+
+      const nameValid  = name.length > 0;
+      const phoneValid = isValidPhone(phone);
+      const emailValid = isValidEmail(email);
+
+      setFieldValid(form.name, nameValid);
+      setFieldValid(form.phone, phoneValid);
+      setFieldValid(form.email, emailValid);
+
+      return nameValid && phoneValid && emailValid;
+    }
+
+    ['l-name', 'l-phone', 'l-email'].forEach(id => {
+      document.getElementById(id).addEventListener('input', (e) => {
+        e.target.classList.remove('invalid');
+        document.getElementById('lead-form-error').classList.remove('show');
+      });
     });
 
     // ============================================================
@@ -434,33 +518,42 @@
     // ============================================================
     document.getElementById('lead-form').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const form = e.target;
+      const errorBox = document.getElementById('lead-form-error');
+
+      if (!validateLeadForm(form)) {
+        errorBox.classList.add('show');
+        const firstInvalid = form.querySelector('.wow-input.invalid');
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+      errorBox.classList.remove('show');
+
       const btn = document.getElementById('lead-submit-btn');
       btn.disabled = true;
       btn.textContent = 'Sending...';
 
-      const form = e.target;
       try {
+        const total = getTotal();
         const { error } = await db.from('leads').insert([{
           name:           form.name.value.trim(),
           phone:          form.phone.value.trim(),
           email:          form.email.value.trim(),
           project_type:   form.project_type.value || null,
           address:        form.address.value.trim() || null,
-          estimate_total: getTotal(),
+          estimate_total: total,
           source:         'price_estimator'
         }]);
 
         if (error) throw error;
 
-        // Show success
-        document.getElementById('lead-form-fields').classList.add('hidden');
-        document.getElementById('lead-success').classList.remove('hidden');
+        window.location.href = 'thank-you.html?name=' + encodeURIComponent(form.name.value.trim());
 
       } catch (err) {
         console.error('Supabase error:', err);
-        alert('There was an error sending your estimate. Please call us at (224) 704-7014 or try again.');
+        alert('There was an error sending your request. Please call us at (224) 704-7014 or try again.');
         btn.disabled = false;
-        btn.textContent = 'Send My Estimate & Request Consultation';
+        btn.textContent = 'Send Me My Free Guide + Checklist';
       }
     });
   </script>
