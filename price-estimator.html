@@ -535,7 +535,7 @@
 
       try {
         const total = getTotal();
-        const { error } = await db.from('leads').insert([{
+        const leadData = {
           name:           form.name.value.trim(),
           phone:          form.phone.value.trim(),
           email:          form.email.value.trim(),
@@ -543,9 +543,21 @@
           address:        form.address.value.trim() || null,
           estimate_total: total,
           source:         'price_estimator'
-        }]);
+        };
+
+        const { error } = await db.from('leads').insert([leadData]);
 
         if (error) throw error;
+
+        try {
+          await fetch('/.netlify/functions/notify-lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(leadData)
+          });
+        } catch (notifyErr) {
+          console.error('Lead saved, but notification email failed:', notifyErr);
+        }
 
         window.location.href = 'thank-you.html?name=' + encodeURIComponent(form.name.value.trim());
 
