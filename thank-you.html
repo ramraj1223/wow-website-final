@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You | WOW Home Transformations</title>
   <meta name="description" content="Thanks for requesting your free bathroom remodel guide from WOW Home Transformations.">
+  <link rel="icon" type="image/png" href="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,9 +32,12 @@
 
     /* === Nav === */
     .top-nav { background: var(--navy); padding: 0 5%; }
-    .top-nav-inner { max-width: 1020px; margin: 0 auto; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-    .back-link { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,.75); transition: color .18s; }
-    .back-link:hover { color: #fff; }
+    .top-nav-inner { max-width: 1020px; margin: 0 auto; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo img { height: 34px; width: auto; object-fit: contain; }
+    .nav-logo-text { line-height: 1.2; }
+    .nav-logo-name { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: .02em; }
+    .nav-logo-sub  { font-size: 10px; font-weight: 400; color: rgba(255,255,255,.55); letter-spacing: .06em; text-transform: uppercase; }
     .nav-cta { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: var(--gold); color: #fff; font-size: 13px; font-weight: 600; border-radius: 7px; transition: background .18s; }
     .nav-cta:hover { background: var(--gold-h); }
 
@@ -53,7 +57,7 @@
     .ty-section-heading { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--charcoal); margin: 32px 0 16px; text-align: center; }
     .ty-photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: left; }
     .ty-photo-grid img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; display: block; }
-    .ty-followup { font-size: 17px; font-weight: 500; color: var(--ink); line-height: 1.75; max-width: 440px; margin: 40px auto 0; }
+    .ty-followup { font-size: 21px; font-weight: 700; color: var(--charcoal); line-height: 1.6; max-width: 480px; margin: 56px auto 0; }
     .ty-cta-heading { font-size: 26px; margin-top: 18px; }
     .ty-chicago-line { font-size: 13px; font-weight: 600; color: var(--stone); margin: 4px auto 20px; }
 
@@ -72,9 +76,12 @@
   <!-- NAV -->
   <div class="top-nav">
     <div class="top-nav-inner">
-      <a href="index.html" class="back-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Back to Home
+      <a href="index.html" class="nav-logo">
+        <img src="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png" alt="WOW Home Transformations">
+        <div class="nav-logo-text">
+          <div class="nav-logo-name">WOW Home</div>
+          <div class="nav-logo-sub">Transformations</div>
+        </div>
       </a>
       <a href="tel:2247047014" class="nav-cta">(224) 704-7014</a>
     </div>
@@ -128,7 +135,7 @@
         <img src="https://static.wixstatic.com/media/c8469c_4168337e7e3748a4a17797f994866836~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_4168337e7e3748a4a17797f994866836~mv2.jpg" alt="Spa Bathroom Remodel Westmont" loading="lazy">
         <img src="https://static.wixstatic.com/media/c8469c_795d5a0f2045494097e8307b66a79b9c~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_795d5a0f2045494097e8307b66a79b9c~mv2.jpg" alt="Bathroom Upgrade Downers Grove" loading="lazy">
       </div>
-      <p class="ty-followup">We'd love to help transform your bathroom too — book a free call below to get started.</p>
+      <p class="ty-followup">We've helped dozens of homeowners transform their bathrooms, and we'd love to help you too. You'll get a free estimate and a realistic design of what your new bathroom could look like — book a 30-minute call with us below to get started.</p>
 
       <h2 class="ty-section-heading ty-cta-heading">Pick a Time That Works for You</h2>
       <p class="ty-chicago-line">We proudly serve up to 30 miles from downtown Chicago.</p>
