@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Itemized Bathroom Remodel Cost Breakdown | WOW Home Transformations</title>
+  <meta name="description" content="Your custom, itemized labor and materials cost breakdown based on your quiz answers.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/brand.css">
+  <style>
+    .booking-panel { max-width: 680px; margin: 0 auto; background: #fff; border-radius: var(--radius-lg); padding: 8px; box-shadow: 0 4px 24px rgba(26,43,74,.08); border: 1px solid var(--border); }
+  </style>
+
+  <!-- TODO: Meta Pixel — replace YOUR_PIXEL_ID with the real Pixel ID before running traffic.
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', 'YOUR_PIXEL_ID');
+  fbq('track', 'PageView');
+  </script>
+  -->
+</head>
+<body>
+
+  <header class="lander-header">
+    <div class="lander-header-inner">
+      <a href="index.html" class="lander-logo">
+        <img src="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png" alt="WOW Home Transformations">
+        <div class="lander-logo-text">
+          <div class="lander-logo-name">WOW Home</div>
+          <div class="lander-logo-sub">Transformations</div>
+        </div>
+      </a>
+      <a href="tel:2247047014" class="lander-call">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.22 16.92z"/></svg>
+        (224) 704-7014
+      </a>
+    </div>
+  </header>
+
+  <!-- BREAKDOWN -->
+  <section class="lander-section cream" id="breakdown-wrap" style="padding-top:56px;">
+    <div class="lander-section-inner wide">
+      <div style="text-align:center; margin-bottom:8px;">
+        <span class="eyebrow">Your Custom Estimate</span>
+        <h1 class="section-h2" style="margin-top:8px;" id="breakdown-heading">Your Itemized Cost Breakdown</h1>
+      </div>
+      <div id="breakdown-selections" style="text-align:center; font-weight:600; color:var(--navy); margin:8px 0 24px; font-size:14px;"></div>
+
+      <div id="breakdown-valid">
+        <div style="overflow-x:auto;">
+          <table class="breakdown-table" id="breakdown-table">
+            <thead>
+              <tr><th>Category</th><th>Itemized Line Item</th><th>Estimated Cost</th></tr>
+            </thead>
+            <tbody id="breakdown-tbody"></tbody>
+            <tfoot id="breakdown-tfoot"></tfoot>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--stone); max-width:480px; margin:16px auto 24px; line-height:1.6; text-align:center;">Labor is fixed and quoted up front. Materials are purchased separately at retail price with our exact shopping list — zero contractor markup.</p>
+
+        <div style="text-align:center; margin:40px 0 8px;" id="consult-offer">
+          <h2 class="section-h2" style="margin-bottom:6px;">Ready to Lock In a Guaranteed Price?</h2>
+          <p class="section-p" style="max-width:520px; margin:0 auto 24px;">We didn't lowball you to get you in the door — this is a straight, honest estimate based on typical Chicagoland jobs like yours. The only way to turn it into a firm, written number is to have us walk your space in person. Zero cost, zero pressure — just pick a time and let's confirm it.</p>
+          <button type="button" class="btn-gold" id="consult-offer-btn" onclick="showBookingSection()">Yes — Show Me Available Times →</button>
+        </div>
+
+        <div id="consult-booking" class="hidden">
+          <div style="text-align:center; margin:0 0 16px;">
+            <h2 class="section-h2" style="margin-bottom:6px;">Get Your Exact, On-Site Quote</h2>
+            <p class="section-p" style="max-width:520px; margin:0 auto;">Preliminary estimate based on standard Chicagoland conditions. Schedule below to verify site conditions, finalize materials, and get a guaranteed price.</p>
+          </div>
+          <div class="booking-panel">
+            <div id="calendly-embed-container" style="min-width:280px; height:630px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="breakdown-invalid" class="hidden" style="text-align:center; max-width:480px; margin:0 auto;">
+        <p class="section-p">We couldn't find your quiz answers — this link may have expired or been opened directly.</p>
+        <a href="free-design.html" class="btn-gold" style="margin-top:12px;">Retake the 30-Second Quiz →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="badge-row">
+    <div class="badge-row-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Licensed &amp; Insured</div>
+    <div class="badge-row-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>100+ Projects Completed</div>
+    <div class="badge-row-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>5.0 on Google</div>
+    <div class="badge-row-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>1-Year Warranty</div>
+    <div class="badge-row-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Serving Chicagoland (30 miles from downtown Chicago)</div>
+  </div>
+
+  <footer class="lander-footer">
+    <div class="lander-footer-inner">
+      <p>GMRH Construction Services LLC · WOW Home Transformations — Licensed &amp; Insured</p>
+      <p>Serving Chicagoland, IL — 30 miles from downtown Chicago · <a href="tel:2247047014">(224) 704-7014</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================
+    // §7.3 COST BREAKDOWN CONFIG — owner-editable. Kept identical to
+    // the copy in free-design.html so both pages price consistently.
+    // ============================================================
+    const BREAKDOWN_CONFIG = {
+      laborBase: 10000,
+      sizeAdj:   { small_half: 0,    standard_full: 1500, large_primary: 4000 },
+      typeAdj:   { hall_guest: 0,    powder_room: 0,       tub_to_shower: 1000, primary_suite: 2500 },
+      scopeAdj:  { refresh: 0,       layout_change: 3000,  full_reroute: 6000 },
+      laborSplit: [
+        { label: 'Demolition, Framing Prep & Waste Haul-Away',                    share: 0.15   },
+        { label: 'Plumbing Rough-in & Reroute (Shower/Valve/Drain)',              share: 0.2667 },
+        { label: 'Waterproofing System (Schluter/Kerdi) & Custom Tile Install',   share: 0.375  },
+        { label: 'Electrical, Lighting, Ventilation & Drywall Finish',            share: 0.2083 }
+      ],
+      materials: {
+        classic: [ // Modern Refresh
+          { label: 'Tile & Setting Materials',  low: 800,  high: 1200 },
+          { label: 'Fixtures & Faucets',        low: 500,  high: 900  },
+          { label: 'Vanity & Countertop',       low: 700,  high: 1200 },
+          { label: 'Glass & Misc Hardware',     low: 400,  high: 700  }
+        ],
+        custom_high_end: [ // Signature Custom Build
+          { label: 'Tile & Setting Materials',  low: 1200, high: 2000 },
+          { label: 'Fixtures & Faucets',        low: 1000, high: 1800 },
+          { label: 'Vanity & Countertop',       low: 1500, high: 2800 },
+          { label: 'Glass & Misc Hardware',     low: 800,  high: 1400 }
+        ],
+        luxury_spa: [ // Resort-Style Retreat
+          { label: 'Tile & Setting Materials',  low: 2200, high: 3500 },
+          { label: 'Fixtures & Faucets',        low: 2000, high: 3500 },
+          { label: 'Vanity & Countertop',       low: 2500, high: 4500 },
+          { label: 'Glass & Misc Hardware',     low: 1800, high: 3500 }
+        ]
+      }
+    };
+
+    const BATHROOM_LABELS = { hall_guest: 'Hall/Guest Bath', primary_suite: 'Primary Suite', powder_room: 'Powder Room', tub_to_shower: 'Tub-to-Shower Conversion' };
+    const FINISH_LABELS   = { classic: 'Modern Refresh', custom_high_end: 'Signature Custom Build', luxury_spa: 'Resort-Style Retreat' };
+    const SCOPE_LABELS    = { refresh: 'Refresh (Same Layout)', layout_change: 'Layout Change', full_reroute: 'Full Reroute' };
+    const SIZE_LABELS     = { small_half: 'Small/Half Bath (~35 sq ft)', standard_full: 'Standard Full (~60 sq ft)', large_primary: 'Large Primary (~100+ sq ft)' };
+
+    function round100(n) { return Math.round(n / 100) * 100; }
+    function formatMoney(n) { return '$' + n.toLocaleString('en-US'); }
+    function formatRange(low, high) { return `${formatMoney(low)} – ${formatMoney(high)}`; }
+
+    function calculateBreakdown(answers) {
+      const { bathroom, finish, scope, room_size } = answers;
+
+      const laborTotal = BREAKDOWN_CONFIG.laborBase
+        + BREAKDOWN_CONFIG.sizeAdj[room_size]
+        + BREAKDOWN_CONFIG.typeAdj[bathroom]
+        + BREAKDOWN_CONFIG.scopeAdj[scope];
+
+      const laborItems = [];
+      let assigned = 0;
+      BREAKDOWN_CONFIG.laborSplit.forEach((item, idx) => {
+        const isLast = idx === BREAKDOWN_CONFIG.laborSplit.length - 1;
+        const cost = isLast ? (laborTotal - assigned) : round100(laborTotal * item.share);
+        if (!isLast) assigned += cost;
+        laborItems.push({ category: 'Labor (Fixed)', label: item.label, cost });
+      });
+
+      const materialItems = BREAKDOWN_CONFIG.materials[finish].map(item => ({
+        category: 'Materials (Retail)', label: item.label, low: item.low, high: item.high
+      }));
+      const materialsLow  = materialItems.reduce((sum, i) => sum + i.low, 0);
+      const materialsHigh = materialItems.reduce((sum, i) => sum + i.high, 0);
+
+      return { laborItems, materialItems, laborTotal, materialsLow, materialsHigh };
+    }
+
+    function renderBreakdown(answers, breakdown) {
+      const selText = [
+        BATHROOM_LABELS[answers.bathroom],
+        FINISH_LABELS[answers.finish],
+        SCOPE_LABELS[answers.scope],
+        SIZE_LABELS[answers.room_size]
+      ].join(' + ');
+      document.getElementById('breakdown-selections').textContent = 'Selections Made: ' + selText;
+
+      const tbody = document.getElementById('breakdown-tbody');
+      tbody.innerHTML = '';
+      breakdown.laborItems.forEach(item => {
+        tbody.insertAdjacentHTML('beforeend', `<tr><td data-label="Category">${item.category}</td><td data-label="Item">${item.label}</td><td data-label="Estimated Cost">${formatMoney(item.cost)}</td></tr>`);
+      });
+      breakdown.materialItems.forEach(item => {
+        tbody.insertAdjacentHTML('beforeend', `<tr><td data-label="Category">${item.category}</td><td data-label="Item">${item.label}</td><td data-label="Estimated Cost">${formatRange(item.low, item.high)}</td></tr>`);
+      });
+
+      document.getElementById('breakdown-tfoot').innerHTML =
+        `<tr class="breakdown-total-row"><td colspan="2">ESTIMATED TOTAL</td><td data-label="Total">Labor: ${formatMoney(breakdown.laborTotal)}<br>Materials: ${formatRange(breakdown.materialsLow, breakdown.materialsHigh)}</td></tr>`;
+    }
+
+    // ============================================================
+    // READ ANSWERS FROM URL & RENDER
+    // ============================================================
+    const params = new URLSearchParams(location.search);
+    const answers = {
+      bathroom:  params.get('bathroom'),
+      finish:    params.get('finish'),
+      scope:     params.get('scope'),
+      room_size: params.get('size')
+    };
+    const leadName  = params.get('name');
+    const leadEmail = params.get('email');
+
+    const isValid = BATHROOM_LABELS[answers.bathroom] && FINISH_LABELS[answers.finish]
+      && SCOPE_LABELS[answers.scope] && SIZE_LABELS[answers.room_size];
+
+    if (isValid) {
+      if (leadName) {
+        document.getElementById('breakdown-heading').textContent = leadName + ', Here’s Your Itemized Cost Breakdown';
+      }
+
+      const breakdown = calculateBreakdown(answers);
+      renderBreakdown(answers, breakdown);
+
+      // TODO: fire once Meta Pixel is configured above.
+      if (typeof fbq === 'function') { fbq('track', 'ViewContent', { content_name: 'cost_breakdown' }); }
+    } else {
+      document.getElementById('breakdown-valid').classList.add('hidden');
+      document.getElementById('breakdown-invalid').classList.remove('hidden');
+    }
+
+    // ============================================================
+    // INLINE BOOKING — reveal the Calendly widget on this same page
+    // once the visitor says yes to the offer above.
+    // ============================================================
+    function showBookingSection() {
+      document.getElementById('consult-offer').classList.add('hidden');
+      const bookingSection = document.getElementById('consult-booking');
+      bookingSection.classList.remove('hidden');
+      bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      initCalendlyWidget();
+    }
+
+    function initCalendlyWidget() {
+      const container = document.getElementById('calendly-embed-container');
+      const prefill = {};
+      if (leadName)  prefill.name  = leadName;
+      if (leadEmail) prefill.email = leadEmail;
+
+      const start = () => {
+        window.Calendly.initInlineWidget({
+          url: 'https://calendly.com/wowhometransformations-info/30min',
+          parentElement: container,
+          prefill: prefill
+        });
+      };
+
+      if (window.Calendly) {
+        start();
+      } else {
+        const poll = setInterval(() => {
+          if (window.Calendly) { clearInterval(poll); start(); }
+        }, 150);
+      }
+    }
+
+    // Calendly posts a postMessage event named 'calendly.event_scheduled'
+    // when a time is booked in the embed — send them to the thank-you page.
+    window.addEventListener('message', (e) => {
+      if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
+
+      // TODO: fire once Meta Pixel is configured above.
+      if (typeof fbq === 'function') { fbq('track', 'Schedule'); }
+
+      window.location.href = 'thank-you.html?name=' + encodeURIComponent(leadName || '');
+    });
+  </script>
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</body>
+</html>

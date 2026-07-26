@@ -97,6 +97,7 @@
     /* Total bar */
     .total-bar { padding: 28px 28px 22px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; }
     .total-left { display: flex; align-items: center; gap: 14px; }
+    .price-anchor-note { width: 100%; max-width: 480px; text-align: center; font-size: 12px; color: var(--stone); background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; line-height: 1.6; }
     .total-label { font-size: 14px; color: var(--stone); font-weight: 500; }
     .total-badge { background: var(--navy); border-radius: 10px; padding: 11px 24px; }
     .total-amount { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .01em; }
@@ -191,8 +192,8 @@
         <!-- Base row -->
         <div class="base-row">
           <div>
-            <div class="base-row-title">Base 50 sqft bathroom full remodel</div>
-            <div class="base-row-desc">Includes demo, installation, lighting, waterproofing, plumbing, tile, vanity, painting, mirrors, and baseboards</div>
+            <div class="base-row-title">Base 50 sq ft bathroom — full remodel labor</div>
+            <div class="base-row-desc">Includes all labor: demo, waterproofing, plumbing, electrical, tile setting, vanity and fixture installation, painting, mirrors, and baseboards. Fixtures and building materials are purchased separately — you get our exact shopping list, no contractor markup.</div>
           </div>
           <div class="base-row-right">
             <span class="base-price">$10,000</span>
@@ -243,6 +244,7 @@
           </div>
           <button class="btn-reset" id="reset-btn">Reset</button>
         </div>
+        <p class="price-anchor-note">For perspective: primary suite expansions or complete layout changes in the Chicagoland area typically range from $30,000 to $50,000+.</p>
         <div style="width:100%; text-align:center;">
           <p style="font-size:14px; color:var(--ink); font-weight:500; margin-bottom:12px;">If this budget works for you, give us a call — we'd love to walk you through the next steps.</p>
           <a href="tel:2247047014" class="call-cta-btn">
@@ -266,6 +268,9 @@
             Get My <strong style="text-decoration:underline;">FREE</strong> Guide + Checklist
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
           </button>
+          <p style="margin-top:14px;">
+            <a href="free-design.html#render" style="font-size:13px; font-weight:600; color:var(--brown); text-decoration:underline;">Want to see it before you build it? Get a Free 3D Design Render →</a>
+          </p>
         </div>
       </div>
     </div><!-- /est-card -->
@@ -552,24 +557,19 @@
           project_type:   form.project_type.value || null,
           address:        form.address.value.trim() || null,
           estimate_total: total,
-          source:         'price_estimator'
+          source:         'price_estimator',
+          lead_source:    'price_estimator',
+          flow:           'guide_download'
         };
 
         const { error } = await db.from('leads').insert([leadData]);
 
         if (error) throw error;
 
-        try {
-          await fetch('/.netlify/functions/notify-lead', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(leadData)
-          });
-        } catch (notifyErr) {
-          console.error('Lead saved, but notification email failed:', notifyErr);
-        }
-
-        window.location.href = 'thank-you.html?name=' + encodeURIComponent(form.name.value.trim());
+        window.location.href = 'qualify-booking.html'
+          + '?name=' + encodeURIComponent(form.name.value.trim())
+          + '&phone=' + encodeURIComponent(form.phone.value.trim())
+          + '&email=' + encodeURIComponent(form.email.value.trim());
 
       } catch (err) {
         console.error('Supabase error:', err);

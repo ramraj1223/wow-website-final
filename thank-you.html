@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You | WOW Home Transformations</title>
-  <meta name="description" content="Thanks for requesting your free bathroom remodel guide from WOW Home Transformations.">
+  <meta name="description" content="Thank you for booking your free in-home bathroom design consultation with WOW Home Transformations.">
   <link rel="icon" type="image/png" href="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
 
     .success-icon { width: 58px; height: 58px; background: #EEF2FA; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
     .ty-card h1 { font-family: var(--font-serif); font-size: 30px; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; }
-    .ty-card > p { font-size: 14px; color: var(--stone); line-height: 1.7; max-width: 420px; margin: 0 auto; }
+    .ty-card > p { font-size: 14px; color: var(--stone); line-height: 1.7; max-width: 480px; margin: 0 auto; }
 
     .confirm-video-block { margin: 24px 0; text-align: left; }
     .ty-video-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brown); margin-bottom: 8px; }
@@ -55,11 +55,25 @@
     .video-fallback { padding: 60px 20px; background: var(--cream); border-radius: 12px; text-align: center; color: var(--stone); font-size: 14px; }
 
     .ty-section-heading { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--charcoal); margin: 32px 0 16px; text-align: center; }
-    .ty-photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: left; }
-    .ty-photo-grid img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; display: block; }
-    .ty-followup { font-size: 21px; font-weight: 700; color: var(--charcoal); line-height: 1.6; max-width: 480px; margin: 56px auto 0; }
-    .ty-cta-heading { font-size: 26px; margin-top: 18px; }
-    .ty-chicago-line { font-size: 13px; font-weight: 600; color: var(--stone); margin: 4px auto 20px; }
+
+    /* === Before / After comparison sliders === */
+    .ba-gallery { display: flex; flex-direction: column; gap: 22px; margin: 4px 0 8px; }
+    .ba-slider { position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; user-select: none; touch-action: none; box-shadow: 0 4px 20px rgba(26,43,74,.08); border: 1px solid var(--border); cursor: ew-resize; }
+    .ba-slider img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .ba-img-after { z-index: 1; }
+    .ba-img-before { z-index: 2; clip-path: inset(0 50% 0 0); }
+    .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.15); z-index: 3; transform: translateX(-1px); pointer-events: none; }
+    .ba-handle { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.3); transform: translate(-50%,-50%); z-index: 4; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .ba-label { position: absolute; top: 12px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(13,24,48,.55); padding: 5px 10px; border-radius: 6px; z-index: 3; pointer-events: none; }
+    .ba-label-before { left: 12px; }
+    .ba-label-after { right: 12px; }
+    .ba-range-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .bonus-guide-box { margin-top: 32px; padding: 24px 22px; background: var(--cream); border: 1px solid rgba(200,136,46,.3); border-radius: 12px; text-align: center; }
+    .bonus-guide-title { font-size: 15px; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; letter-spacing: .01em; }
+    .bonus-guide-box p { margin-bottom: 16px; }
+    .btn-gold { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; background: var(--gold); color: #fff; font-size: 15px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; transition: background .18s; }
+    .btn-gold:hover { background: var(--gold-h); }
 
     .disclaimer { font-size: 12px; color: #9A8A78; text-align: center; margin-top: 24px; line-height: 1.6; }
     .disclaimer a { color: var(--brown); font-weight: 600; }
@@ -67,7 +81,6 @@
 
     @media (max-width: 680px) {
       .ty-card { padding: 32px 20px; }
-      .ty-photo-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -103,7 +116,7 @@
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <h1 id="ty-heading">Thank You!</h1>
-      <p>Thank you for trusting us with your information — we'll never sell your data. Your free guide and checklist are on their way to your inbox.</p>
+      <p id="ty-subtext">Thank you for making the choice to meet with us in person at your house for the free in-home consultation. We're excited to transform your bathroom like many others.</p>
 
       <!-- Thank-you & testimonial videos — currently disabled until real footage is ready.
            To re-enable: remove this comment wrapper (the markup and showVideoFallback() logic below are unchanged).
@@ -126,28 +139,52 @@
 
       -->
 
-      <h2 class="ty-section-heading">Some of the Work We've Done</h2>
-      <div class="ty-photo-grid">
-        <img src="https://static.wixstatic.com/media/c8469c_3ea82b4253564f248325d02e424fcbe4~mv2.jpg/v1/fill/w_900,h_700,al_c,q_85,enc_avif,quality_auto/c8469c_3ea82b4253564f248325d02e424fcbe4~mv2.jpg" alt="Luxury Bathroom Remodel Chicago" loading="lazy">
-        <img src="https://static.wixstatic.com/media/c8469c_2da733a1d8c44e90b7feda044c4d0d07~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_2da733a1d8c44e90b7feda044c4d0d07~mv2.jpg" alt="Bathroom Renovation Illinois" loading="lazy">
-        <img src="https://static.wixstatic.com/media/c8469c_15cc276bd6bf4175b1ce75f99daf40a3~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_15cc276bd6bf4175b1ce75f99daf40a3~mv2.jpg" alt="Modern Bathroom Design Naperville" loading="lazy">
-        <img src="https://static.wixstatic.com/media/c8469c_008ee74da5c24edb99aae6efa174e18e~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_008ee74da5c24edb99aae6efa174e18e~mv2.jpg" alt="Bathroom Transformation Chicagoland" loading="lazy">
-        <img src="https://static.wixstatic.com/media/c8469c_4168337e7e3748a4a17797f994866836~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_4168337e7e3748a4a17797f994866836~mv2.jpg" alt="Spa Bathroom Remodel Westmont" loading="lazy">
-        <img src="https://static.wixstatic.com/media/c8469c_795d5a0f2045494097e8307b66a79b9c~mv2.jpg/v1/fill/w_600,h_500,al_c,q_85,enc_avif,quality_auto/c8469c_795d5a0f2045494097e8307b66a79b9c~mv2.jpg" alt="Bathroom Upgrade Downers Grove" loading="lazy">
+      <h2 class="ty-section-heading">Please See Some of the Work We've Done Below</h2>
+
+      <!-- BEFORE / AFTER SLIDERS — real project photos -->
+      <div class="ba-gallery" id="ba-gallery">
+        <div class="ba-slider">
+          <img class="ba-img-after" src="assets/before-after/downers-guest-after.jpg" alt="After — Downers Grove guest bath renovation">
+          <img class="ba-img-before" src="assets/before-after/downers-guest-before.jpg" alt="Before — Downers Grove guest bath renovation">
+          <div class="ba-divider"></div>
+          <div class="ba-handle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg></div>
+          <span class="ba-label ba-label-before">Before</span>
+          <span class="ba-label ba-label-after">After</span>
+          <input type="range" class="ba-range-sr" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+        </div>
+        <div class="ba-slider">
+          <img class="ba-img-after" src="assets/before-after/downers-master-after.jpg" alt="After — Downers Grove primary bath renovation">
+          <img class="ba-img-before" src="assets/before-after/downers-master-before.jpg" alt="Before — Downers Grove primary bath renovation">
+          <div class="ba-divider"></div>
+          <div class="ba-handle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg></div>
+          <span class="ba-label ba-label-before">Before</span>
+          <span class="ba-label ba-label-after">After</span>
+          <input type="range" class="ba-range-sr" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+        </div>
+        <div class="ba-slider">
+          <img class="ba-img-after" src="assets/before-after/palatine-after.jpg" alt="After — Palatine bath renovation">
+          <img class="ba-img-before" src="assets/before-after/palatine-before.jpg" alt="Before — Palatine bath renovation">
+          <div class="ba-divider"></div>
+          <div class="ba-handle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/></svg></div>
+          <span class="ba-label ba-label-before">Before</span>
+          <span class="ba-label ba-label-after">After</span>
+          <input type="range" class="ba-range-sr" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+        </div>
       </div>
-      <p class="ty-followup">We've helped dozens of homeowners transform their bathrooms, and we'd love to help you too. You'll get a free estimate and a realistic design of what your new bathroom could look like — book a 30-minute call with us below to get started.</p>
 
-      <h2 class="ty-section-heading ty-cta-heading">Pick a Time That Works for You</h2>
-      <p class="ty-chicago-line">We proudly serve up to 30 miles from downtown Chicago.</p>
+      <div class="bonus-guide-box">
+        <div class="bonus-guide-title">🎁 Your Free Bonus Guide Is Ready</div>
+        <p>Get our Contractor &amp; Material Guide — every material itemized, what to buy vs. what we handle, and how to spot a contractor cutting corners you can't see.</p>
+        <a href="downloads/best-practices-guide.pdf" class="btn-gold" download>📥 Download Free Guide Now</a>
+      </div>
 
-      <div class="calendly-inline-widget" data-url="https://calendly.com/wowhometransformations-info/30min" style="min-width:320px;height:630px;"></div>
-
-      <p class="disclaimer">Prefer to just call? <a href="tel:2247047014">(224) 704-7014</a></p>
+      <p class="disclaimer">Questions before your consult? Call <a href="tel:2247047014">(224) 704-7014</a></p>
     </div>
   </div>
 
   <script>
-    // Populate from the query string set by price-estimator.html on a successful submit:
+    // Populate from the query string (set by google-consult.html after a Calendly
+    // booking, or by index.html / price-estimator.html on a successful submit):
     // thank-you.html?name=John
     const params = new URLSearchParams(location.search);
     const name = params.get('name');
@@ -155,7 +192,45 @@
     if (name) {
       document.getElementById('ty-heading').textContent = 'Thank You, ' + name + '!';
     }
+
+    // ============================================================
+    // BEFORE/AFTER SLIDERS — drag (mouse/touch) or use the hidden range
+    // input (keyboard/a11y) to reveal more of the before or after photo.
+    // ============================================================
+    document.querySelectorAll('.ba-slider').forEach((slider) => {
+      const before  = slider.querySelector('.ba-img-before');
+      const divider = slider.querySelector('.ba-divider');
+      const handle  = slider.querySelector('.ba-handle');
+      const range   = slider.querySelector('.ba-range-sr');
+
+      function setPct(pct) {
+        pct = Math.min(100, Math.max(0, pct));
+        before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+        divider.style.left = pct + '%';
+        handle.style.left = pct + '%';
+        range.value = pct;
+      }
+
+      function pctFromClientX(clientX) {
+        const rect = slider.getBoundingClientRect();
+        return ((clientX - rect.left) / rect.width) * 100;
+      }
+
+      let dragging = false;
+      slider.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        setPct(pctFromClientX(e.clientX));
+      });
+      window.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        setPct(pctFromClientX(e.clientX));
+      });
+      window.addEventListener('pointerup', () => { dragging = false; });
+
+      range.addEventListener('input', () => setPct(Number(range.value)));
+
+      setPct(50);
+    });
   </script>
-  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
