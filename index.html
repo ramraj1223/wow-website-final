@@ -193,21 +193,6 @@
     .why-item p  { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.7; }
 
     /* ===================================================
-       REVIEWS
-       =================================================== */
-    .reviews-section { background: var(--cream); padding: 88px 5%; }
-    .reviews-inner { max-width: 1280px; margin: 0 auto; }
-    .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .rev-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px 26px; transition: transform .18s, box-shadow .18s; }
-    .rev-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(26,43,74,.09); }
-    .stars { display: flex; gap: 2px; margin-bottom: 12px; }
-    .rev-text { font-size: 14px; color: var(--ink); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
-    .rev-author { display: flex; align-items: center; gap: 12px; }
-    .rev-avatar { width: 38px; height: 38px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
-    .rev-name { font-size: 14px; font-weight: 700; color: var(--charcoal); }
-    .rev-role { font-size: 12px; color: var(--stone); }
-
-    /* ===================================================
        FINAL CTA BAND
        =================================================== */
     .cta-band { background: linear-gradient(110deg, var(--navy-mid) 0%, var(--navy) 60%, var(--navy-deep) 100%); padding: 88px 5%; text-align: center; position: relative; overflow: hidden; }
@@ -248,7 +233,6 @@
     }
     @media (max-width: 700px) {
       .gal-grid { grid-template-columns: 1fr 1fr; }
-      .reviews-grid { grid-template-columns: 1fr; }
       .trust-bar-inner { flex-wrap: wrap; justify-content: center; gap: 16px; height: auto; padding: 14px 5%; }
       .why-item { flex: 0 0 calc(50% - 12px); min-width: 160px; }
       .footer-inner { flex-direction: column; gap: 36px; }
@@ -288,7 +272,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.22 16.92z"/></svg>
           (224) 704-7014
         </a>
-        <a href="price-estimator.html" class="nav-estimator">Bathroom Price Estimator</a>
+        <a href="free-design.html#quiz" class="nav-estimator">Bathroom Price Estimator</a>
       </div>
       <a href="tel:2247047014" class="nav-phone-mobile">(224) 704-7014</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -304,7 +288,7 @@
         <a href="#home">Contact</a>
       </div>
       <div class="mobile-menu-btns">
-        <a href="price-estimator.html" class="btn-outline-light" style="justify-content:center;">Bathroom Price Estimator</a>
+        <a href="free-design.html#quiz" class="btn-outline-light" style="justify-content:center;">Bathroom Price Estimator</a>
         <a href="tel:2247047014" class="btn-outline-light" style="justify-content:center;">(224) 704-7014</a>
       </div>
     </div>
@@ -330,7 +314,7 @@
         <!-- EDIT: Sub-headline -->
         <p class="hero-p">Transform your kitchen or bathroom with expert craftsmanship, transparent pricing, and a stress-free remodeling experience.</p>
         <div class="hero-btns">
-          <a href="price-estimator.html" class="btn-gold" style="font-size:16px; padding:16px 34px;">Bathroom Price Estimator</a>
+          <a href="free-design.html#quiz" class="btn-gold" style="font-size:16px; padding:16px 34px;">Bathroom Price Estimator</a>
         </div>
         <div class="hero-trust">
           <div class="trust-badge">
@@ -356,19 +340,10 @@
             <span>Labor from $10,000 — Transparent Pricing</span>
           </div>
           <div class="trust-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>Standard Baths Done in 5 Days — Guaranteed</span>
-          </div>
-          <div class="trust-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Free AI After-Renovation Photos</span>
-          </div>
-          <div class="trust-badge">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
             <span>1-Year Warranty</span>
           </div>
         </div>
-        <p style="font-size:11px; color:rgba(255,255,255,.45); margin-top:10px; max-width:420px; line-height:1.6;">Standard bathrooms (tub or shower surround, no layout changes) are done in 5 days. Custom and complex bathrooms typically take 10–14 days — your exact completion date is written into your contract, and if we run past it, we pay you $100 for every day we're late.</p>
       </div>
 
       <!-- Right: hero lead form -->
@@ -452,8 +427,8 @@
         <!-- EDIT: Replace with your kitchen photo -->
         <img src="https://static.wixstatic.com/media/c8469c_8c55b70b1f1945e48bdd098a8e23b2b1~mv2.jpg/v1/fill/w_900,h_700,al_c,q_85,enc_avif,quality_auto/c8469c_8c55b70b1f1945e48bdd098a8e23b2b1~mv2.jpg" alt="Beautiful Kitchen Remodel Chicago" loading="lazy">
         <div class="service-img-badge">
-          <div class="service-img-badge-num">100+</div>
-          <div class="service-img-badge-label">Kitchens Completed</div>
+          <div class="service-img-badge-num">Luxury</div>
+          <div class="service-img-badge-label">Premium Kitchens</div>
         </div>
       </div>
       <div class="service-text">
@@ -463,12 +438,12 @@
         <h2 class="service-h2">Beautiful Kitchens Designed Around Your Lifestyle</h2>
         <p class="service-p">From custom cabinetry and quartz countertops to open-concept layouts and designer lighting — we create kitchens that are as functional as they are stunning.</p>
         <div class="chips">
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Cabinets</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Countertops</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Backsplashes</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Flooring</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lighting</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Open Concept</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Fixed-Price Quotes</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Licensed &amp; Insured</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>On-Time Guarantee</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Premium Materials</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom Design</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1-Year Warranty</div>
         </div>
         <a href="tel:2247047014" class="btn-gold">Call for Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
@@ -494,14 +469,14 @@
         <h2 class="service-h2">Luxury Bathrooms Built for Comfort</h2>
         <p class="service-p">Turn your bathroom into a personal retreat. From spa-inspired walk-in showers to elegant vanities and premium tile work — every detail crafted to perfection.</p>
         <div class="chips">
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Walk-In Showers</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Tile Work</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Vanities</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lighting</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Flooring</div>
-          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Spa Upgrades</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Fixed-Price Quotes</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Licensed &amp; Insured</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>On-Time Guarantee</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Spa-Inspired Design</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Premium Materials</div>
+          <div class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8882E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1-Year Warranty</div>
         </div>
-        <a href="price-estimator.html" class="btn-gold">Get Bathroom Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="free-design.html#quiz" class="btn-gold">Get Bathroom Estimate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
   </section>
@@ -524,7 +499,7 @@
         <!-- Populated by JavaScript -->
       </div>
       <div class="gallery-cta">
-        <a href="price-estimator.html" class="btn-gold" style="font-size:15px; padding:15px 36px;">Start Your Project Today</a>
+        <a href="google-consult.html#qualify-form" class="btn-gold" style="font-size:15px; padding:15px 36px;">Start Your Project Today</a>
       </div>
     </div>
   </section>
@@ -556,58 +531,6 @@
     </div>
   </section>
 
-  <!-- ===================================================
-       REVIEWS SECTION
-       EDIT: Replace reviews with real customer reviews
-       =================================================== -->
-  <section class="reviews-section">
-    <div class="reviews-inner">
-      <div class="section-head">
-        <div class="stars" style="justify-content:center; margin-bottom:12px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <span style="font-size:13px; font-weight:600; color:#7A6E65; margin-left:8px;">5.0 on Google</span>
-        </div>
-        <span class="eyebrow">Client Reviews</span>
-        <h2 class="section-h2">What Our Clients Say</h2>
-      </div>
-      <div class="reviews-grid">
-        <div class="rev-card">
-          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <p class="rev-text">"WOW completely transformed our kitchen. From the first consultation to the final walkthrough, they were professional, clean, and finished exactly on time."</p>
-          <div class="rev-author"><div class="rev-avatar">SM</div><div><div class="rev-name">Sarah M.</div><div class="rev-role">Kitchen Remodel · Naperville</div></div></div>
-        </div>
-        <div class="rev-card">
-          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <p class="rev-text">"Stunning bathroom transformation. They listened to exactly what we wanted and delivered beyond our expectations. Highly recommend WOW!"</p>
-          <div class="rev-author"><div class="rev-avatar">JL</div><div><div class="rev-name">Jennifer L.</div><div class="rev-role">Bathroom Remodel · Westmont</div></div></div>
-        </div>
-        <div class="rev-card">
-          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <p class="rev-text">"Best investment we made in our home. The kitchen is now the heart of our home. They stayed perfectly on schedule. Five stars, no question."</p>
-          <div class="rev-author"><div class="rev-avatar">MS</div><div><div class="rev-name">Maria S.</div><div class="rev-role">Kitchen Remodel · Chicago</div></div></div>
-        </div>
-        <div class="rev-card">
-          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <p class="rev-text">"They turned our outdated bathroom into a modern spa. The whole process was smooth, clean, and stress-free."</p>
-          <div class="rev-author"><div class="rev-avatar">DT</div><div><div class="rev-name">David T.</div><div class="rev-role">Bathroom Remodel · Downers Grove</div></div></div>
-        </div>
-        <div class="rev-card">
-          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <p class="rev-text">"Our kitchen is completely unrecognizable — in the best way. Communication was excellent the entire time. Truly a WOW experience."</p>
-          <div class="rev-author"><div class="rev-avatar">RK</div><div><div class="rev-name">Robert K.</div><div class="rev-role">Kitchen Remodel · Joliet</div></div></div>
-        </div>
-        <div class="rev-card">
-          <div class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="#C8882E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <p class="rev-text">"Our master bath is now a sanctuary. The craftsmanship is second to none. WOW exceeded every expectation."</p>
-          <div class="rev-author"><div class="rev-avatar">AP</div><div><div class="rev-name">Amanda P.</div><div class="rev-role">Bathroom Remodel · Bolingbrook</div></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ===================================================
        CTA BAND
@@ -618,7 +541,7 @@
       <h2>Ready to Transform Your<br>Kitchen or Bathroom?</h2>
       <p>Get your free consultation and preliminary estimate today. No obligation.</p>
       <div class="cta-btns">
-        <a href="price-estimator.html" class="btn-gold" style="font-size:16px; padding:18px 40px;">Get Free Estimate</a>
+        <a href="free-design.html#quiz" class="btn-gold" style="font-size:16px; padding:18px 40px;">Get Free Estimate</a>
         <!-- EDIT: Update phone number here -->
         <a href="tel:2247047014" class="btn-outline-dark" style="font-size:16px; padding:18px 40px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.22 16.92z"/></svg>
@@ -657,7 +580,7 @@
         <h4>Services</h4>
         <a href="#kitchen">Kitchen Remodeling</a>
         <a href="#bathroom">Bathroom Remodeling</a>
-        <a href="price-estimator.html">Bathroom Price Estimator</a>
+        <a href="free-design.html#quiz">Bathroom Price Estimator</a>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
