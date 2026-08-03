@@ -112,22 +112,8 @@
     .total-amount { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .01em; }
     .btn-reset { padding: 6px 4px; background: transparent; border: none; color: var(--stone); font-size: 12px; font-weight: 600; cursor: pointer; transition: color .15s; font-family: var(--font-sans); text-decoration: underline; }
     .btn-reset:hover { color: var(--ink); }
-    .get-guide-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; padding: 15px 32px; background: var(--gold); color: #fff; font-size: 15px; font-weight: 700; border: none; border-radius: 9px; cursor: pointer; transition: background .18s; font-family: var(--font-sans); }
-    .get-guide-btn:hover { background: var(--gold-h); }
     .call-cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 32px; background: var(--gold); color: #fff; font-size: 16px; font-weight: 700; border: none; border-radius: 9px; transition: background .18s; }
     .call-cta-btn:hover { background: var(--gold-h); }
-
-    /* Guide section */
-    .guide-section { padding: 8px 28px 32px; }
-    .guide-section h3 { font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: var(--charcoal); margin-bottom: 14px; }
-    .guide-section p { font-size: 16px; color: var(--stone); line-height: 1.8; margin-bottom: 14px; }
-    .guide-section .guide-cta { font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 0; }
-    .guide-list { list-style: none; margin: 0 0 16px; padding: 0; }
-    .guide-list li { position: relative; padding-left: 22px; font-size: 14px; color: var(--stone); line-height: 1.7; margin-bottom: 6px; }
-    .guide-list li::before { content: '•'; position: absolute; left: 4px; color: var(--gold); font-weight: 700; }
-    .guide-checklist { list-style: none; margin: 4px 0 16px; padding: 0; }
-    .guide-checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; color: var(--ink); font-weight: 500; line-height: 1.7; margin-bottom: 10px; }
-    .guide-checklist .check { color: var(--gold); font-weight: 700; flex-shrink: 0; }
 
     /* Lead form */
     .lead-form-wrap { margin-top: 28px; background: #fff; border-radius: 16px; border: 1px solid var(--border); padding: 36px; box-shadow: 0 4px 24px rgba(26,43,74,.08); }
@@ -163,7 +149,6 @@
       .form-grid-2 { grid-template-columns: 1fr; }
       .total-bar { flex-direction: column; align-items: center; padding: 24px 16px 18px; }
       .est-card-inner { padding: 20px 16px 0; }
-      .guide-section { padding: 8px 16px 24px; }
       .lead-form-wrap { padding: 24px 16px; }
     }
   </style>
@@ -263,25 +248,6 @@
         </div>
       </div>
 
-      <!-- Free Guide Section -->
-      <div class="guide-section">
-        <h3>Want to Know What's Behind That Number?</h3>
-        <p>Get the full material breakdown — what we buy, what you'll pick out, and what a fair contractor actually looks like. Free, straight to your inbox.</p>
-        <ul class="guide-checklist">
-          <li><span class="check">✓</span> Every material, itemized</li>
-          <li><span class="check">✓</span> What you'll need to buy</li>
-          <li><span class="check">✓</span> What a fair contractor offers</li>
-        </ul>
-        <div style="text-align:center;">
-          <button class="get-guide-btn" onclick="document.getElementById('lead-form-section').scrollIntoView({behavior:'smooth', block:'start'});">
-            Get My <strong style="text-decoration:underline;">FREE</strong> Guide + Checklist
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-          </button>
-          <p style="margin-top:14px;">
-            <a href="free-design.html#render" style="font-size:13px; font-weight:600; color:var(--brown); text-decoration:underline;">Want to see it before you build it? Get a Free 3D Design Render →</a>
-          </p>
-        </div>
-      </div>
     </div><!-- /est-card -->
 
     <!-- Lead Capture Form -->
@@ -293,8 +259,8 @@
           <div class="form-eyebrow-line"></div>
           <span class="form-eyebrow-text">One Last Step</span>
         </div>
-        <h3 class="lead-form-title" style="margin-top:4px;">Get Your Free Guide + Checklist</h3>
-        <p class="lead-form-sub">Enter your email below for your free material breakdown and best-practices checklist.</p>
+        <h3 class="lead-form-title" style="margin-top:4px;">Get Your Free In-Home Design Consult</h3>
+        <p class="lead-form-sub">Enter your details below and we'll reach out to schedule your free in-home design consult and estimate.</p>
 
         <form id="lead-form" novalidate>
           <div class="form-grid-2" style="margin-top:20px;">
@@ -329,11 +295,22 @@
               <span>Please fill the information correctly.</span>
             </div>
             <button type="submit" class="submit-btn-full" id="lead-submit-btn">
-              Send Me My Free Guide + Checklist
+              Get My Free In-Home Design Consult
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
         </form>
+      </div>
+
+      <!-- Calendly booking — revealed inline after a successful submit -->
+      <div id="booking-section" class="hidden">
+        <div class="form-eyebrow">
+          <div class="form-eyebrow-line"></div>
+          <span class="form-eyebrow-text">You're All Set</span>
+        </div>
+        <h3 class="lead-form-title" style="margin-top:4px;">Pick a Time for Your In-Home Design Consult</h3>
+        <p class="lead-form-sub">Choose a time below and we'll confirm your free in-home design consult and estimate.</p>
+        <div id="calendly-embed-container" style="min-width:280px; height:630px; margin-top:20px;"></div>
       </div>
     </div><!-- /lead-form-wrap -->
 
@@ -537,6 +514,10 @@
       });
     });
 
+    // Populated on submit — reused by the inline booking section below.
+    let leadName  = null;
+    let leadEmail = null;
+
     // ============================================================
     // FORM SUBMISSION → SUPABASE
     // ============================================================
@@ -568,25 +549,72 @@
           estimate_total: total,
           source:         'price_estimator',
           lead_source:    'price_estimator',
-          flow:           'guide_download'
+          flow:           'price_estimator'
         };
 
         const { error } = await db.from('leads').insert([leadData]);
 
         if (error) throw error;
 
-        window.location.href = 'qualify-booking.html'
-          + '?name=' + encodeURIComponent(form.name.value.trim())
-          + '&phone=' + encodeURIComponent(form.phone.value.trim())
-          + '&email=' + encodeURIComponent(form.email.value.trim());
+        leadName  = form.name.value.trim();
+        leadEmail = form.email.value.trim();
+        showBookingSection();
 
       } catch (err) {
         console.error('Supabase error:', err);
         alert('There was an error sending your request. Please call us at (224) 704-7014 or try again.');
         btn.disabled = false;
-        btn.textContent = 'Send Me My Free Guide + Checklist';
+        btn.textContent = 'Get My Free In-Home Design Consult';
       }
     });
+
+    // ============================================================
+    // INLINE BOOKING — reveal the Calendly widget in place of the
+    // form once the lead is saved, instead of navigating away.
+    // ============================================================
+    function showBookingSection() {
+      document.getElementById('lead-form-fields').classList.add('hidden');
+      const bookingSection = document.getElementById('booking-section');
+      bookingSection.classList.remove('hidden');
+      bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      initCalendlyWidget();
+    }
+
+    function initCalendlyWidget() {
+      const container = document.getElementById('calendly-embed-container');
+      const prefill = {};
+      if (leadName)  prefill.name  = leadName;
+      if (leadEmail) prefill.email = leadEmail;
+
+      const start = () => {
+        window.Calendly.initInlineWidget({
+          url: 'https://calendly.com/wowhometransformations-info/30min',
+          parentElement: container,
+          prefill: prefill
+        });
+      };
+
+      if (window.Calendly) {
+        start();
+      } else {
+        const poll = setInterval(() => {
+          if (window.Calendly) { clearInterval(poll); start(); }
+        }, 150);
+      }
+    }
+
+    // Calendly posts a postMessage event named 'calendly.event_scheduled'
+    // when a time is booked in the embed — send them to the thank-you page.
+    window.addEventListener('message', (e) => {
+      if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'consult_booked');
+      }
+
+      window.location.href = 'thank-you.html?name=' + encodeURIComponent(leadName || '');
+    });
   </script>
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
