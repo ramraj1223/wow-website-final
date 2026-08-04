@@ -53,7 +53,7 @@
   <section class="lander-section cream">
     <div class="lander-section-inner">
       <div class="booking-panel">
-        <div class="calendly-inline-widget" id="calendly-embed" data-url="https://calendly.com/wowhometransformations-info/30min" style="min-width:280px; height:630px;"></div>
+        <div id="calendly-embed-container" style="min-width:280px; height:630px;"></div>
       </div>
 
     </div>
@@ -74,21 +74,39 @@
     const leadName  = params.get('name')  || '';
     const leadEmail = params.get('email') || '';
 
-    (function prefillCalendly() {
-      const embed = document.getElementById('calendly-embed');
-      const baseUrl = embed.dataset.url;
-      const qs = new URLSearchParams();
-      if (leadName)  qs.set('name', leadName);
-      if (leadEmail) qs.set('email', leadEmail);
-      // Calendly natively supports name/email prefill via query params; phone isn't a
-      // standard prefill field on the default booking form.
-      embed.dataset.url = qs.toString() ? `${baseUrl}?${qs.toString()}` : baseUrl;
-    })();
-
     // TODO: fire once gtag is configured above.
     if (typeof gtag === 'function') {
       gtag('event', 'qualified_lead');
     }
+
+    // ============================================================
+    // INLINE BOOKING — init the Calendly widget via its JS API (rather
+    // than the auto-init data-url markup) so it reliably fires the
+    // postMessage events the booking-confirmation listener below relies on.
+    // ============================================================
+    function initCalendlyWidget() {
+      const container = document.getElementById('calendly-embed-container');
+      const prefill = {};
+      if (leadName)  prefill.name  = leadName;
+      if (leadEmail) prefill.email = leadEmail;
+
+      const start = () => {
+        window.Calendly.initInlineWidget({
+          url: 'https://calendly.com/wowhometransformations-info/30min',
+          parentElement: container,
+          prefill: prefill
+        });
+      };
+
+      if (window.Calendly) {
+        start();
+      } else {
+        const poll = setInterval(() => {
+          if (window.Calendly) { clearInterval(poll); start(); }
+        }, 150);
+      }
+    }
+    initCalendlyWidget();
 
     // ============================================================
     // BOOKING CONFIRMATION — Calendly posts a postMessage event named
