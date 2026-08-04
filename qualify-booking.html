@@ -10,7 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/brand.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16865482935"></script>
@@ -24,15 +23,6 @@
 
   <style>
     .booking-panel { max-width: 680px; margin: 0 auto; background: #fff; border-radius: var(--radius-lg); padding: 8px; box-shadow: 0 4px 24px rgba(26,43,74,.08); border: 1px solid var(--border); }
-    .render-line { text-align: center; font-size: 14px; font-weight: 600; color: var(--brown); background: rgba(200,136,46,.08); border: 1px solid rgba(200,136,46,.25); border-radius: 10px; padding: 14px 18px; max-width: 680px; margin: 0 auto 20px; line-height: 1.6; }
-    .confirmed-panel { display: none; max-width: 680px; margin: 24px auto 0; background: #fff; border-radius: var(--radius-lg); padding: 28px 26px; box-shadow: 0 4px 24px rgba(26,43,74,.08); border: 1px solid var(--border); text-align: center; }
-    .confirmed-panel.show { display: block; }
-    .confirmed-panel h3 { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--charcoal); margin-bottom: 10px; }
-    .confirmed-panel p { font-size: 14px; color: var(--stone); line-height: 1.7; margin-bottom: 16px; }
-    .render-details-note { font-size: 12px; color: var(--stone); margin-top: 8px; line-height: 1.6; }
-    .bonus-guide-box { margin-top: 28px; padding: 24px 22px; background: var(--cream); border: 1px solid rgba(200,136,46,.3); border-radius: var(--radius-md); text-align: center; }
-    .bonus-guide-title { font-size: 15px; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; letter-spacing: .01em; }
-    .bonus-guide-box p { margin-bottom: 16px; }
   </style>
 </head>
 <body>
@@ -66,33 +56,6 @@
         <div class="calendly-inline-widget" id="calendly-embed" data-url="https://calendly.com/wowhometransformations-info/30min" style="min-width:280px; height:630px;"></div>
       </div>
 
-      <div class="confirmed-panel" id="confirmed-panel">
-        <h3>You're All Set — One More Thing</h3>
-        <p>Want us to prepare your 3D render before we arrive? Upload 2–3 photos of your current space below.</p>
-        <label class="photo-upload-label" for="render-photos" style="justify-content:center; max-width:360px; margin:0 auto 14px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A0622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span class="photo-upload-text" id="render-photo-label">Add up to 3 photos of your bathroom</span>
-          <input id="render-photos" type="file" accept="image/*" multiple style="display:none;" onchange="updateRenderPhotoLabel(this)">
-        </label>
-
-        <div class="field-group" style="text-align:left; margin-top:18px;">
-          <label class="wow-label" for="render-details">What Are You Looking to Get Done?</label>
-          <textarea id="render-details" class="wow-input" rows="5" style="resize:vertical;" placeholder="e.g. Keep the same layout, but swap in a floating double-vanity with two black faucets and two LED mirrors. New toilet. Black matte floor tile with gray veining, white subway tile on the shower walls, and a niche. Rain shower head plus a handheld, with a sliding glass door."></textarea>
-          <p class="render-details-note">Haven't decided yet? No problem — leave this blank and we'll get a feel for your style and bring suggestions to the consult.</p>
-        </div>
-
-        <div style="margin-top:18px;">
-          <button type="button" class="btn-gold" id="render-photos-btn" onclick="submitRenderPhotos()">Submit</button>
-        </div>
-        <p id="render-photos-status" style="font-size:12px; color:var(--stone); margin-top:10px;"></p>
-
-        <div class="bonus-guide-box">
-          <div class="bonus-guide-title">🎁 Your Free Bonus Guide Is Ready</div>
-          <p>We just emailed your Contractor &amp; Material Guide to your inbox — or download it instantly below:</p>
-          <a href="downloads/best-practices-guide.pdf" class="btn-gold" download>📥 Download PDF Guide Now</a>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -104,18 +67,11 @@
   </footer>
 
   <script>
-    const SUPABASE_URL      = 'https://pydiopoywewqgyxsqvom.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5ZGlvcG95d2V3cWd5eHNxdm9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4NzEwOTQsImV4cCI6MjA5ODQ0NzA5NH0.-pM5CHkV7TV2R65P0xLfbSf_p8wdnGLKqXn1q8HwxTk';
-    const PHOTO_BUCKET      = 'project-photos';
-    const { createClient } = supabase;
-    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
     // ============================================================
-    // URL PARAM PREFILL — read name/phone/email from google-consult.html's redirect
+    // URL PARAM PREFILL — read name/email from index.html's hero-form redirect
     // ============================================================
     const params = new URLSearchParams(location.search);
     const leadName  = params.get('name')  || '';
-    const leadPhone = params.get('phone') || '';
     const leadEmail = params.get('email') || '';
 
     (function prefillCalendly() {
@@ -136,82 +92,19 @@
 
     // ============================================================
     // BOOKING CONFIRMATION — Calendly posts a postMessage event named
-    // 'calendly.event_scheduled' when a time is booked in the embed.
+    // 'calendly.event_scheduled' when a time is booked in the embed —
+    // send them straight to the thank-you page.
     // ============================================================
     window.addEventListener('message', (e) => {
       if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
-
-      document.getElementById('confirmed-panel').classList.add('show');
-      document.getElementById('confirmed-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
       // TODO: fire once gtag is configured above.
       if (typeof gtag === 'function') {
         gtag('event', 'consult_booked');
       }
+
+      window.location.href = 'thank-you.html?name=' + encodeURIComponent(leadName || '');
     });
-
-    function updateRenderPhotoLabel(input) {
-      if (input.files.length > 3) {
-        const dt = new DataTransfer();
-        Array.from(input.files).slice(0, 3).forEach(f => dt.items.add(f));
-        input.files = dt.files;
-      }
-      const count = input.files.length;
-      document.getElementById('render-photo-label').textContent =
-        count > 0 ? `${count} of 3 photos selected` : 'Add up to 3 photos of your bathroom';
-    }
-
-    async function uploadPhotos(files) {
-      const urls = [];
-      const timestamp = Date.now();
-      for (const file of files) {
-        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        const path = `leads/${timestamp}/${safeName}`;
-        const { error } = await db.storage.from(PHOTO_BUCKET).upload(path, file);
-        if (!error) {
-          const { data } = db.storage.from(PHOTO_BUCKET).getPublicUrl(path);
-          urls.push(data.publicUrl);
-        }
-      }
-      return urls;
-    }
-
-    async function submitRenderPhotos() {
-      const input = document.getElementById('render-photos');
-      const details = document.getElementById('render-details').value.trim();
-      const status = document.getElementById('render-photos-status');
-      const btn = document.getElementById('render-photos-btn');
-
-      if (input.files.length === 0 && !details) {
-        status.textContent = 'Add a photo or a few details first, or just reply to your confirmation email instead.';
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Uploading...';
-
-      try {
-        const photoUrls = input.files.length > 0 ? await uploadPhotos(Array.from(input.files)) : [];
-        const { error } = await db.from('leads').insert([{
-          name:       leadName || null,
-          email:      leadEmail || null,
-          phone:      leadPhone || null,
-          photo_urls: photoUrls.length > 0 ? photoUrls : null,
-          message:    details || null,
-          source:     'qualify_booking_render_photos',
-          flow:       'render_photos'
-        }]);
-        if (error) throw error;
-
-        status.textContent = "Got it — we'll have your render ready at your appointment.";
-        btn.textContent = 'Sent ✓';
-      } catch (err) {
-        console.error('Render photo upload failed:', err);
-        status.textContent = 'Something went wrong uploading — no worries, just reply to your confirmation email with the photos instead.';
-        btn.disabled = false;
-        btn.textContent = 'Send Photos Now';
-      }
-    }
   </script>
   <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
