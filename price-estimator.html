@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Price Estimator | WOW Home Transformations</title>
   <meta name="description" content="Bathroom remodeling price estimator for Chicago area homeowners.">
+  <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -151,7 +152,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
         Back to Home
       </a>
-      <a href="index.html#contact" class="nav-cta">Get Free Estimate</a>
+      <a href="index.html#contact" class="nav-cta">Free Estimate</a>
     </div>
   </div>
 
@@ -159,8 +160,8 @@
   <div class="est-header">
     <div class="est-header-content">
       <div class="eyebrow">Transparent Pricing</div>
-      <h1>Bathroom Remodel Price Estimator</h1>
-      <p>Select your add-ons and material grade to build your custom estimate. Share it with us to get an exact quote.</p>
+      <h1>Bathroom Price Estimator</h1>
+      <p>Pick add-ons and materials to build your estimate.</p>
       <div class="range-bar">
         <div class="range-item">
           <div class="range-label">Basic</div>
@@ -188,8 +189,8 @@
         <!-- Base row -->
         <div class="base-row">
           <div>
-            <div class="base-row-title">Base 50 sqft bathroom full remodel</div>
-            <div class="base-row-desc">Includes demo, installation, lighting, waterproofing, plumbing, tile, vanity, painting, mirrors, and baseboards</div>
+            <div class="base-row-title">Base 50 sqft Full Remodel</div>
+            <div class="base-row-desc">Demo, plumbing, tile, vanity, lighting, waterproofing, paint, mirrors, baseboards</div>
           </div>
           <div class="base-row-right">
             <span class="base-price">$9,999</span>
@@ -206,13 +207,13 @@
         </div>
 
         <!-- Other Add-ons -->
-        <h3 class="section-heading">Other Bathroom Add-ons</h3>
+        <h3 class="section-heading">Other Add-ons</h3>
         <div class="addon-grid" id="other-addons">
           <!-- Populated by JS -->
         </div>
 
         <!-- Material Grade -->
-        <h3 class="section-heading">Material &amp; Fixture Grade (choose one)</h3>
+        <h3 class="section-heading">Material Grade (pick one)</h3>
         <div class="mat-row" id="material-options">
           <!-- Populated by JS -->
         </div>
@@ -222,14 +223,14 @@
       <!-- Total Bar -->
       <div class="total-bar">
         <div class="total-left">
-          <span class="total-label">Estimated Total:</span>
+          <span class="total-label">Total:</span>
           <div class="total-badge">
             <span class="total-amount" id="total-display">$9,999</span>
           </div>
         </div>
         <div class="total-actions">
           <button class="btn-gold" id="request-btn">
-            Request This Estimate
+            Request Estimate
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
           <button class="btn-reset" id="reset-btn">Reset</button>
@@ -246,7 +247,7 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A2B4A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <h3>Estimate Sent!</h3>
-        <p>We'll review your estimate and call you within 24 hours to discuss your project in detail.</p>
+        <p>We'll call within 24 hours.</p>
         <div class="success-estimate">
           <span style="font-size:13px; color:#7A6E65;">Your estimate:</span>
           <span style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:700; color:#1A2B4A; margin-left:8px;" id="success-total"></span>
@@ -259,13 +260,13 @@
           <div class="form-eyebrow-line"></div>
           <span class="form-eyebrow-text">One Last Step</span>
         </div>
-        <h3 class="lead-form-title" style="margin-top:4px;">Send Me This Estimate</h3>
-        <p class="lead-form-sub">Your estimated range is <strong style="color:#1A2B4A;" id="form-total-display"></strong>. Leave your details and we'll follow up with a precise quote.</p>
+        <h3 class="lead-form-title" style="margin-top:4px;">Send My Estimate</h3>
+        <p class="lead-form-sub">Estimate: <strong style="color:#1A2B4A;" id="form-total-display"></strong>. We'll follow up with an exact quote.</p>
 
         <form id="lead-form" novalidate>
           <div class="form-grid-2" style="margin-top:20px;">
             <div>
-              <label class="wow-label" for="l-name">Full Name *</label>
+              <label class="wow-label" for="l-name">Name *</label>
               <input id="l-name" name="name" type="text" required placeholder="John Smith" class="wow-input">
             </div>
             <div>
@@ -275,13 +276,13 @@
           </div>
           <div class="form-group">
             <div>
-              <label class="wow-label" for="l-email">Email Address *</label>
+              <label class="wow-label" for="l-email">Email *</label>
               <input id="l-email" name="email" type="email" required placeholder="you@example.com" class="wow-input">
             </div>
             <div>
               <label class="wow-label" for="l-project">Project Type</label>
               <select id="l-project" name="project_type" class="wow-input" style="appearance:auto;">
-                <option value="">Select project type...</option>
+                <option value="">Select...</option>
                 <option value="Full Bathroom Remodel">Full Bathroom Remodel</option>
                 <option value="Tub to Walk-in Shower">Tub to Walk-in Shower Conversion</option>
                 <option value="New Bathroom Addition">New Bathroom Addition</option>
@@ -289,11 +290,11 @@
               </select>
             </div>
             <div>
-              <label class="wow-label" for="l-address">Property Address <span class="optional-tag">(Optional — helps us prepare)</span></label>
+              <label class="wow-label" for="l-address">Address <span class="optional-tag">(Optional)</span></label>
               <input id="l-address" name="address" type="text" placeholder="123 Main St, Naperville, IL" class="wow-input" autocomplete="street-address">
             </div>
             <button type="submit" class="submit-btn-full" id="lead-submit-btn">
-              Send My Estimate &amp; Request Consultation
+              Send My Estimate
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
@@ -302,8 +303,8 @@
     </div><!-- /lead-form-wrap -->
 
     <p class="disclaimer">
-      Estimates are approximate and may vary based on project scope, site conditions, and material availability.<br>
-      Call us: <a href="tel:2247047014">(224) 704-7014</a> &middot; <a href="index.html#contact">Request Free In-Home Estimate</a>
+      Estimates may vary by scope, site conditions, and materials.<br>
+      Call <a href="tel:2247047014">(224) 704-7014</a> &middot; <a href="index.html#contact">Free In-Home Estimate</a>
     </p>
   </div><!-- /est-body -->
 
@@ -324,25 +325,25 @@
     const BASE_PRICE = 9999;
 
     const SHOWER_ADDONS = [
-      { label: 'Custom tiled niche in shower',   price: 600  },
-      { label: 'Tiled floating shower bench',     price: 800  },
-      { label: 'LED lights in niche',             price: 500  },
-      { label: 'Additional LED lights',           price: 500  },
-      { label: 'Rain shower head',                price: 600  },
-      { label: 'Zero entry (curbless) shower',    price: 1500 }
+      { label: 'Tiled niche',       price: 600  },
+      { label: 'Floating bench',    price: 800  },
+      { label: 'LED niche light',   price: 500  },
+      { label: 'Extra LED lights',  price: 500  },
+      { label: 'Rain shower head',  price: 600  },
+      { label: 'Curbless shower',   price: 1500 }
     ];
 
     const OTHER_ADDONS = [
-      { label: 'LED mirror over vanity',   price: 300  },
-      { label: 'Additional GFCI outlet',  price: 350  },
-      { label: 'Heated flooring',         price: 2200 },
-      { label: 'Frameless shower door',   price: 400  }
+      { label: 'LED mirror',          price: 300  },
+      { label: 'GFCI outlet',         price: 350  },
+      { label: 'Heated flooring',     price: 2200 },
+      { label: 'Frameless door',      price: 400  }
     ];
 
     const MATERIALS = [
-      { label: 'Low cost finishes and fixtures',    price: 3800 },
-      { label: 'Medium grade finishes and fixtures', price: 6500 },
-      { label: 'High grade finishes and fixtures',  price: 8000 }
+      { label: 'Basic finishes',    price: 3800 },
+      { label: 'Mid-grade finishes', price: 6500 },
+      { label: 'High-end finishes',  price: 8000 }
     ];
 
     // ============================================================
@@ -430,6 +431,35 @@
     });
 
     // ============================================================
+    // EMAIL NOTIFICATION
+    // ============================================================
+    async function sendEstimateEmailNotification(data) {
+      try {
+        const body = new URLSearchParams({
+          name:           data.name || '',
+          phone:          data.phone || '',
+          email:          data.email || '',
+          address:        data.address || '',
+          project_type:   data.project_type || '',
+          estimate_total: data.estimate_total != null ? `$${data.estimate_total.toLocaleString('en-US')}` : '',
+          source:         data.source || '',
+          _subject:       'New Free Estimate Request',
+          _captcha:       'false'
+        });
+
+        await fetch('https://formsubmit.co/info@wowhometransformations.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: body.toString()
+        });
+      } catch (err) {
+        console.warn('Email notification failed:', err);
+      }
+    }
+
+    // ============================================================
     // FORM SUBMISSION → SUPABASE
     // ============================================================
     document.getElementById('lead-form').addEventListener('submit', async (e) => {
@@ -452,6 +482,16 @@
 
         if (error) throw error;
 
+        await sendEstimateEmailNotification({
+          name:          form.name.value.trim(),
+          phone:         form.phone.value.trim(),
+          email:         form.email.value.trim(),
+          address:       form.address.value.trim() || '',
+          project_type:  form.project_type.value || '',
+          estimate_total: getTotal(),
+          source:        'price_estimator'
+        });
+
         // Show success
         document.getElementById('lead-form-fields').classList.add('hidden');
         document.getElementById('lead-success').classList.remove('hidden');
@@ -460,7 +500,7 @@
         console.error('Supabase error:', err);
         alert('There was an error sending your estimate. Please call us at (224) 704-7014 or try again.');
         btn.disabled = false;
-        btn.textContent = 'Send My Estimate & Request Consultation';
+        btn.textContent = 'Send My Estimate';
       }
     });
   </script>
