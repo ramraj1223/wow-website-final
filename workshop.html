@@ -73,8 +73,8 @@
       --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font); background: #fff; color: var(--charcoal); -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body { font-family: var(--font); background: #fff; color: var(--charcoal); -webkit-font-smoothing: antialiased; overflow-x: hidden; max-width: 100%; }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
     button { border: none; background: none; font-family: inherit; cursor: pointer; }
@@ -139,6 +139,10 @@
     /* SECTION HEAD (shared) */
     .section-head { text-align: center; margin-bottom: 52px; }
     .section-head h2 { font-size: clamp(28px,3.4vw,44px); font-weight: 800; color: var(--navy); line-height: 1.12; max-width: 640px; margin: 0 auto; }
+    .portfolio-heading { white-space: nowrap; max-width: none; font-size: clamp(18px,3.4vw,40px); }
+    @media (max-width: 480px) {
+      .portfolio-heading { white-space: normal; font-size: 22px; max-width: 320px; margin: 0 auto; }
+    }
 
     /* BENEFITS GRID */
     .benefits { padding: 88px 5%; background: var(--cream); }
@@ -167,7 +171,9 @@
     /* TEXT REVIEWS MARQUEE */
     .ws-marquee-viewport { overflow: hidden; }
     .ws-marquee-track { display: flex; align-items: center; gap: 24px; width: max-content; animation: ws-scroll 95s linear infinite; padding: 4px 0; }
-    .ws-marquee-viewport:hover .ws-marquee-track { animation-play-state: paused; }
+    @media (hover: hover) and (pointer: fine) {
+      .ws-marquee-viewport:hover .ws-marquee-track { animation-play-state: paused; }
+    }
     @keyframes ws-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .ws-rev-card { flex: 0 0 520px; align-self: center; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 28px rgba(26,43,74,.14); }
     .ws-rev-card img { width: 100%; height: auto; display: block; }
@@ -237,6 +243,8 @@
       .quote-card, .hero-form-card { padding: 28px 20px; }
       .portfolio-nav { width: 38px; height: 38px; }
       .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .btn { padding: 16px 26px; font-size: 13px; letter-spacing: .02em; }
+      .cta-row { margin-top: 32px; }
     }
   </style>
 </head>
@@ -378,7 +386,7 @@
        =================================================== -->
   <section class="portfolio">
     <div class="section-head">
-      <h2 style="white-space:nowrap; max-width:none; font-size:clamp(18px,3.4vw,40px);">See Our Recent Bathroom Transformations</h2>
+      <h2 class="portfolio-heading">See Our Recent Bathroom Transformations</h2>
     </div>
     <!-- EDIT: Add more photos by adding { src, caption } objects to the
          PORTFOLIO_ITEMS array near the bottom of this file. -->
