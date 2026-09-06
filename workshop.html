@@ -98,8 +98,15 @@
     .nav-logo img { height: 52px; width: auto; }
     .nav-logo-name { font-size: 19px; font-weight: 800; color: var(--navy); line-height: 1.2; }
     .nav-logo-sub { font-size: 12px; font-weight: 500; color: var(--stone); letter-spacing: .05em; text-transform: uppercase; }
-    .nav-phone { font-size: 27px; font-weight: 800; color: var(--navy); display: none; letter-spacing: -.01em; }
-    @media (min-width: 601px) { .nav-phone { display: block; } }
+    .nav-phone { font-size: 27px; font-weight: 800; color: var(--navy); letter-spacing: -.01em; white-space: nowrap; }
+    @media (max-width: 600px) {
+      .nav-inner { padding: 14px 5%; }
+      .nav-logo { gap: 8px; }
+      .nav-logo img { height: 32px; }
+      .nav-logo-name { font-size: 14px; }
+      .nav-logo-sub { font-size: 9px; }
+      .nav-phone { font-size: 16px; }
+    }
 
     /* HERO */
     .hero { position: relative; padding: 72px 5% 84px; background: var(--cream); overflow: hidden; }
@@ -245,10 +252,7 @@
           <div class="nav-logo-sub">Transformations</div>
         </div>
       </a>
-      <div style="display:flex; align-items:center; gap:20px;">
-        <a href="tel:2247047014" class="nav-phone">224-704-7014</a>
-        <a href="#get-quote" class="btn btn-sm">Book Free In-Person Estimate</a>
-      </div>
+      <a href="tel:2247047014" class="nav-phone">224-704-7014</a>
     </div>
   </nav>
 
