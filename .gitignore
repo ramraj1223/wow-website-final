@@ -1,8 +1,3 @@
-# Video files are too large for a normal git push (GitHub hard-caps
-# individual files at 100MB). Host video separately (YouTube/Supabase
-# storage) and reference it by URL instead of committing it here.
-videos/
-
 # OS junk
 .DS_Store
 Thumbs.db
