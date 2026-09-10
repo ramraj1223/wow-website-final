@@ -192,15 +192,15 @@
     .proof-quote { font-size: 14px; color: var(--stone); line-height: 1.6; margin-top: 4px; }
     .proof .cta-row { padding: 0 5%; }
 
-    /* TEXT REVIEWS MARQUEE */
-    .ws-marquee-viewport { overflow: hidden; }
-    .ws-marquee-track { display: flex; align-items: center; gap: 24px; width: max-content; animation: ws-scroll 95s linear infinite; padding: 4px 0; }
-    @media (hover: hover) and (pointer: fine) {
-      .ws-marquee-viewport:hover .ws-marquee-track { animation-play-state: paused; }
-    }
-    @keyframes ws-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .ws-rev-card { flex: 0 0 520px; align-self: center; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 28px rgba(26,43,74,.14); }
+    /* TEXT REVIEWS GRID */
+    .ws-reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: center; gap: 24px; max-width: 900px; margin: 0 auto; }
+    .ws-rev-card { border-radius: 16px; overflow: hidden; box-shadow: 0 10px 28px rgba(26,43,74,.14); background: #fff; }
     .ws-rev-card img { width: 100%; height: auto; display: block; }
+    .ws-rev-card:nth-child(5):last-child { grid-column: 1 / -1; max-width: calc(50% - 12px); margin: 0 auto; }
+    @media (max-width: 640px) {
+      .ws-reviews-grid { grid-template-columns: 1fr; max-width: 420px; }
+      .ws-rev-card:nth-child(5):last-child { grid-column: auto; max-width: none; margin: 0; }
+    }
 
     /* PORTFOLIO — full grid of photos, paged with Prev/Next */
     .portfolio { padding: 88px 5%; background: var(--cream); }
@@ -395,9 +395,7 @@
       </video>
     </div>
 
-    <div class="ws-marquee-viewport">
-      <div class="ws-marquee-track" id="ws-marquee-track"><!-- Populated by JavaScript --></div>
-    </div>
+    <div class="ws-reviews-grid" id="ws-reviews-grid"><!-- Populated by JavaScript --></div>
 
     <div class="cta-row">
       <a href="#get-quote" class="btn">Book Free In-Person Estimate</a>
@@ -481,7 +479,7 @@
     const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // ============================================================
-    // OUR TESTIMONIALS — real Google review screenshots (marquee)
+    // OUR TESTIMONIALS — real Google review screenshots (fixed grid)
     // EDIT: Add more screenshots to images/Reviews/ and list them here.
     // ============================================================
     const REVIEW_IMAGES = [
@@ -493,13 +491,12 @@
     ];
 
     function renderReviews() {
-      const track = document.getElementById('ws-marquee-track');
-      const cardHtml = REVIEW_IMAGES.map(r => `
+      const grid = document.getElementById('ws-reviews-grid');
+      grid.innerHTML = REVIEW_IMAGES.map(r => `
         <div class="ws-rev-card">
           <img src="${encodeURI(r.src)}" alt="${r.alt}" loading="lazy">
         </div>
       `).join('');
-      track.innerHTML = cardHtml + cardHtml;
     }
     renderReviews();
 
