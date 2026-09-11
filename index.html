@@ -193,12 +193,12 @@
     .proof .cta-row { padding: 0 5%; }
 
     /* TEXT REVIEWS GRID */
-    .ws-reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: center; gap: 24px; max-width: 900px; margin: 0 auto; }
+    .ws-reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: center; gap: 32px; max-width: 1160px; margin: 0 auto; }
     .ws-rev-card { border-radius: 16px; overflow: hidden; box-shadow: 0 10px 28px rgba(26,43,74,.14); background: #fff; }
     .ws-rev-card img { width: 100%; height: auto; display: block; }
-    .ws-rev-card:nth-child(5):last-child { grid-column: 1 / -1; max-width: calc(50% - 12px); margin: 0 auto; }
-    @media (max-width: 640px) {
-      .ws-reviews-grid { grid-template-columns: 1fr; max-width: 420px; }
+    .ws-rev-card:nth-child(5):last-child { grid-column: 1 / -1; max-width: calc(50% - 16px); margin: 0 auto; }
+    @media (max-width: 760px) {
+      .ws-reviews-grid { grid-template-columns: 1fr; max-width: 560px; gap: 24px; }
       .ws-rev-card:nth-child(5):last-child { grid-column: auto; max-width: none; margin: 0; }
     }
 
@@ -524,6 +524,11 @@
       { src: BATHS_DIR + 'Inverness.png', caption: 'Inverness, IL' },
       { src: BATHS_DIR + 'burridge (2).png', caption: 'Burr Ridge, IL' },
       { src: BATHS_DIR + 'burridge (3).png', caption: 'Burr Ridge, IL' },
+      { src: BATHS_DIR + 'Burridge.jpg', caption: 'Burr Ridge, IL' },
+      { src: BATHS_DIR + 'Burridge (2).jpg', caption: 'Burr Ridge, IL' },
+      { src: BATHS_DIR + 'Burridge (3).jpg', caption: 'Burr Ridge, IL' },
+      { src: BATHS_DIR + 'Burridge (4).jpg', caption: 'Burr Ridge, IL' },
+      { src: BATHS_DIR + 'Burridge (5).jpg', caption: 'Burr Ridge, IL' },
       { src: BATHS_DIR + 'Libertyville.jpg', caption: 'Libertyville, IL' },
       { src: BATHS_DIR + 'Naperville4.jpg', caption: 'Naperville, IL' },
       { src: BATHS_DIR + 'Warrenville.jpg', caption: 'Warrenville, IL' },
