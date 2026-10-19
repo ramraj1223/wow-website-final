@@ -89,6 +89,13 @@
     .addon-row.checked .addon-checkbox { background: var(--navy); border-color: var(--navy); }
     .addon-row.checked .addon-checkbox::after { content: ''; display: block; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); }
 
+    /* Quantity add-ons */
+    .qty-row { cursor: default; }
+    .qty-each { font-size: 12px; color: var(--stone); }
+    .qty-btn { width: 26px; height: 26px; border: 1.5px solid #C8B89A; border-radius: 6px; background: #fff; color: var(--navy); font-size: 16px; font-weight: 700; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); transition: all .15s; }
+    .qty-btn:hover { border-color: var(--navy); background: var(--navy); color: #fff; }
+    .qty-value { min-width: 18px; text-align: center; font-size: 14px; font-weight: 700; color: var(--charcoal); }
+
     /* Material options */
     .mat-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
     .mat-opt { flex: 1; min-width: 200px; border: 2px solid var(--border); border-radius: 9px; padding: 13px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all .15s; background: #fff; user-select: none; }
@@ -332,17 +339,19 @@
     // ============================================================
     const BASE_PRICE = 9999;
 
+    // qty: true → shows a +/- counter; price is per unit
     const SHOWER_ADDONS = [
-      { label: 'Tiled niche',       price: 600  },
-      { label: 'Floating bench',    price: 800  },
-      { label: 'LED niche light',   price: 500  },
-      { label: 'Extra LED lights',  price: 500  },
-      { label: 'Rain shower head',  price: 600  },
-      { label: 'Curbless shower',   price: 1500 }
+      { label: 'Tiled niche',          price: 800   },
+      { label: 'Floating bench',       price: 1800  },
+      { label: 'LED niche light',      price: 500   },
+      { label: 'LED lights',           price: 500, qty: true },
+      { label: 'Rain shower head',     price: 1200  },
+      { label: 'Curbless shower',      price: 1500  },
+      { label: 'Ready-made panels',    price: -1500 }
     ];
 
     const OTHER_ADDONS = [
-      { label: 'LED mirror',          price: 300  },
+      { label: 'LED mirrors',         price: 300, qty: true },
       { label: 'GFCI outlet',         price: 350  },
       { label: 'Heated flooring',     price: 2200 },
       { label: 'Frameless door',      price: 400  }
@@ -359,15 +368,28 @@
     // ============================================================
     function renderAddons(items, containerId) {
       const el = document.getElementById(containerId);
-      el.innerHTML = items.map((item, i) => `
+      el.innerHTML = items.map((item, i) => item.qty ? `
+        <div class="addon-row qty-row" data-price="${item.price}" data-qty="0">
+          <span class="addon-label">${item.label} <span class="qty-each">(${fmtSigned(item.price)} each)</span></span>
+          <div class="addon-right">
+            <button type="button" class="qty-btn" onclick="changeQty(this, -1)" aria-label="Decrease">&minus;</button>
+            <span class="qty-value">0</span>
+            <button type="button" class="qty-btn" onclick="changeQty(this, 1)" aria-label="Increase">+</button>
+          </div>
+        </div>
+      ` : `
         <div class="addon-row" data-price="${item.price}" onclick="toggleAddon(this)">
           <span class="addon-label">${item.label}</span>
           <div class="addon-right">
-            <span class="addon-price">+$${item.price.toLocaleString('en-US')}</span>
+            <span class="addon-price">${fmtSigned(item.price)}</span>
             <div class="addon-checkbox"></div>
           </div>
         </div>
       `).join('');
+    }
+
+    function fmtSigned(n) {
+      return (n < 0 ? '−$' : '+$') + Math.abs(n).toLocaleString('en-US');
     }
 
     function renderMaterials() {
@@ -392,6 +414,15 @@
       updateTotal();
     }
 
+    function changeQty(btn, delta) {
+      const row = btn.closest('.qty-row');
+      const qty = Math.max(0, parseInt(row.dataset.qty) + delta);
+      row.dataset.qty = qty;
+      row.querySelector('.qty-value').textContent = qty;
+      row.classList.toggle('checked', qty > 0);
+      updateTotal();
+    }
+
     function selectMaterial(opt) {
       const wasSelected = opt.classList.contains('selected');
       document.querySelectorAll('.mat-opt').forEach(o => o.classList.remove('selected'));
@@ -402,7 +433,8 @@
     function getTotal() {
       let total = BASE_PRICE;
       document.querySelectorAll('.addon-row.checked').forEach(row => {
-        total += parseInt(row.dataset.price);
+        const qty = row.classList.contains('qty-row') ? parseInt(row.dataset.qty) : 1;
+        total += parseInt(row.dataset.price) * qty;
       });
       const mat = document.querySelector('.mat-opt.selected');
       if (mat) total += parseInt(mat.dataset.price);
@@ -430,6 +462,10 @@
     // Reset button
     document.getElementById('reset-btn').addEventListener('click', () => {
       document.querySelectorAll('.addon-row').forEach(r => r.classList.remove('checked'));
+      document.querySelectorAll('.qty-row').forEach(r => {
+        r.dataset.qty = 0;
+        r.querySelector('.qty-value').textContent = '0';
+      });
       document.querySelectorAll('.mat-opt').forEach(o => o.classList.remove('selected'));
       document.getElementById('lead-form-section').classList.add('hidden');
       document.getElementById('lead-success').classList.add('hidden');
