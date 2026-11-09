@@ -555,8 +555,8 @@
           value: rows => money(sum(rows, 'estimate_total')), sub: rows => rows.length + ' quotes waiting' },
         { id: 'leads_won', label: 'Leads won', dot: '#1E8E3E', view: 'leads', dateKey: 'won_at', filter: r => r.status === 'won',
           value: rows => rows.length, sub: () => 'By date won' },
-        { id: 'leads_conv', label: 'Close rate', dot: '#6B3FC4', view: 'leads', filter: r => !['cancelled', 'canceled'].includes(r.status),
-          value: rows => pct(rows.filter(r => r.status === 'won').length, rows.length), sub: () => 'Won ÷ (all leads − cancelled), by lead date' },
+        { id: 'leads_conv', label: 'Close rate', dot: '#6B3FC4', view: 'leads', filter: r => !['new', 'cancelled', 'canceled'].includes(r.status),
+          value: rows => pct(rows.filter(r => r.status === 'won').length, rows.length), sub: () => 'Won ÷ (all leads − cancelled − new), by lead date' },
       ]},
       { title: 'Customers', kpis: [
         { id: 'cust_all', label: 'Customers', dot: '#1E8E3E', view: 'customers', filter: r => true,
