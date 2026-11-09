@@ -70,11 +70,14 @@ DROP POLICY IF EXISTS "Allow authenticated users to view leads" ON leads;
 DROP POLICY IF EXISTS "Staff can view leads" ON leads;
 DROP POLICY IF EXISTS "Staff can update leads" ON leads;
 DROP POLICY IF EXISTS "Staff can delete leads" ON leads;
+DROP POLICY IF EXISTS "Staff can insert leads" ON leads;
 CREATE POLICY "Staff can view leads"   ON leads FOR SELECT USING (is_staff());
+CREATE POLICY "Staff can insert leads" ON leads FOR INSERT TO authenticated WITH CHECK (is_staff());
 CREATE POLICY "Staff can update leads" ON leads FOR UPDATE USING (is_staff()) WITH CHECK (is_staff());
 CREATE POLICY "Staff can delete leads" ON leads FOR DELETE USING (is_staff());
--- (The existing "Allow public form submissions" INSERT policy stays as-is,
---  and also lets staff add leads by hand from the dashboard.)
+-- (The existing "Allow public form submissions" INSERT policy stays as-is for
+--  website visitors; staff get their own INSERT policy above, so adding leads
+--  from the dashboard works even if the public policy is limited to anon.)
 
 CREATE INDEX IF NOT EXISTS idx_leads_appointment ON leads(appointment_date);
 CREATE INDEX IF NOT EXISTS idx_leads_won_at ON leads(won_at);
