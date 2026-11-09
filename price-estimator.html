@@ -395,7 +395,7 @@
     function renderMaterials() {
       const el = document.getElementById('material-options');
       el.innerHTML = MATERIALS.map(m => `
-        <div class="mat-opt" data-price="${m.price}" onclick="selectMaterial(this)">
+        <div class="mat-opt" data-price="${m.price}" data-label="${m.label}" onclick="selectMaterial(this)">
           <div class="mat-radio"><div class="mat-dot"></div></div>
           <span style="font-size:13px; color:#2A2018; line-height:1.4;">${m.label} (+$${m.price.toLocaleString('en-US')})</span>
         </div>
@@ -439,6 +439,20 @@
       const mat = document.querySelector('.mat-opt.selected');
       if (mat) total += parseInt(mat.dataset.price);
       return total;
+    }
+
+    // What the customer picked — saved on the lead so the dashboard can show it
+    function getSelectedAddons() {
+      return [...document.querySelectorAll('.addon-row.checked')].map(row => {
+        const label = row.querySelector('.addon-label').firstChild.textContent.trim();
+        const qty = row.classList.contains('qty-row') ? parseInt(row.dataset.qty) : 1;
+        return qty > 1 ? `${label} × ${qty}` : label;
+      });
+    }
+
+    function getMaterialGrade() {
+      const mat = document.querySelector('.mat-opt.selected');
+      return mat ? mat.dataset.label : null;
     }
 
     function fmtMoney(n) {
@@ -486,6 +500,8 @@
           address:        data.address || '',
           project_type:   data.project_type || '',
           estimate_total: data.estimate_total != null ? `$${data.estimate_total.toLocaleString('en-US')}` : '',
+          material_grade: data.material_grade || '',
+          add_ons:        (data.selected_addons || []).join(', '),
           source:         data.source || '',
           _subject:       'New Free Estimate Request',
           _captcha:       'false'
@@ -521,6 +537,8 @@
           project_type:   form.project_type.value || null,
           address:        form.address.value.trim() || null,
           estimate_total: getTotal(),
+          selected_addons: getSelectedAddons(),
+          material_grade: getMaterialGrade(),
           source:         'price_estimator'
         }]);
 
@@ -533,6 +551,8 @@
           address:       form.address.value.trim() || '',
           project_type:  form.project_type.value || '',
           estimate_total: getTotal(),
+          selected_addons: getSelectedAddons(),
+          material_grade: getMaterialGrade(),
           source:        'price_estimator'
         });
 

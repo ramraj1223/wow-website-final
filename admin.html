@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard | WOW Home Transformations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --navy: #1A2B4A;
+      --navy-deep: #0D1830;
+      --gold: #C8882E;
+      --gold-h: #A86E20;
+      --charcoal: #1C1C1C;
+      --ink: #3A3028;
+      --stone: #6B6459;
+      --border: #E6E0D6;
+      --cream: #FAF8F4;
+      --green: #1E8E3E;
+      --red: #C0392B;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--cream); color: var(--charcoal); -webkit-font-smoothing: antialiased; }
+    button { border: none; background: none; font-family: inherit; cursor: pointer; }
+    input, select { font-family: inherit; }
+    .hidden { display: none !important; }
+
+    /* LOGIN */
+    .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; background: linear-gradient(135deg, var(--navy-deep), var(--navy)); }
+    .login-card { background: #fff; border-radius: 16px; padding: 40px 32px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .login-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .login-logo img { height: 48px; }
+    .logo-name { font-size: 18px; font-weight: 800; color: var(--navy); line-height: 1.2; }
+    .logo-sub { font-size: 11px; font-weight: 500; color: var(--stone); letter-spacing: .05em; text-transform: uppercase; }
+    .login-card h1 { font-size: 22px; color: var(--navy); margin-bottom: 6px; }
+    .login-card p.muted { font-size: 14px; color: var(--stone); margin-bottom: 24px; }
+    .preview-note { background: #FFF4E0; color: var(--gold-h); font-size: 13px; font-weight: 600; padding: 10px 12px; border-radius: 8px; margin-bottom: 20px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .field input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; }
+    .field input:focus { outline: 2px solid var(--gold); border-color: transparent; }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; }
+    .btn-primary { background: var(--gold); color: #fff; width: 100%; padding: 12px 20px; font-size: 15px; }
+    .btn-primary:hover { background: var(--gold-h); }
+    .btn-primary:disabled { opacity: .6; cursor: wait; }
+    .btn-ghost { border: 1px solid var(--border); color: var(--navy); background: #fff; }
+    .btn-ghost:hover { border-color: var(--navy); }
+    .login-error { color: var(--red); font-size: 14px; margin-top: 12px; min-height: 20px; }
+
+    /* DASHBOARD */
+    .topbar { background: var(--navy); color: #fff; }
+    .topbar-inner { max-width: 1280px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .topbar .logo-name { color: #fff; }
+    .topbar .logo-sub { color: rgba(255,255,255,.7); }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; }
+    .topbar-logo img { height: 36px; }
+    .topbar-right { display: flex; align-items: center; gap: 14px; font-size: 13px; }
+    .topbar-right .user { color: rgba(255,255,255,.8); }
+    .btn-logout { color: #fff; border: 1px solid rgba(255,255,255,.4); padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+    .btn-logout:hover { background: rgba(255,255,255,.1); }
+    .preview-banner { background: #FFF4E0; color: var(--gold-h); text-align: center; font-size: 13px; font-weight: 600; padding: 8px 16px; }
+
+    main { max-width: 1280px; margin: 0 auto; padding: 28px 24px 60px; }
+    .head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+    .head-row h1 { font-size: 26px; color: var(--navy); }
+    .head-row p { font-size: 14px; color: var(--stone); margin-top: 4px; }
+    .head-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    a.btn { text-decoration: none; }
+    .head-controls select { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: #fff; }
+
+    .kpi-group { margin-bottom: 22px; }
+    .kpi-group-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+    .kpi-group-title { font-size: 12px; font-weight: 700; color: var(--stone); text-transform: uppercase; letter-spacing: .08em; }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+    .kpi { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: left; transition: border-color .15s, box-shadow .15s, transform .15s; position: relative; }
+    .kpi:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,43,74,.08); }
+    .kpi.active { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold) inset; }
+    .kpi-label { font-size: 12px; font-weight: 600; color: var(--stone); text-transform: uppercase; letter-spacing: .04em; padding-right: 18px; }
+    .kpi-value { font-size: 30px; font-weight: 800; color: var(--navy); margin: 6px 0 2px; font-variant-numeric: tabular-nums; }
+    .kpi-sub { font-size: 12px; color: var(--stone); }
+    .kpi-dot { position: absolute; top: 18px; right: 18px; width: 10px; height: 10px; border-radius: 50%; }
+
+    .panel { background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-top: 8px; scroll-margin-top: 16px; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+    .panel-head h2 { font-size: 18px; color: var(--navy); }
+    .panel-head .count { font-size: 13px; color: var(--stone); font-weight: 500; margin-left: 6px; }
+    .panel-tools { display: flex; gap: 10px; flex-wrap: wrap; }
+    .panel-tools input { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; min-width: 220px; }
+    .filter-bar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 24px; padding: 14px 20px; background: var(--cream); border-bottom: 1px solid var(--border); }
+    .filter-group label { display: block; font-size: 11px; font-weight: 700; color: var(--stone); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+    .filter-group .range { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--stone); }
+    .filter-group input[type=date] { padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; background: #fff; color: var(--charcoal); }
+    .filter-group input[type=date]:focus { outline: 2px solid var(--gold); border-color: transparent; }
+    .btn-clear { font-size: 13px; font-weight: 600; color: var(--gold-h); padding: 8px 4px; }
+    .btn-clear:hover { text-decoration: underline; }
+    .table-wrap { overflow-x: auto; border-radius: 0 0 12px 12px; }
+
+    /* Checkbox dropdowns (Columns, Status) */
+    .dropdown { position: relative; }
+    .dropdown-btn { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font-size: 13px; font-weight: 600; color: var(--navy); white-space: nowrap; }
+    .dropdown-btn:hover { border-color: var(--navy); }
+    .dropdown-btn .caret { font-size: 10px; color: var(--stone); }
+    .dropdown-btn .badge { background: var(--gold); color: #fff; border-radius: 999px; font-size: 11px; padding: 1px 7px; }
+    .dropdown-menu { position: absolute; top: calc(100% + 6px); left: 0; z-index: 20; min-width: 220px; background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 32px rgba(26,43,74,.15); padding: 8px; }
+    .dropdown-menu.right { left: auto; right: 0; }
+    .dropdown-menu label { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 6px; font-size: 14px; color: var(--charcoal); cursor: pointer; text-transform: none; letter-spacing: 0; font-weight: 500; margin: 0; }
+    .dropdown-menu label:hover { background: var(--cream); }
+    .dropdown-menu input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; }
+    .dropdown-menu .menu-foot { display: flex; justify-content: space-between; border-top: 1px solid var(--border); margin-top: 6px; padding: 8px 8px 2px; }
+    .dropdown-menu .menu-foot button { font-size: 13px; font-weight: 600; color: var(--gold-h); }
+    .dropdown-menu .menu-foot button:hover { text-decoration: underline; }
+    .status-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; font-size: 12px; font-weight: 700; color: var(--stone); text-transform: uppercase; letter-spacing: .04em; padding: 12px 16px; background: var(--cream); border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; }
+    th:hover { color: var(--navy); }
+    th .arrow { font-size: 10px; margin-left: 4px; }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr.row:hover td { background: #FCFBF8; }
+    tr.row { cursor: pointer; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .name { font-weight: 700; color: var(--navy); }
+    .contact { font-size: 13px; color: var(--stone); }
+    .contact a { color: var(--stone); text-decoration: none; }
+    .contact a:hover { color: var(--gold-h); text-decoration: underline; }
+    .muted-cell { color: var(--stone); }
+    .owed { color: var(--red); font-weight: 700; }
+    .status-select { padding: 5px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid transparent; cursor: pointer; }
+    .btn-gold { background: var(--gold); color: #fff; }
+    .btn-gold:hover { background: var(--gold-h); }
+    .btn-gold:disabled { opacity: .6; cursor: wait; }
+    .btn-danger { color: var(--red); border: 1px solid var(--border); background: #fff; }
+    .btn-danger:hover { border-color: var(--red); }
+
+    /* RECORD PAGE (lead / customer / job details) */
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--gold-h); padding: 4px 0; margin-bottom: 14px; }
+    .back-link:hover { text-decoration: underline; }
+    .record-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+    .record-type { font-size: 12px; font-weight: 700; color: var(--stone); text-transform: uppercase; letter-spacing: .08em; }
+    .record-head h1 { font-size: 26px; color: var(--navy); margin: 4px 0; }
+    .record-meta { font-size: 14px; color: var(--stone); display: flex; gap: 8px 16px; flex-wrap: wrap; align-items: center; }
+    .record-meta a { color: var(--gold-h); font-weight: 600; text-decoration: none; }
+    .record-meta a:hover { text-decoration: underline; }
+    .record-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .record-stat { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+    .record-stat .kpi-value { font-size: 22px; margin: 4px 0 0; }
+    .form-section { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    .form-section h2 { font-size: 16px; color: var(--navy); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px 20px; }
+    .form-grid .wide { grid-column: 1 / -1; }
+    .form-grid label { display: block; font-size: 12px; font-weight: 700; color: var(--stone); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+    .form-grid label .req { color: var(--red); }
+    .form-grid input:not([type=checkbox]), .form-grid select, .form-grid textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; background: #fff; color: var(--charcoal); }
+    .form-grid textarea { min-height: 96px; resize: vertical; }
+    .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus { outline: 2px solid var(--gold); border-color: transparent; }
+    .form-grid .check { display: flex; align-items: center; gap: 10px; font-size: 15px; text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--charcoal); padding-top: 26px; cursor: pointer; }
+    .form-grid .check input { width: 18px; height: 18px; accent-color: var(--gold); }
+    .ro { padding: 10px 0; font-size: 15px; color: var(--ink); }
+    .ro a { color: var(--gold-h); }
+    .form-actions { position: sticky; bottom: 0; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 14px 0; background: var(--cream); border-top: 1px solid var(--border); }
+    .form-actions .right { display: flex; gap: 10px; }
+    .topnav { display: flex; gap: 4px; flex-wrap: wrap; }
+    .topnav a { color: rgba(255,255,255,.75); font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 6px; text-decoration: none; }
+    .topnav a:hover, .topnav a.active { color: #fff; background: rgba(255,255,255,.14); }
+    .custom-range { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--stone); }
+    .custom-range input { padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; background: #fff; }
+    .kpi-group-head a { font-size: 13px; font-weight: 700; color: var(--gold-h); text-decoration: none; }
+    .kpi-group-head a:hover { text-decoration: underline; }
+    .convert-banner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; background: #E3F4E8; color: #145F2A; border-radius: 10px; padding: 12px 16px; font-weight: 600; font-size: 14px; margin-bottom: 16px; }
+    .convert-banner a { color: #145F2A; }
+    .convert-banner.pending { background: #FFF4E0; color: var(--gold-h); }
+    .pay-add, .inline-add { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+    .pay-add input, .pay-add select, .inline-add input, .inline-add select, .cell-input { padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; background: #fff; }
+    .pay-add input[type=number], .inline-add input[type=number] { width: 130px; }
+    .cell-input { width: 100%; min-width: 90px; }
+    .icon-btn { color: var(--stone); font-size: 18px; line-height: 1; padding: 4px 8px; border-radius: 6px; }
+    .icon-btn:hover { color: var(--red); background: #FCECEA; }
+    .pill-list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .pill-list .status-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; padding: 4px 10px; }
+    .pill-list .status-pill button { color: inherit; font-size: 15px; line-height: 1; opacity: .7; }
+    .pill-list .status-pill button:hover { opacity: 1; }
+    .move-box { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; padding: 12px 14px; border: 1px dashed var(--red); border-radius: 10px; background: #FFF8F7; font-size: 14px; }
+    .move-box select { padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: #fff; }
+    .hint { font-size: 13px; color: var(--stone); margin-top: 8px; line-height: 1.5; }
+    tfoot td { font-weight: 700; background: var(--cream); }
+    .nc-box { border: 1px dashed var(--gold); border-radius: 10px; padding: 14px 16px 16px; background: #FFFBF3; min-width: 0; }
+    .nc-box legend { font-size: 12px; font-weight: 700; color: var(--gold-h); text-transform: uppercase; letter-spacing: .06em; padding: 0 6px; }
+    .mini-table { width: 100%; }
+    .mini-table td, .mini-table th { padding: 10px 12px; }
+    .empty { padding: 48px 20px; text-align: center; color: var(--stone); }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.2); z-index: 50; }
+
+    @media (max-width: 640px) {
+      .topbar-inner, main { padding-left: 16px; padding-right: 16px; }
+      .topbar-right .user { display: none; }
+      .topbar-inner { flex-wrap: wrap; }
+      .topnav { order: 3; width: 100%; }
+      .kpis { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .kpi { padding: 14px; }
+      .kpi-value { font-size: 24px; }
+      .panel-tools, .panel-tools input { width: 100%; min-width: 0; }
+      .hide-sm { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginView" class="login-wrap hidden">
+    <form class="login-card" id="loginForm">
+      <div class="login-logo">
+        <img src="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png" alt="WOW Home Transformations">
+        <div>
+          <div class="logo-name">WOW Home</div>
+          <div class="logo-sub">Transformations</div>
+        </div>
+      </div>
+      <h1>Team login</h1>
+      <p class="muted">Sign in to view leads, customers and jobs.</p>
+      <div class="preview-note" id="previewNote">UI preview — any email and password will work.</div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn btn-primary" type="submit" id="loginBtn">Sign in</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashView" class="hidden">
+    <div class="preview-banner" id="previewBanner">UI preview — sample data only. Changes are not saved.</div>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="topbar-logo">
+          <img src="https://static.wixstatic.com/media/c8469c_4b1a85ad7b44468b9a095e34313b51d4~mv2.png" alt="">
+          <div>
+            <div class="logo-name">WOW Home</div>
+            <div class="logo-sub">Admin Dashboard</div>
+          </div>
+        </div>
+        <nav class="topnav" id="topnav">
+          <a href="#/" data-nav="dashboard">Dashboard</a>
+          <a href="#/marketing" data-nav="marketing">Marketing</a>
+          <a href="#/settings" data-nav="settings">Settings</a>
+        </nav>
+        <div class="topbar-right">
+          <span class="user" id="userEmail"></span>
+          <button class="btn-logout" id="logoutBtn">Log out</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="dashMain">
+      <div class="head-row">
+        <div>
+          <h1>Business overview</h1>
+          <p id="lastUpdated">Loading…</p>
+        </div>
+        <div class="head-controls">
+          <select id="rangeSelect" aria-label="Date range">
+            <option value="30">Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="365">Last 12 months</option>
+            <option value="all" selected>All time</option>
+            <option value="custom">Custom range…</option>
+          </select>
+          <span class="custom-range hidden" id="customRange">
+            <input type="date" id="customFrom" aria-label="From date"> to
+            <input type="date" id="customTo" aria-label="To date">
+          </span>
+          <button class="btn btn-ghost" id="refreshBtn">Refresh</button>
+          <a class="btn btn-gold" href="#/leads/new">+ Add lead</a>
+          <a class="btn btn-gold" href="#/customers/new">+ Add customer</a>
+          <a class="btn btn-gold" href="#/jobs/new">+ Add job</a>
+        </div>
+      </div>
+
+      <div id="kpiGroups"></div>
+
+      <section class="panel" id="panel">
+        <div class="panel-head">
+          <h2><span id="tableTitle"></span><span class="count" id="tableCount"></span></h2>
+          <div class="panel-tools">
+            <input type="search" id="searchInput" placeholder="Search…">
+            <div class="dropdown" id="columnsDropdown">
+              <button class="dropdown-btn" data-toggle="columnsMenu">Columns <span class="caret">▼</span></button>
+              <div class="dropdown-menu right hidden" id="columnsMenu"></div>
+            </div>
+            <button class="btn btn-ghost" id="exportBtn">Export CSV</button>
+          </div>
+        </div>
+        <div class="filter-bar" id="filterBar"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr id="theadRow"></tr></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- RECORD PAGE — filled in by renderRecord() -->
+    <main id="recordView" class="hidden"></main>
+  </div>
+
+  <div class="toast hidden" id="toast"></div>
+
+  <script>
+    // ============================================================
+    // CONFIG — same Supabase project as the public website forms
+    // ============================================================
+    const SUPABASE_URL      = 'https://pydiopoywewqgyxsqvom.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5ZGlvcG95d2V3cWd5eHNxdm9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4NzEwOTQsImV4cCI6MjA5ODQ0NzA5NH0.-pM5CHkV7TV2R65P0xLfbSf_p8wdnGLKqXn1q8HwxTk';
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Sample-data preview (any login works): only on your own computer, by opening
+    // http://localhost:8080/admin.html?preview — the live site always uses real logins and data.
+    const IS_LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
+    const PREVIEW_MODE = IS_LOCAL && new URLSearchParams(location.search).has('preview');
+
+    const $ = id => document.getElementById(id);
+
+    // ============================================================
+    // STATUSES — the built-in ones drive the KPIs; extra ones are added on the Settings page
+    // ============================================================
+    const CORE_LEAD_STATUSES = {
+      new:       { label: 'New',       bg: '#E8F0FE', fg: '#1A56DB' },
+      contacted: { label: 'Contacted', bg: '#F1EAFD', fg: '#6B3FC4' },
+      quoted:    { label: 'Quoted',    bg: '#FFF4E0', fg: '#A86E20' },
+      won:       { label: 'Won',       bg: '#E3F4E8', fg: '#1E8E3E' },
+      lost:      { label: 'Lost',      bg: '#F3F1EE', fg: '#6B6459' },
+    };
+    const CORE_JOB_STATUSES = {
+      scheduled:   { label: 'Scheduled',   bg: '#E8F0FE', fg: '#1A56DB' },
+      in_progress: { label: 'In progress', bg: '#FFF4E0', fg: '#A86E20' },
+      completed:   { label: 'Completed',   bg: '#E3F4E8', fg: '#1E8E3E' },
+      cancelled:   { label: 'Cancelled',   bg: '#F3F1EE', fg: '#6B6459' },
+    };
+    const EXTRA_COLORS = [
+      { bg: '#E0F2F1', fg: '#00796B' }, { bg: '#FCE8EC', fg: '#B0254A' },
+      { bg: '#EEF3D9', fg: '#5B7A12' }, { bg: '#E6EEF7', fg: '#2F5C8A' },
+    ];
+    const LEAD_STATUSES = {}, JOB_STATUSES = {};
+    const STATUS_SETS = { leads: [LEAD_STATUSES, CORE_LEAD_STATUSES], jobs: [JOB_STATUSES, CORE_JOB_STATUSES] };
+    let extraStatuses = { leads: [], jobs: [] };   // [{ key, label }] from app_settings
+    let hiddenStatuses = { leads: [], jobs: [] };  // built-in statuses deleted on the Settings page
+    // These can't be deleted: website leads arrive as New, Won creates the customer, Lost feeds
+    // the close rate, new jobs start as Scheduled, Completed feeds the revenue cards.
+    const LOCKED_STATUSES = { leads: ['new', 'won', 'lost'], jobs: ['scheduled', 'completed'] };
+    const statusExists = (type, key) => key in STATUS_SETS[type][0];
+
+    function applyStatuses() {
+      for (const [type, [target, core]] of Object.entries(STATUS_SETS)) {
+        Object.keys(target).forEach(k => delete target[k]);
+        Object.entries(core).forEach(([k, s]) => { if (!hiddenStatuses[type].includes(k)) target[k] = s; });
+        extraStatuses[type].forEach((s, i) => {
+          target[s.key] = { label: s.label, ...EXTRA_COLORS[i % EXTRA_COLORS.length], custom: true };
+        });
+      }
+    }
+    const statusInfo = (statuses, s) => statuses[s] || { label: s || '—', bg: '#F3F1EE', fg: '#6B6459' };
+
+    // ============================================================
+    // LEAD SOURCES — stored in Supabase lead_sources, managed on the Settings page
+    // ============================================================
+    const DEFAULT_SOURCES = [
+      { key: 'google_ads_landing',    label: 'Google Ads landing page', is_paid: true,  sort: 10 },
+      { key: 'google',                label: 'Google',                  is_paid: true,  sort: 12 },
+      { key: 'facebook',              label: 'Facebook',                is_paid: true,  sort: 14 },
+      { key: 'price_estimator',       label: 'Price estimator',         is_paid: true,  sort: 20 },
+      { key: 'bathroom_remodel_page', label: 'Bathroom remodel page',   is_paid: true,  sort: 30 },
+      { key: 'homepage_hero_form',    label: 'Homepage',                is_paid: false, sort: 40 },
+      { key: 'workshop_hero_form',    label: 'Workshop page',           is_paid: false, sort: 50 },
+      { key: 'referral',              label: 'Referral',                is_paid: false, sort: 60 },
+      { key: 'phone',                 label: 'Phone call',              is_paid: false, sort: 70 },
+      { key: 'walk_in',               label: 'Walk-in / showroom',      is_paid: false, sort: 80 },
+      { key: 'other',                 label: 'Other',                   is_paid: false, sort: 90 },
+    ];
+    let sources = [];
+    const SOURCES = {};  // key → label
+
+    function applySources(rows) {
+      sources = [...rows].sort((a, b) => (a.sort ?? 100) - (b.sort ?? 100) || a.label.localeCompare(b.label));
+      Object.keys(SOURCES).forEach(k => delete SOURCES[k]);
+      sources.forEach(s => { SOURCES[s.key] = s.label; });
+    }
+    const sourceLabel = k => SOURCES[k] || k || '—';
+    const isPaidSource = k => sources.some(s => s.key === k && s.is_paid);
+
+    // ============================================================
+    // HELPERS
+    // ============================================================
+    const money = n => '$' + Math.round(n || 0).toLocaleString();
+    const sum = (rows, key) => rows.reduce((s, r) => s + (r[key] || 0), 0);
+    const pct = (a, b) => b ? Math.round(a / b * 100) + '%' : '—';
+    // Plain 'YYYY-MM-DD' dates are read as local midnight (not UTC) so they don't shift a day
+    const toDate = v => new Date(/^\d{4}-\d{2}-\d{2}$/.test(v) ? v + 'T00:00' : v);
+    const date = d => d ? toDate(d).toLocaleDateString() : '—';
+    const dateTime = d => d ? toDate(d).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '—';
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const labelsOf = statuses => Object.fromEntries(Object.entries(statuses).map(([k, v]) => [k, v.label]));
+    const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+    const today = () => localDay(new Date());
+
+    // Date → 'YYYY-MM-DD' in local time, to compare with <input type=date> values
+    function localDay(v) {
+      if (!v) return null;
+      const d = toDate(v);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+    // 'YYYY-MM-DDTHH:MM' in local time, for <input type=datetime-local>
+    function localDateTime(v) {
+      const d = toDate(v);
+      return `${localDay(d)}T${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    }
+
+    const nameCell  = r => `<span class="name">${esc(r.name)}</span>`;
+    const phoneCell = r => `<span class="contact"><a href="tel:${esc(r.phone)}">${esc(r.phone)}</a></span>`;
+    const emailCell = r => `<span class="contact"><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></span>`;
+    const pill = (statuses, s) => {
+      const st = statusInfo(statuses, s);
+      return s ? `<span class="status-pill" style="background:${st.bg};color:${st.fg}">${esc(st.label)}</span>` : '';
+    };
+    const statusSelect = (r, statuses) => {
+      const st = statusInfo(statuses, r.status);
+      const opts = labelsOf(statuses);
+      if (r.status && !statuses[r.status]) opts[r.status] = r.status;  // a status that was removed in Settings
+      return `<select class="status-select" data-id="${esc(r.id)}" style="background:${st.bg};color:${st.fg}">
+        ${Object.entries(opts).map(([k, l]) => `<option value="${esc(k)}" ${k === r.status ? 'selected' : ''}>${esc(l)}</option>`).join('')}
+      </select>`;
+    };
+    const owedCell = (n, zero) => n > 0 ? `<span class="owed">${money(n)}</span>` : `<span class="muted-cell">${zero}</span>`;
+
+    // ============================================================
+    // TABLE LAYOUTS — one per record type. Edit columns here.
+    // ============================================================
+    const VIEWS = {
+      leads: {
+        search: ['name', 'phone', 'email', 'address', 'project_type'],
+        dateKey: 'created_at',
+        statuses: LEAD_STATUSES,
+        filters: [
+          { key: 'created_at',       label: 'Lead date' },
+          { key: 'appointment_date', label: 'Appointment scheduled' },
+          { key: 'won_at',           label: 'Won date' },
+        ],
+        columns: [
+          { key: 'name',             label: 'Name', html: nameCell },
+          { key: 'phone',            label: 'Phone', html: phoneCell },
+          { key: 'email',            label: 'Email', cls: 'hide-sm', html: emailCell },
+          { key: 'created_at',       label: 'Lead date', html: r => date(r.created_at) },
+          { key: 'appointment_date', label: 'Appointment', html: r => r.appointment_date ? date(r.appointment_date) : '<span class="muted-cell">Not set</span>' },
+          { key: 'won_at',           label: 'Won on', cls: 'hide-sm', html: r => r.won_at ? date(r.won_at) : '<span class="muted-cell">—</span>' },
+          { key: 'project_type',     label: 'Project', cls: 'hide-sm' },
+          { key: 'source',           label: 'Source',  cls: 'hide-sm', html: r => esc(sourceLabel(r.source)) },
+          { key: 'estimate_total',   label: 'Estimate', cls: 'num', html: r => money(r.estimate_total) },
+          { key: 'status',           label: 'Status', html: r => statusSelect(r, LEAD_STATUSES) },
+        ],
+      },
+      customers: {
+        search: ['name', 'phone', 'email', 'address', 'city'],
+        dateKey: 'customer_since',
+        filters: [
+          { key: 'customer_since', label: 'Customer since' },
+        ],
+        columns: [
+          { key: 'name',           label: 'Customer', html: nameCell },
+          { key: 'phone',          label: 'Phone', html: phoneCell },
+          { key: 'email',          label: 'Email', cls: 'hide-sm', html: emailCell },
+          { key: 'city',           label: 'City', cls: 'hide-sm' },
+          { key: 'source',         label: 'Source', cls: 'hide-sm', html: r => esc(sourceLabel(r.source)) },
+          { key: 'job_count',      label: 'Jobs', cls: 'num' },
+          { key: 'lifetime_value', label: 'Lifetime value', cls: 'num', html: r => money(r.lifetime_value) },
+          { key: 'balance',        label: 'Balance due', cls: 'num', html: r => owedCell(r.balance, '$0') },
+          { key: 'customer_since', label: 'Customer since', cls: 'hide-sm', html: r => date(r.customer_since) },
+        ],
+      },
+      jobs: {
+        search: ['job_no', 'customer', 'project_type', 'crew', 'city'],
+        dateKey: 'start_date',
+        statuses: JOB_STATUSES,
+        filters: [
+          { key: 'start_date', label: 'Start date' },
+          { key: 'end_date',   label: 'Completion date' },
+        ],
+        columns: [
+          { key: 'job_no',         label: 'Job #', html: r => `<span class="name">${esc(r.job_no)}</span>` },
+          { key: 'customer',       label: 'Customer', html: r => `<div class="name">${esc(r.customer)}</div><div class="contact">${esc(r.city)}</div>` },
+          { key: 'project_type',   label: 'Project', cls: 'hide-sm' },
+          { key: 'crew',           label: 'Crew', cls: 'hide-sm' },
+          { key: 'start_date',     label: 'Start', cls: 'hide-sm', html: r => date(r.start_date) },
+          { key: 'contract_value', label: 'Contract', cls: 'num', html: r => money(r.contract_value) },
+          { key: 'paid',           label: 'Paid', cls: 'num hide-sm', html: r => money(r.paid) },
+          { key: 'balance',        label: 'Balance', cls: 'num', html: r => owedCell(r.balance, 'Paid') },
+          { key: 'status',         label: 'Status', html: r => statusSelect(r, JOB_STATUSES) },
+        ],
+      },
+      payments: {
+        search: ['job_no', 'customer', 'method', 'note'],
+        dateKey: 'paid_on',
+        filters: [
+          { key: 'paid_on', label: 'Payment date' },
+        ],
+        columns: [
+          { key: 'paid_on',  label: 'Date', html: r => date(r.paid_on) },
+          { key: 'job_no',   label: 'Job #', html: r => `<span class="name">${esc(r.job_no)}</span>` },
+          { key: 'customer', label: 'Customer' },
+          { key: 'amount',   label: 'Amount', cls: 'num', html: r => money(r.amount) },
+          { key: 'method',   label: 'Method', cls: 'hide-sm' },
+          { key: 'note',     label: 'Note', cls: 'hide-sm' },
+        ],
+      },
+    };
+
+    // ============================================================
+    // KPI CARDS — each points at a table + filter. Edit/add here.
+    // value(rows, ctx) / sub(rows, ctx): rows = matching records in the date range,
+    // ctx.spend = lead spend in the date range. dateKey: which date the range applies to.
+    // ============================================================
+    const notCancelled = j => j.status !== 'cancelled';
+    const roas = (revenue, spend) => spend ? (revenue / spend).toFixed(1) + 'x' : '—';
+
+    const KPI_GROUPS = [
+      { title: 'Marketing', link: ['#/marketing', 'Spend & ROAS by source →'], kpis: [
+        { id: 'mkt_roas', label: 'ROAS (paid sources)', dot: '#C8882E', view: 'jobs', filter: j => notCancelled(j) && isPaidSource(j.source),
+          value: (rows, c) => roas(sum(rows, 'contract_value'), c.spend.total),
+          sub: (rows, c) => money(sum(rows, 'contract_value')) + ' revenue ÷ ' + money(c.spend.total) + ' spend' },
+        { id: 'mkt_blended', label: 'Blended ROAS', dot: '#A86E20', view: 'jobs', filter: notCancelled,
+          value: (rows, c) => roas(sum(rows, 'contract_value'), c.spend.total), sub: () => 'All revenue, incl. referrals' },
+        { id: 'mkt_spend', label: 'Lead spend', dot: '#1A2B4A', view: 'leads', filter: r => isPaidSource(r.source),
+          value: (rows, c) => money(c.spend.total),
+          sub: (rows, c) => c.spend.defaultMonths ? `Incl. ${money(defaultMonthlySpend)}/mo default` : 'From spend you entered' },
+        { id: 'mkt_cpl', label: 'Cost per lead', dot: '#1A56DB', view: 'leads', filter: r => isPaidSource(r.source),
+          value: (rows, c) => rows.length ? money(c.spend.total / rows.length) : '—', sub: rows => rows.length + ' paid-source leads' },
+        { id: 'mkt_cac', label: 'Cost per customer', dot: '#1E8E3E', view: 'leads', dateKey: 'won_at',
+          filter: r => r.status === 'won' && isPaidSource(r.source),
+          value: (rows, c) => rows.length ? money(c.spend.total / rows.length) : '—', sub: rows => rows.length + ' paid-source leads won' },
+      ]},
+      { title: 'Leads', kpis: [
+        { id: 'leads_all', label: 'Total leads', dot: '#1A2B4A', view: 'leads', filter: r => true,
+          value: rows => rows.length, sub: rows => money(sum(rows, 'estimate_total')) + ' in estimates' },
+        { id: 'leads_new', label: 'New leads', dot: '#1A56DB', view: 'leads', filter: r => r.status === 'new',
+          value: rows => rows.length, sub: () => 'Need first contact' },
+        { id: 'leads_quoted', label: 'Quotes out', dot: '#A86E20', view: 'leads', requires: ['leads', 'quoted'], filter: r => r.status === 'quoted',
+          value: rows => money(sum(rows, 'estimate_total')), sub: rows => rows.length + ' quotes waiting' },
+        { id: 'leads_won', label: 'Leads won', dot: '#1E8E3E', view: 'leads', dateKey: 'won_at', filter: r => r.status === 'won',
+          value: rows => rows.length, sub: () => 'By date won' },
+        { id: 'leads_conv', label: 'Close rate', dot: '#6B3FC4', view: 'leads', filter: r => r.status === 'won' || r.status === 'lost',
+          value: rows => pct(rows.filter(r => r.status === 'won').length, rows.length), sub: () => 'Won ÷ (won + lost), by lead date' },
+      ]},
+      { title: 'Customers', kpis: [
+        { id: 'cust_all', label: 'Customers', dot: '#1E8E3E', view: 'customers', filter: r => true,
+          value: rows => rows.length, sub: rows => money(sum(rows, 'lifetime_value')) + ' lifetime value' },
+        { id: 'cust_owing', label: 'Balance due', dot: '#C0392B', view: 'customers', filter: r => r.balance > 0,
+          value: rows => money(sum(rows, 'balance')), sub: rows => rows.length + ' customers owe' },
+        { id: 'cust_review', label: 'Review requests', dot: '#C8882E', view: 'customers', filter: r => !r.reviewed && r.job_count > 0,
+          value: rows => rows.length, sub: () => 'Happy customers to ask' },
+      ]},
+      { title: 'Jobs', kpis: [
+        { id: 'jobs_sched', label: 'Jobs scheduled', dot: '#1A56DB', view: 'jobs', filter: r => r.status === 'scheduled',
+          value: rows => rows.length, sub: rows => money(sum(rows, 'contract_value')) + ' booked' },
+        { id: 'jobs_active', label: 'Jobs in progress', dot: '#A86E20', view: 'jobs', requires: ['jobs', 'in_progress'], filter: r => r.status === 'in_progress',
+          value: rows => rows.length, sub: rows => money(sum(rows, 'contract_value')) + ' in work' },
+        { id: 'jobs_done', label: 'Jobs completed', dot: '#1E8E3E', view: 'jobs', filter: r => r.status === 'completed',
+          value: rows => rows.length, sub: rows => money(sum(rows, 'contract_value')) + ' revenue' },
+        { id: 'jobs_avg', label: 'Avg job size', dot: '#1A2B4A', view: 'jobs', filter: notCancelled,
+          value: rows => rows.length ? money(sum(rows, 'contract_value') / rows.length) : '—', sub: () => 'Excludes cancelled' },
+        { id: 'cash_in', label: 'Cash collected', dot: '#145F2A', view: 'payments', filter: r => true,
+          value: rows => money(sum(rows, 'amount')), sub: rows => rows.length + ' payments received' },
+      ]},
+    ];
+    const ALL_KPIS = KPI_GROUPS.flatMap(g => g.kpis);
+    const activeKpiDef = () => ALL_KPIS.find(k => k.id === activeKpi);
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let data = { leads: [], customers: [], jobs: [], payments: [] };  // shaped for display (totals added)
+    let spendRows = [];            // marketing_spend: { id, month 'YYYY-MM-01', source, amount }
+    let defaultMonthlySpend = 2500; // used for any month with no spend entered
+    let raw = null;                // preview mode only: the sample "database" edits are applied to
+    let previewSeq = 0;
+    let activeKpi = 'leads_all';
+    let sort = { key: null, dir: -1 };
+    let dateFilters = {};          // { fieldKey: { from: 'YYYY-MM-DD', to: 'YYYY-MM-DD' } }
+    let statusFilter = new Set();  // empty = all statuses
+    let filterBarView = null;      // which view the filter bar was last drawn for
+    let hiddenCols = loadHiddenCols();  // { viewName: [columnKey, …] } — remembered per browser
+
+    function loadHiddenCols() {
+      try { return JSON.parse(localStorage.getItem('wow_hidden_cols')) || {}; } catch { return {}; }
+    }
+    function saveHiddenCols() {
+      try { localStorage.setItem('wow_hidden_cols', JSON.stringify(hiddenCols)); } catch {}
+    }
+    const visibleColumns = viewName =>
+      VIEWS[viewName].columns.filter(c => !(hiddenCols[viewName] || []).includes(c.key));
+
+    // ============================================================
+    // DATE RANGE (top of dashboard)
+    // ============================================================
+    const FAR_FUTURE = new Date(8.64e15);
+
+    function earliestDate() {
+      const times = [...data.leads.map(r => toDate(r.created_at).getTime()), ...spendRows.map(s => toDate(s.month).getTime())]
+        .filter(Number.isFinite);
+      return times.length ? new Date(Math.min(...times)) : new Date(Date.now() - 30 * 86400000);
+    }
+
+    // [start, end] of the selected range. Presets have no end, so upcoming scheduled jobs still count.
+    function rangeBounds() {
+      const v = $('rangeSelect').value;
+      if (v === 'custom') {
+        const f = $('customFrom').value, t = $('customTo').value;
+        return [f ? toDate(f) : earliestDate(), t ? new Date(toDate(t).getTime() + 86400000 - 1) : FAR_FUTURE];
+      }
+      if (v === 'all') return [earliestDate(), FAR_FUTURE];
+      return [new Date(Date.now() - Number(v) * 86400000), FAR_FUTURE];
+    }
+
+    function rangeLabel() {
+      const sel = $('rangeSelect');
+      if (sel.value !== 'custom') return sel.selectedOptions[0].textContent;
+      const [s, e] = rangeBounds();
+      return `${s.toLocaleDateString()} – ${e === FAR_FUTURE ? 'today' : e.toLocaleDateString()}`;
+    }
+
+    // Records with no date in the chosen field fall back to when they were created;
+    // records with no date at all are always included (so nothing silently disappears).
+    function inRange(view, rows, key = VIEWS[view].dateKey) {
+      if ($('rangeSelect').value === 'all') return rows;
+      const [s, e] = rangeBounds();
+      return rows.filter(r => {
+        const v = r[key] || r.created_at;
+        if (!v) return true;
+        const t = toDate(v).getTime();
+        return t >= s && t <= e;
+      });
+    }
+
+    // Lead spend in the date range, by source. Each month counts in proportion to how much of it
+    // is inside the range; months with nothing entered use the default monthly spend.
+    function spendInRange() {
+      const [start, rangeEnd] = rangeBounds();
+      const end = new Date(Math.min(rangeEnd, Date.now()));
+      const bySource = {};
+      let total = 0, defaultMonths = 0;
+      let m = new Date(start.getFullYear(), start.getMonth(), 1);
+      while (m < end) {
+        const next = new Date(m.getFullYear(), m.getMonth() + 1, 1);
+        const share = (Math.min(end, next) - Math.max(start, m)) / (next - m);
+        const entries = spendRows.filter(s => localDay(s.month) === localDay(m));
+        if (entries.length) {
+          entries.forEach(s => { bySource[s.source] = (bySource[s.source] || 0) + s.amount * share; total += s.amount * share; });
+        } else {
+          bySource[''] = (bySource[''] || 0) + defaultMonthlySpend * share;
+          total += defaultMonthlySpend * share;
+          defaultMonths += share;
+        }
+        m = next;
+      }
+      return { total, bySource, defaultMonths };
+    }
+
+    // ============================================================
+    // AUTH
+    // ============================================================
+    async function init() {
+      $('previewNote').classList.toggle('hidden', !PREVIEW_MODE);
+      $('previewBanner').classList.toggle('hidden', !PREVIEW_MODE);
+      if (PREVIEW_MODE) {
+        const saved = sessionStorageGet('wow_preview_user');
+        return saved ? showDashboard(saved) : showLogin();
+      }
+      const { data: { session } } = await db.auth.getSession();
+      session ? showDashboard(session.user.email) : showLogin();
+    }
+
+    function showLogin() {
+      $('dashView').classList.add('hidden');
+      $('loginView').classList.remove('hidden');
+    }
+
+    function showDashboard(email) {
+      $('loginView').classList.add('hidden');
+      $('dashView').classList.remove('hidden');
+      $('userEmail').textContent = email;
+      loadData().then(route);
+    }
+
+    $('loginForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const email = $('email').value.trim();
+      if (PREVIEW_MODE) {
+        sessionStorageSet('wow_preview_user', email);
+        return showDashboard(email);
+      }
+      const btn = $('loginBtn');
+      const err = $('loginError');
+      err.textContent = '';
+      btn.disabled = true; btn.textContent = 'Signing in…';
+      const { data: auth, error } = await db.auth.signInWithPassword({
+        email, password: $('password').value,
+      });
+      btn.disabled = false; btn.textContent = 'Sign in';
+      if (error) { err.textContent = error.message; return; }
+      showDashboard(auth.user.email);
+    });
+
+    $('logoutBtn').addEventListener('click', async () => {
+      if (PREVIEW_MODE) sessionStorageSet('wow_preview_user', '');
+      else await db.auth.signOut();
+      showLogin();
+    });
+
+    function sessionStorageGet(k) { try { return sessionStorage.getItem(k); } catch { return null; } }
+    function sessionStorageSet(k, v) { try { v ? sessionStorage.setItem(k, v) : sessionStorage.removeItem(k); } catch {} }
+
+    // ============================================================
+    // DATA — loading
+    // ============================================================
+    const TABLES = ['leads', 'customers', 'jobs', 'payments', 'marketing_spend', 'lead_sources', 'app_settings'];
+
+    async function loadData() {
+      $('lastUpdated').textContent = 'Loading…';
+      let rows;
+      if (PREVIEW_MODE) {
+        if (!raw) raw = makeSampleData();  // keep preview edits until the page is reloaded
+        rows = raw;
+      } else {
+        const res = await Promise.all(TABLES.map(t => db.from(t).select('*')));
+        const bad = res.find(r => r.error);
+        if (bad) {
+          toast('Could not load data: ' + bad.error.message + ' — run the latest supabase-admin-schema.sql');
+          return;
+        }
+        rows = Object.fromEntries(TABLES.map((t, i) => [t, res[i].data]));
+        rows.settings = Object.fromEntries(rows.app_settings.map(s => [s.key, s.value]));
+      }
+      const settings = rows.settings || {};
+      defaultMonthlySpend = Number(settings.monthly_lead_spend ?? 2500) || 0;
+      extraStatuses = { leads: settings.extra_lead_statuses || [], jobs: settings.extra_job_statuses || [] };
+      hiddenStatuses = { leads: settings.hidden_lead_statuses || [], jobs: settings.hidden_job_statuses || [] };
+      applyStatuses();
+      applySources(rows.lead_sources.length ? rows.lead_sources : DEFAULT_SOURCES);
+      spendRows = rows.marketing_spend.map(s => ({ ...s, amount: Number(s.amount) || 0 }));
+      data = shapeData(rows);
+      if (!PREVIEW_MODE && !data.leads.length && !data.customers.length) {
+        const { data: me } = await db.from('staff').select('email').maybeSingle();
+        if (!me) toast('This login is not on the staff list — add your email to the staff table in Supabase.');
+      }
+      $('lastUpdated').textContent = 'Updated ' + new Date().toLocaleString();
+      render();
+    }
+
+    // Add the totals the tables show: payments → job paid/balance, jobs → customer totals
+    function shapeData(rows) {
+      const byId = Object.fromEntries(rows.customers.map(c => [c.id, { ...c, job_count: 0, lifetime_value: 0, balance: 0 }]));
+      const paidByJob = {};
+      rows.payments.forEach(p => { paidByJob[p.job_id] = (paidByJob[p.job_id] || 0) + (Number(p.amount) || 0); });
+      const jobs = rows.jobs.map(j => {
+        const c = byId[j.customer_id] || {};
+        const value = Number(j.contract_value) || 0, paid = paidByJob[j.id] || 0;
+        const balance = j.status === 'cancelled' ? 0 : value - paid;
+        if (c.id && j.status !== 'cancelled') { c.job_count++; c.lifetime_value += value; c.balance += balance; }
+        return { ...j, customer: c.name || '—', city: c.city || '', source: c.source || null,
+          contract_value: value, paid, balance,
+          materials_cost: Number(j.materials_cost) || 0, labor_cost: Number(j.labor_cost) || 0 };
+      });
+      const jobById = Object.fromEntries(jobs.map(j => [j.id, j]));
+      return {
+        leads: rows.leads.map(r => ({ ...r, status: r.status || 'new' })),
+        customers: Object.values(byId),
+        jobs,
+        payments: rows.payments.map(p => ({ ...p, amount: Number(p.amount) || 0,
+          job_no: jobById[p.job_id]?.job_no || '—', customer: jobById[p.job_id]?.customer || '—' })),
+      };
+    }
+
+    // ============================================================
+    // DATA — saving (preview mode applies the same rules as the database triggers)
+    // ============================================================
+    function previewLeadRules(rec, before) {
+      if (rec.status === 'won') rec.won_at ||= new Date().toISOString();
+      else rec.won_at = null;
+      if (rec.status === 'won' && before.status !== 'won' && !raw.customers.some(c => c.lead_id === rec.id)) {
+        raw.customers.push({ id: 'pc' + (++previewSeq), lead_id: rec.id, name: rec.name, phone: rec.phone, email: rec.email,
+          address: rec.address, source: rec.source, customer_since: localDay(rec.won_at), reviewed: false,
+          created_at: new Date().toISOString() });
+      }
+    }
+
+    // Insert (id = null) or update one record. Returns { data: savedRow, error }.
+    async function saveRecord(type, id, values) {
+      if (PREVIEW_MODE) {
+        let rec = id && raw[type].find(r => r.id === id);
+        const before = rec ? { ...rec } : {};
+        if (rec) Object.assign(rec, values);
+        else {
+          rec = { id: 'p' + type[0] + (++previewSeq), created_at: new Date().toISOString(), ...values };
+          if (type === 'jobs') rec.job_no = 'WOW-' + (1001 + raw.jobs.length);
+          if (type === 'customers') rec.customer_since ||= today();
+          raw[type].push(rec);
+        }
+        if (type === 'leads') previewLeadRules(rec, before);
+        return { data: rec, error: null };
+      }
+      const q = id ? db.from(type).update(values).eq('id', id) : db.from(type).insert(values);
+      return q.select().single();
+    }
+
+    async function deleteRecord(type, id) {
+      if (PREVIEW_MODE) {
+        if (type === 'customers' && raw.jobs.some(j => j.customer_id === id))
+          return { error: { message: 'This customer has jobs — delete those first.' } };
+        raw[type] = raw[type].filter(r => r.id !== id);
+        if (type === 'jobs') raw.payments = raw.payments.filter(p => p.job_id !== id);
+        return { error: null };
+      }
+      const res = await db.from(type).delete().eq('id', id);
+      if (res.error && /foreign key/i.test(res.error.message))
+        res.error.message = type === 'customers' ? 'This customer has jobs — delete those first.' : 'This is still in use.';
+      return res;
+    }
+
+    async function saveSetting(key, value) {
+      if (PREVIEW_MODE) { raw.settings[key] = value; return { error: null }; }
+      return db.from('app_settings').upsert({ key, value, updated_at: new Date().toISOString() });
+    }
+
+    async function saveSource(row) {
+      if (PREVIEW_MODE) {
+        const s = raw.lead_sources.find(x => x.key === row.key);
+        s ? Object.assign(s, row) : raw.lead_sources.push(row);
+        return { error: null };
+      }
+      return db.from('lead_sources').upsert(row);
+    }
+
+    async function deleteSource(key) {
+      if (PREVIEW_MODE) { raw.lead_sources = raw.lead_sources.filter(s => s.key !== key); return { error: null }; }
+      return db.from('lead_sources').delete().eq('key', key);
+    }
+
+    // One amount per month + source; saving again replaces it
+    async function upsertSpend(month, source, amount) {
+      if (PREVIEW_MODE) {
+        const s = raw.marketing_spend.find(x => x.month === month && x.source === source);
+        s ? (s.amount = amount) : raw.marketing_spend.push({ id: 'ps' + (++previewSeq), month, source, amount });
+        return { error: null };
+      }
+      return db.from('marketing_spend').upsert({ month, source, amount }, { onConflict: 'month,source' });
+    }
+
+    async function saveStatus(viewName, rec, prev) {
+      const { error } = await saveRecord(viewName, rec.id, { status: rec.status });
+      if (error) {
+        rec.status = prev;
+        render();
+        return toast('Save failed: ' + error.message);
+      }
+      const won = viewName === 'leads' && rec.status === 'won';
+      toast(`${rec.name || rec.job_no} → ${statusInfo(VIEWS[viewName].statuses, rec.status).label}`
+        + (won ? ' · customer created' : '') + (PREVIEW_MODE ? ' (preview)' : ''));
+      // Marking a lead "won" creates its customer — reload to show it
+      if (won) loadData();
+    }
+
+    // ============================================================
+    // RENDER — dashboard
+    // ============================================================
+    function render() {
+      renderKpis();
+      renderTable();
+    }
+
+    // A KPI card is hidden when the status it counts has been deleted on the Settings page
+    const kpiShown = k => !k.requires || statusExists(...k.requires);
+
+    function renderKpis() {
+      const ctx = { spend: spendInRange() };
+      if (!kpiShown(activeKpiDef())) activeKpi = 'leads_all';
+      $('kpiGroups').innerHTML = KPI_GROUPS.map(g => `
+        <div class="kpi-group">
+          <div class="kpi-group-head">
+            <div class="kpi-group-title">${g.title}</div>
+            ${g.link ? `<a href="${g.link[0]}">${g.link[1]}</a>` : ''}
+          </div>
+          <div class="kpis">${g.kpis.filter(kpiShown).map(k => {
+            const rows = inRange(k.view, data[k.view], k.dateKey).filter(k.filter);
+            return `<button class="kpi ${k.id === activeKpi ? 'active' : ''}" data-kpi="${k.id}">
+              <span class="kpi-dot" style="background:${k.dot}"></span>
+              <div class="kpi-label">${k.label}</div>
+              <div class="kpi-value">${k.value(rows, ctx)}</div>
+              <div class="kpi-sub">${k.sub(rows, ctx)}</div>
+            </button>`;
+          }).join('')}</div>
+        </div>`).join('');
+    }
+
+    function currentRows() {
+      const kpi = activeKpiDef();
+      const view = VIEWS[kpi.view];
+      const q = $('searchInput').value.trim().toLowerCase();
+      let list = inRange(kpi.view, data[kpi.view], kpi.dateKey).filter(kpi.filter);
+      if (q) list = list.filter(r => view.search.some(f => String(r[f] || '').toLowerCase().includes(q)));
+      if (statusFilter.size) list = list.filter(r => statusFilter.has(r.status));
+      for (const [key, { from, to }] of Object.entries(dateFilters)) {
+        if (!from && !to) continue;
+        list = list.filter(r => {
+          const d = localDay(r[key]);
+          return d && (!from || d >= from) && (!to || d <= to);
+        });
+      }
+      const sortKey = sort.key || view.dateKey;
+      return list.sort((a, b) => {
+        const x = a[sortKey] ?? '', y = b[sortKey] ?? '';
+        return (x > y ? 1 : x < y ? -1 : 0) * sort.dir;
+      });
+    }
+
+    // Only redrawn when switching record type, so typing in a date box keeps focus
+    function renderFilterBar(viewName, force) {
+      if (filterBarView === viewName && !force) return;
+      filterBarView = viewName;
+      dateFilters = {};
+      statusFilter = new Set();
+      const statuses = VIEWS[viewName].statuses;
+      const statusHtml = !statuses ? '' : `
+        <div class="filter-group">
+          <label>Status</label>
+          <div class="dropdown">
+            <button class="dropdown-btn" data-toggle="statusMenu"><span id="statusBtnLabel">All statuses</span> <span class="caret">▼</span></button>
+            <div class="dropdown-menu hidden" id="statusMenu">
+              ${Object.entries(statuses).map(([k, s]) => `<label><input type="checkbox" data-status="${esc(k)}">
+                <span class="status-pill" style="background:${s.bg};color:${s.fg}">${esc(s.label)}</span></label>`).join('')}
+              <div class="menu-foot"><button data-status-all>Select all</button><button data-status-none>Clear</button></div>
+            </div>
+          </div>
+        </div>`;
+      $('filterBar').innerHTML = statusHtml + VIEWS[viewName].filters.map(f => `
+        <div class="filter-group">
+          <label>${f.label}</label>
+          <div class="range">
+            <input type="date" data-key="${f.key}" data-end="from" aria-label="${f.label} from">
+            <span>to</span>
+            <input type="date" data-key="${f.key}" data-end="to" aria-label="${f.label} to">
+          </div>
+        </div>`).join('') + `<button class="btn-clear" id="clearFilters">Clear filters</button>`;
+      renderColumnsMenu(viewName);
+    }
+
+    function updateStatusLabel() {
+      const el = $('statusBtnLabel');
+      if (!el) return;
+      const statuses = VIEWS[filterBarView].statuses;
+      el.innerHTML = !statusFilter.size ? 'All statuses'
+        : statusFilter.size === 1 ? esc(statusInfo(statuses, [...statusFilter][0]).label)
+        : `Status <span class="badge">${statusFilter.size}</span>`;
+    }
+
+    function renderColumnsMenu(viewName) {
+      const hidden = hiddenCols[viewName] || [];
+      $('columnsMenu').innerHTML = VIEWS[viewName].columns.map(c =>
+        `<label><input type="checkbox" data-col="${c.key}" ${hidden.includes(c.key) ? '' : 'checked'}> ${c.label}</label>`
+      ).join('') + `<div class="menu-foot"><button data-cols-all>Show all</button></div>`;
+    }
+
+    function renderTable() {
+      const kpi = activeKpiDef();
+      const view = VIEWS[kpi.view];
+      renderFilterBar(kpi.view);
+      const list = currentRows();
+      const sortKey = sort.key || view.dateKey;
+      const cols = visibleColumns(kpi.view);
+
+      $('tableTitle').textContent = kpi.label;
+      $('tableCount').textContent = `(${list.length})`;
+      $('searchInput').placeholder = 'Search ' + kpi.view + '…';
+      $('theadRow').innerHTML = cols.map(c =>
+        `<th class="${c.cls || ''}" data-sort="${c.key}">${c.label}${sortKey === c.key ? `<span class="arrow">${sort.dir > 0 ? '▲' : '▼'}</span>` : ''}</th>`
+      ).join('');
+
+      const tbody = $('tbody');
+      if (!list.length) {
+        tbody.innerHTML = `<tr><td colspan="${cols.length}" class="empty">No records match this view.</td></tr>`;
+        return;
+      }
+      // Payment rows open their job; every other row opens its own record page
+      tbody.innerHTML = list.map(r => `<tr class="row" data-href="${kpi.view === 'payments' ? `#/jobs/${esc(r.job_id)}` : `#/${kpi.view}/${esc(r.id)}`}">${cols.map(c =>
+        `<td class="${c.cls || ''}">${c.html ? c.html(r) : esc(r[c.key] ?? '—')}</td>`).join('')}</tr>`
+      ).join('');
+    }
+
+    // ============================================================
+    // EVENTS — dashboard
+    // ============================================================
+    $('kpiGroups').addEventListener('click', e => {
+      const card = e.target.closest('.kpi');
+      if (!card) return;
+      const prevView = activeKpiDef().view;
+      activeKpi = card.dataset.kpi;
+      if (activeKpiDef().view !== prevView) {
+        sort = { key: null, dir: -1 };
+        $('searchInput').value = '';
+      }
+      render();
+      $('panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    $('theadRow').addEventListener('click', e => {
+      const th = e.target.closest('th');
+      if (!th) return;
+      const view = VIEWS[activeKpiDef().view];
+      const cur = sort.key || view.dateKey;
+      sort = cur === th.dataset.sort ? { key: cur, dir: -sort.dir } : { key: th.dataset.sort, dir: 1 };
+      render();
+    });
+
+    $('tbody').addEventListener('change', e => {
+      if (!e.target.classList.contains('status-select')) return;
+      const viewName = activeKpiDef().view;
+      const rec = data[viewName].find(r => r.id === e.target.dataset.id);
+      const prev = rec.status;
+      rec.status = e.target.value;
+      render();
+      saveStatus(viewName, rec, prev);
+    });
+
+    $('tbody').addEventListener('click', e => {
+      if (e.target.closest('select, a')) return;
+      const tr = e.target.closest('tr.row');
+      if (tr) location.hash = tr.dataset.href;
+    });
+
+    $('filterBar').addEventListener('change', e => {
+      const { key, end, status } = e.target.dataset;
+      if (status) {
+        e.target.checked ? statusFilter.add(status) : statusFilter.delete(status);
+        updateStatusLabel();
+      } else if (key) {
+        dateFilters[key] = { ...dateFilters[key], [end]: e.target.value };
+      } else return;
+      renderTable();
+    });
+
+    $('filterBar').addEventListener('click', e => {
+      const t = e.target;
+      if (t.id === 'clearFilters') {
+        document.querySelectorAll('#filterBar input').forEach(i => { i.value = ''; i.checked = false; });
+        dateFilters = {};
+        statusFilter.clear();
+      } else if (t.matches('[data-status-all], [data-status-none]')) {
+        const on = t.matches('[data-status-all]');
+        document.querySelectorAll('#statusMenu input[data-status]').forEach(i => {
+          i.checked = on;
+          on ? statusFilter.add(i.dataset.status) : statusFilter.delete(i.dataset.status);
+        });
+      } else return;
+      updateStatusLabel();
+      renderTable();
+    });
+
+    // Column chooser
+    $('columnsMenu').addEventListener('change', e => {
+      const col = e.target.dataset.col;
+      if (!col) return;
+      const viewName = activeKpiDef().view;
+      const hidden = new Set(hiddenCols[viewName] || []);
+      if (e.target.checked) hidden.delete(col);
+      else if (hidden.size < VIEWS[viewName].columns.length - 1) hidden.add(col);
+      else { e.target.checked = true; toast('Keep at least one column visible'); return; }
+      hiddenCols[viewName] = [...hidden];
+      saveHiddenCols();
+      renderTable();
+    });
+
+    $('columnsMenu').addEventListener('click', e => {
+      if (!e.target.matches('[data-cols-all]')) return;
+      const viewName = activeKpiDef().view;
+      hiddenCols[viewName] = [];
+      saveHiddenCols();
+      renderColumnsMenu(viewName);
+      renderTable();
+    });
+
+    // Open/close dropdowns; clicking anywhere else closes them
+    document.addEventListener('click', e => {
+      const toggle = e.target.closest('[data-toggle]');
+      const insideMenu = e.target.closest('.dropdown-menu');
+      document.querySelectorAll('.dropdown-menu').forEach(m => {
+        if (toggle && m.id === toggle.dataset.toggle) m.classList.toggle('hidden');
+        else if (!insideMenu || !m.contains(insideMenu)) m.classList.add('hidden');
+      });
+    });
+
+    $('searchInput').addEventListener('input', renderTable);
+    $('rangeSelect').addEventListener('change', () => {
+      $('customRange').classList.toggle('hidden', $('rangeSelect').value !== 'custom');
+      render();
+    });
+    $('customRange').addEventListener('change', render);
+    $('refreshBtn').addEventListener('click', loadData);
+
+    $('exportBtn').addEventListener('click', () => {
+      const kpi = activeKpiDef();
+      const rows = currentRows();
+      const visible = visibleColumns(kpi.view);
+      const cols = visible.map(c => c.key);
+      const csv = [visible.map(c => `"${c.label}"`).join(',')].concat(rows.map(r => cols.map(c => `"${String(r[c] ?? '').replace(/"/g, '""')}"`).join(','))).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+      a.download = `wow-${kpi.id}-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    });
+
+    function toast(msg) {
+      const t = $('toast');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => t.classList.add('hidden'), 3500);
+    }
+
+    // ============================================================
+    // RECORD PAGES — fields shown when you open / add a record. Edit fields here.
+    // types: text (default), tel, email, number, date, datetime, select, textarea, checkbox, readonly
+    // suggest: offers values already used elsewhere · zero: empty counts as 0
+    // ============================================================
+    const jobProfit = r => (r.contract_value || 0) - (r.materials_cost || 0) - (r.labor_cost || 0);
+    const PAY_METHODS = ['Check', 'Cash', 'Card', 'Zelle', 'Bank transfer', 'Financing', 'Other'];
+    const customerOfLead = lead => data.customers.find(c => c.lead_id === lead.id);
+
+    const FORMS = {
+      leads: {
+        singular: 'Lead',
+        defaults: () => ({ status: 'new', created_at: new Date().toISOString(), source: 'phone' }),
+        title: r => r.name,
+        meta: r => [
+          r.phone && `<a href="tel:${esc(r.phone)}">${esc(r.phone)}</a>`,
+          r.email && `<a href="mailto:${esc(r.email)}">${esc(r.email)}</a>`,
+          pill(LEAD_STATUSES, r.status),
+          esc(sourceLabel(r.source)),
+        ],
+        stats: r => [['Estimate', money(r.estimate_total)], ['Lead date', date(r.created_at)],
+          ['Appointment', r.appointment_date ? dateTime(r.appointment_date) : 'Not set'],
+          ['Won on', r.won_at ? date(r.won_at) : '—']],
+        sections: [
+          { title: 'Contact', fields: [
+            { key: 'name', label: 'Name', required: true },
+            { key: 'phone', label: 'Phone', type: 'tel', required: true },
+            { key: 'email', label: 'Email', type: 'email', required: true },
+            { key: 'address', label: 'Address', wide: true },
+          ]},
+          { title: 'Status & dates', fields: [
+            { key: 'status', label: 'Status', type: 'select', options: () => labelsOf(LEAD_STATUSES), required: true },
+            { key: 'created_at', label: 'Lead date', type: 'datetime', required: true },
+            { key: 'appointment_date', label: 'Appointment', type: 'datetime' },
+            { key: 'follow_up', label: 'Follow-up date', type: 'date' },
+            { key: 'won_at', label: 'Won on', type: 'datetime', hint: 'Filled in automatically when the status becomes Won' },
+          ]},
+          { title: 'Project', fields: [
+            { key: 'source', label: 'Source', type: 'select', options: () => ({ ...SOURCES }) },
+            { key: 'project_type', label: 'Project type', suggest: true },
+            { key: 'timeline', label: 'Timeline', suggest: true },
+            { key: 'material_grade', label: 'Material grade', suggest: true },
+            { key: 'estimate_total', label: 'Estimate ($)', type: 'number', integer: true },
+            { key: 'selected_addons', label: 'Add-ons chosen', type: 'readonly', wide: true,
+              show: r => Array.isArray(r.selected_addons) && r.selected_addons.length ? esc(r.selected_addons.join(', ')) : '—' },
+            { key: 'photo_urls', label: 'Photos', type: 'readonly', wide: true,
+              show: r => Array.isArray(r.photo_urls) && r.photo_urls.length
+                ? r.photo_urls.map((u, i) => `<a href="${esc(u)}" target="_blank" rel="noopener">Photo ${i + 1}</a>`).join(' · ') : '—' },
+            { key: 'message', label: 'Message', type: 'textarea', wide: true },
+          ]},
+        ],
+      },
+      customers: {
+        singular: 'Customer',
+        defaults: () => ({ customer_since: today() }),
+        title: r => r.name,
+        meta: r => [
+          r.phone && `<a href="tel:${esc(r.phone)}">${esc(r.phone)}</a>`,
+          r.email && `<a href="mailto:${esc(r.email)}">${esc(r.email)}</a>`,
+          r.source && esc(sourceLabel(r.source)),
+          r.lead_id && data.leads.some(l => l.id === r.lead_id) && `<a href="#/leads/${esc(r.lead_id)}">View original lead →</a>`,
+        ],
+        stats: r => [['Jobs', r.job_count || 0], ['Lifetime value', money(r.lifetime_value)],
+          ['Balance due', r.balance > 0 ? `<span class="owed">${money(r.balance)}</span>` : '$0']],
+        sections: [
+          { title: 'Contact', fields: [
+            { key: 'name', label: 'Name', required: true },
+            { key: 'phone', label: 'Phone', type: 'tel' },
+            { key: 'email', label: 'Email', type: 'email' },
+            { key: 'address', label: 'Street address', wide: true },
+            { key: 'city', label: 'City', suggest: true },
+          ]},
+          { title: 'Details', fields: [
+            { key: 'source', label: 'Lead source', type: 'select', options: () => ({ ...SOURCES }) },
+            { key: 'customer_since', label: 'Customer since', type: 'date' },
+            { key: 'lead_id', label: 'Original lead', type: 'select',
+              // Leads not already linked to a different customer
+              options: rec => Object.fromEntries(data.leads
+                .filter(l => !data.customers.some(c => c.lead_id === l.id && c.id !== rec.id))
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(l => [l.id, `${l.name} — ${date(l.created_at)}`])) },
+            { key: 'reviewed', label: 'Has left us a review', type: 'checkbox' },
+            { key: 'notes', label: 'Notes', type: 'textarea', wide: true },
+          ]},
+        ],
+      },
+      jobs: {
+        singular: 'Job',
+        defaults: params => ({ status: 'scheduled', customer_id: params.get('customer') || '' }),
+        title: r => r.job_no ? `${r.job_no} · ${r.customer}` : null,
+        meta: r => [
+          r.customer_id && `Customer: <a href="#/customers/${esc(r.customer_id)}">${esc(r.customer)}</a>`,
+          r.city && esc(r.city),
+          pill(JOB_STATUSES, r.status),
+        ],
+        stats: r => [['Contract', money(r.contract_value)], ['Paid', money(r.paid)],
+          ['Balance', r.balance > 0 ? `<span class="owed">${money(r.balance)}</span>` : 'Paid in full'],
+          ['Gross profit', money(jobProfit(r))]],
+        sections: [
+          { title: 'Job', fields: [
+            { key: 'customer_id', label: 'Customer', type: 'select', required: true, addNew: true,
+              options: () => Object.fromEntries([...data.customers].sort((a, b) => a.name.localeCompare(b.name))
+                .map(c => [c.id, c.name + (c.city ? ' — ' + c.city : '')])) },
+            { key: 'project_type', label: 'Project type', suggest: true },
+            { key: 'crew', label: 'Crew', suggest: true },
+            { key: 'status', label: 'Status', type: 'select', options: () => labelsOf(JOB_STATUSES), required: true },
+          ]},
+          { title: 'Schedule', fields: [
+            { key: 'start_date', label: 'Start date', type: 'date' },
+            { key: 'end_date', label: 'Completion date', type: 'date' },
+          ]},
+          { title: 'Money', fields: [
+            { key: 'contract_value', label: 'Contract value ($)', type: 'number', zero: true },
+            { key: 'materials_cost', label: 'Materials cost ($)', type: 'number', zero: true },
+            { key: 'labor_cost', label: 'Labor cost ($)', type: 'number', zero: true },
+            { key: 'paid', label: 'Paid so far', type: 'readonly', show: r => money(r.paid) + ' <span class="muted-cell">(from payments below)</span>' },
+            { key: 'balance', label: 'Balance due', type: 'readonly', show: r => money((r.contract_value || 0) - (r.paid || 0)) },
+            { key: 'profit', label: 'Gross profit', type: 'readonly',
+              show: r => money(jobProfit(r)) + (r.contract_value ? ` (${Math.round(jobProfit(r) / r.contract_value * 100)}% margin)` : '') },
+          ]},
+          { title: 'Notes', fields: [
+            { key: 'notes', label: 'Notes', type: 'textarea', wide: true },
+          ]},
+        ],
+      },
+    };
+
+    const formFields = type => FORMS[type].sections.flatMap(s => s.fields);
+
+    // Job form: picking "+ Add new customer…" opens the customer's contact fields on the same page
+    const NEW_CUSTOMER = '__new';
+    const newCustomerFields = () => FORMS.customers.sections.find(s => s.title === 'Contact').fields;
+    const newCustomerBox = open => `<fieldset class="wide nc-box${open ? '' : ' hidden'}" id="ncBox"${open ? '' : ' disabled'}>
+      <legend>New customer</legend>
+      <div class="form-grid">${newCustomerFields().map(f => fieldHtml('customers', f, {}, 'nc_')).join('')}</div>
+    </fieldset>`;
+
+    function fieldHtml(type, f, rec, prefix = '') {
+      const v = rec[f.key];
+      const id = prefix + f.key;
+      const name = `name="${id}" id="f_${id}"`;
+      const req = f.required ? ' required' : '';
+      const hint = f.hint ? `<div class="hint">${f.hint}</div>` : '';
+      const wrap = inner => `<div class="${f.wide ? 'wide' : ''}">
+        <label for="f_${id}">${f.label}${f.required ? ' <span class="req">*</span>' : ''}</label>${inner}${hint}</div>`;
+      switch (f.type) {
+        case 'readonly': return wrap(`<div class="ro" data-ro="${f.key}">${f.show(rec)}</div>`);
+        case 'checkbox': return `<div><label class="check"><input type="checkbox" ${name} ${v ? 'checked' : ''}> ${f.label}</label></div>`;
+        case 'textarea': return wrap(`<textarea ${name}>${esc(v)}</textarea>`);
+        case 'select': {
+          const opts = { ...f.options(rec) };
+          if (v && v !== NEW_CUSTOMER && !(v in opts)) opts[v] = v;  // keep values that aren't in the list
+          const select = wrap(`<select ${name}${req}>${f.required && v ? '' : '<option value="">—</option>'}
+            ${f.addNew ? `<option value="${NEW_CUSTOMER}" ${v === NEW_CUSTOMER ? 'selected' : ''}>+ Add new customer…</option>` : ''}
+            ${Object.entries(opts).map(([k, l]) => `<option value="${esc(k)}" ${String(k) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`);
+          return f.addNew ? select + newCustomerBox(v === NEW_CUSTOMER) : select;
+        }
+        case 'date': return wrap(`<input type="date" ${name} value="${v ? localDay(v) : ''}"${req}>`);
+        case 'datetime': return wrap(`<input type="datetime-local" ${name} value="${v ? localDateTime(v) : ''}"${req}>`);
+        case 'number': return wrap(`<input type="number" ${name} min="0" step="${f.integer ? 1 : 0.01}" value="${v ?? ''}"${req}>`);
+        default: {
+          const list = f.suggest ? [...new Set(data[type].map(r => r[f.key]).filter(Boolean))].sort() : [];
+          return wrap(`<input type="${f.type || 'text'}" ${name} value="${esc(v)}"${req}${list.length ? ` list="dl_${id}"` : ''}>
+            ${list.length ? `<datalist id="dl_${id}">${list.map(o => `<option value="${esc(o)}">`).join('')}</datalist>` : ''}`);
+        }
+      }
+    }
+
+    function readForm(type, form, fields = formFields(type), prefix = '') {
+      const values = {};
+      for (const f of fields) {
+        if (f.type === 'readonly') continue;
+        const el = form.elements[prefix + f.key];
+        if (f.type === 'checkbox') values[f.key] = el.checked;
+        else if (f.type === 'number') values[f.key] = el.value === '' ? (f.zero ? 0 : null) : (f.integer ? Math.round(+el.value) : +el.value);
+        else if (f.type === 'datetime') values[f.key] = el.value ? new Date(el.value).toISOString() : null;
+        else values[f.key] = el.value.trim() || null;
+      }
+      return values;
+    }
+
+    const statsHtml = (type, rec) => FORMS[type].stats(rec).map(([l, v]) =>
+      `<div class="record-stat"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div></div>`).join('');
+
+    function paymentsHtml(job) {
+      const list = data.payments.filter(p => p.job_id === job.id).sort((a, b) => (a.paid_on > b.paid_on ? 1 : -1));
+      return `<h2>Payments <span class="muted-cell" style="font-size:13px;font-weight:600">${money(job.paid)} of ${money(job.contract_value)} received</span></h2>
+        ${list.length ? `<div class="table-wrap"><table class="mini-table">
+          <thead><tr><th>Date</th><th class="num">Amount</th><th>Method</th><th class="hide-sm">Note</th><th></th></tr></thead>
+          <tbody>${list.map(p => `<tr><td>${date(p.paid_on)}</td><td class="num">${money(p.amount)}</td><td>${esc(p.method || '—')}</td>
+            <td class="hide-sm">${esc(p.note || '')}</td>
+            <td class="num"><button type="button" class="icon-btn" data-action="del-payment" data-id="${esc(p.id)}" title="Delete payment" aria-label="Delete payment">×</button></td></tr>`).join('')}</tbody>
+        </table></div>` : '<p class="muted-cell">No payments recorded yet.</p>'}
+        <div class="pay-add">
+          <input type="date" id="payDate" value="${today()}" aria-label="Payment date">
+          <input type="number" id="payAmount" min="0" step="0.01" placeholder="Amount $" aria-label="Amount">
+          <select id="payMethod" aria-label="Payment method">${PAY_METHODS.map(m => `<option>${m}</option>`).join('')}</select>
+          <input type="text" id="payNote" placeholder="Note (optional)" aria-label="Note">
+          <button type="button" class="btn btn-gold" data-action="add-payment">Add payment</button>
+        </div>`;
+    }
+
+    // Lead page: shows whether the lead has become a customer, or a button to convert it
+    function conversionHtml(lead) {
+      const cust = customerOfLead(lead);
+      if (cust) return `<div class="convert-banner"><span>✓ Won${lead.won_at ? ' on ' + date(lead.won_at) : ''} — this lead is now a customer</span>
+        <a href="#/customers/${esc(cust.id)}">Open customer page →</a></div>`;
+      return `<div class="convert-banner pending"><span>${lead.status === 'won' ? 'Marked Won, but no customer record yet' : 'Not a customer yet'}</span>
+        <button type="button" class="btn btn-gold" data-action="convert">Convert to customer</button></div>`;
+    }
+
+    let currentRecord = null;  // { type, rec, isNew } for the record page that's open
+
+    function renderRecord(type, id, params) {
+      const view = $('recordView');
+      const cfg = FORMS[type];
+      const isNew = id === 'new';
+      const rec = isNew ? cfg.defaults(params) : data[type].find(r => String(r.id) === id);
+      const back = `<a class="back-link" href="#/">← Back to dashboard</a>`;
+      if (!rec) {
+        view.innerHTML = back + `<div class="empty">This ${cfg.singular.toLowerCase()} could not be found — it may have been deleted.</div>`;
+        return;
+      }
+      // No customers yet → a new job starts with the new-customer fields open
+      if (type === 'jobs' && isNew && !rec.customer_id && !data.customers.length) rec.customer_id = NEW_CUSTOMER;
+      currentRecord = { type, rec, isNew };
+
+      const meta = isNew ? [] : cfg.meta(rec).filter(Boolean);
+      const customerJobs = type === 'customers' && !isNew ? data.jobs.filter(j => j.customer_id === rec.id) : null;
+
+      view.innerHTML = `${back}
+        <div class="record-head">
+          <div>
+            <div class="record-type">${cfg.singular}</div>
+            <h1>${esc(isNew ? 'New ' + cfg.singular.toLowerCase() : cfg.title(rec) || cfg.singular)}</h1>
+            ${meta.length ? `<div class="record-meta">${meta.join('<span>·</span>')}</div>` : ''}
+          </div>
+        </div>
+        ${type === 'leads' && !isNew ? conversionHtml(rec) : ''}
+        ${isNew ? '' : `<div class="record-stats" id="recordStats">${statsHtml(type, rec)}</div>`}
+        <form id="recordForm" novalidate>
+          ${cfg.sections.map(s => `<section class="form-section"><h2>${s.title}</h2>
+            <div class="form-grid">${s.fields.map(f => fieldHtml(type, f, rec)).join('')}</div></section>`).join('')}
+          ${type === 'jobs' ? `<section class="form-section" id="paymentsSection">${isNew
+            ? '<h2>Payments</h2><p class="muted-cell">Create the job first, then record deposits and payments here.</p>'
+            : paymentsHtml(rec)}</section>` : ''}
+          ${customerJobs ? `<section class="form-section">
+            <h2>Jobs (${customerJobs.length}) <a class="btn btn-ghost" href="#/jobs/new?customer=${encodeURIComponent(rec.id)}">+ Add job for this customer</a></h2>
+            ${customerJobs.length ? `<div class="table-wrap"><table class="mini-table">
+              <thead><tr><th>Job #</th><th>Project</th><th class="hide-sm">Start</th><th class="num">Contract</th><th class="num">Balance</th><th>Status</th></tr></thead>
+              <tbody>${customerJobs.map(j => `<tr class="row" data-href="#/jobs/${esc(j.id)}">
+                <td class="name">${esc(j.job_no)}</td><td>${esc(j.project_type || '—')}</td><td class="hide-sm">${date(j.start_date)}</td>
+                <td class="num">${money(j.contract_value)}</td><td class="num">${owedCell(j.balance, 'Paid')}</td>
+                <td>${pill(JOB_STATUSES, j.status)}</td></tr>`).join('')}</tbody>
+            </table></div>` : '<p class="muted-cell">No jobs yet.</p>'}
+          </section>` : ''}
+          <div class="form-actions">
+            <div>${isNew ? '' : `<button type="button" class="btn btn-danger" data-action="delete">Delete ${cfg.singular.toLowerCase()}</button>`}</div>
+            <div class="right">
+              <a class="btn btn-ghost" href="#/">Cancel</a>
+              <button type="submit" class="btn btn-gold" id="saveBtn">${isNew ? 'Create ' + cfg.singular.toLowerCase() : 'Save changes'}</button>
+            </div>
+          </div>
+        </form>`;
+    }
+
+    function updateLive(form) {
+      const { type, rec } = currentRecord;
+      const live = { ...rec, ...readForm(type, form) };
+      form.querySelectorAll('[data-ro]').forEach(el => {
+        el.innerHTML = formFields(type).find(f => f.key === el.dataset.ro).show(live);
+      });
+    }
+
+    // Saves the record form. convert = also make the lead a customer, then open the customer page.
+    async function submitRecord(form, convert = false) {
+      if (!form.reportValidity()) return;
+      const { type, rec, isNew } = currentRecord;
+      const btn = $('saveBtn');
+      const label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Saving…';
+      const done = () => { btn.disabled = false; btn.textContent = label; };
+      const values = readForm(type, form);
+      if (convert) values.status = 'won';
+      if (values.customer_id === NEW_CUSTOMER) {
+        // Create the customer first; remembered so a failed job save doesn't create it twice on retry
+        if (!currentRecord.newCustomerId) {
+          const { data: c, error } = await saveRecord('customers', null, readForm('customers', form, newCustomerFields(), 'nc_'));
+          if (error) { done(); return toast('Could not create customer: ' + error.message); }
+          currentRecord.newCustomerId = c.id;
+        }
+        values.customer_id = currentRecord.newCustomerId;
+      }
+      const { data: saved, error } = await saveRecord(type, isNew ? null : rec.id, values);
+      done();
+      if (error) return toast('Save failed: ' + error.message);
+      await loadData();
+      if (convert) {
+        let cust = data.customers.find(c => c.lead_id === saved.id);
+        if (!cust) {  // already Won before, so the database didn't create one — create it now
+          const { data: c, error: cErr } = await saveRecord('customers', null, { lead_id: saved.id, name: saved.name,
+            phone: saved.phone, email: saved.email, address: saved.address, source: saved.source,
+            customer_since: localDay(saved.won_at || new Date()) });
+          if (cErr) return toast('Could not create customer: ' + cErr.message);
+          await loadData();
+          cust = c;
+        }
+        toast(`${saved.name} is now a customer` + (PREVIEW_MODE ? ' (preview)' : ''));
+        return void (location.hash = `#/customers/${cust.id}`);
+      }
+      toast(`${FORMS[type].singular} ${isNew ? 'created' : 'saved'}` + (PREVIEW_MODE ? ' (preview)' : ''));
+      if (isNew) location.replace(`#/${type}/${saved.id}`);
+      else route();
+    }
+
+    async function addPayment(form) {
+      const job = currentRecord.rec;
+      const amount = Number($('payAmount').value);
+      if (!(amount > 0)) return toast('Enter the payment amount');
+      if (!$('payDate').value) return toast('Enter the payment date');
+      const { error } = await saveRecord('payments', null, { job_id: job.id, paid_on: $('payDate').value, amount,
+        method: $('payMethod').value, note: $('payNote').value.trim() || null });
+      if (error) return toast('Could not add payment: ' + error.message);
+      await refreshJobMoney(form);
+      toast(`${money(amount)} payment added` + (PREVIEW_MODE ? ' (preview)' : ''));
+    }
+
+    // After a payment change, refresh only the money parts so unsaved edits in the form stay put
+    async function refreshJobMoney(form) {
+      await loadData();
+      const fresh = data.jobs.find(j => j.id === currentRecord.rec.id);
+      currentRecord.rec = fresh;
+      $('paymentsSection').innerHTML = paymentsHtml(fresh);
+      $('recordStats').innerHTML = statsHtml('jobs', fresh);
+      updateLive(form);
+    }
+
+    // ============================================================
+    // MARKETING PAGE — spend per month & source, ROAS by source
+    // ============================================================
+    function renderMarketing() {
+      const spend = spendInRange();
+      const leadsIn = inRange('leads', data.leads);
+      const wonIn = inRange('leads', data.leads.filter(l => l.status === 'won'), 'won_at');
+      const jobsIn = inRange('jobs', data.jobs.filter(notCancelled));
+      const keys = [...new Set([...sources.map(s => s.key), ...leadsIn.map(l => l.source), ...Object.keys(spend.bySource)])]
+        .filter(k => k !== '');
+      const rows = keys.map(k => ({
+        label: sourceLabel(k), paid: isPaidSource(k), spend: spend.bySource[k] || 0,
+        leads: leadsIn.filter(l => l.source === k).length,
+        won: wonIn.filter(l => l.source === k).length,
+        revenue: sum(jobsIn.filter(j => j.source === k), 'contract_value'),
+      })).filter(r => r.spend || r.leads || r.revenue);
+      if (spend.bySource['']) rows.push({ label: `Default monthly spend (${money(defaultMonthlySpend)}/mo)`, paid: true,
+        spend: spend.bySource[''], leads: null, won: null, revenue: null, isDefault: true });
+      const paidRevenue = sum(jobsIn.filter(j => isPaidSource(j.source)), 'contract_value');
+      const paidLeads = leadsIn.filter(l => isPaidSource(l.source)).length;
+
+      const months = [...new Set(spendRows.map(s => localDay(s.month)))].sort().reverse();
+      const thisMonth = today().slice(0, 7);
+
+      $('recordView').innerHTML = `<a class="back-link" href="#/">← Back to dashboard</a>
+        <div class="record-head"><div>
+          <div class="record-type">Marketing</div>
+          <h1>Spend &amp; ROAS by source</h1>
+          <div class="record-meta">Date range: <b>${esc(rangeLabel())}</b> · <a href="#/">change it on the dashboard</a></div>
+        </div></div>
+        <div class="record-stats">
+          <div class="record-stat"><div class="kpi-label">Lead spend</div><div class="kpi-value">${money(spend.total)}</div></div>
+          <div class="record-stat"><div class="kpi-label">ROAS (paid sources)</div><div class="kpi-value">${roas(paidRevenue, spend.total)}</div></div>
+          <div class="record-stat"><div class="kpi-label">Cost per paid lead</div><div class="kpi-value">${paidLeads ? money(spend.total / paidLeads) : '—'}</div></div>
+          <div class="record-stat"><div class="kpi-label">Blended ROAS</div><div class="kpi-value">${roas(sum(jobsIn, 'contract_value'), spend.total)}</div></div>
+        </div>
+
+        <section class="form-section">
+          <h2>By source</h2>
+          <div class="table-wrap"><table class="mini-table">
+            <thead><tr><th>Source</th><th>Paid?</th><th class="num">Spend</th><th class="num">Leads</th><th class="num">Cost / lead</th>
+              <th class="num">Won</th><th class="num">Revenue</th><th class="num">ROAS</th></tr></thead>
+            <tbody>${rows.map(r => `<tr><td class="name">${esc(r.label)}</td><td>${r.paid ? 'Paid' : '<span class="muted-cell">Free</span>'}</td>
+              <td class="num">${r.spend ? money(r.spend) : '—'}</td>
+              <td class="num">${r.leads ?? ''}</td>
+              <td class="num">${r.spend && r.leads ? money(r.spend / r.leads) : ''}</td>
+              <td class="num">${r.won ?? ''}</td>
+              <td class="num">${r.revenue == null ? '' : money(r.revenue)}</td>
+              <td class="num">${r.spend && r.revenue != null ? roas(r.revenue, r.spend) : ''}</td></tr>`).join('')}</tbody>
+            <tfoot><tr><td>Total</td><td></td><td class="num">${money(spend.total)}</td><td class="num">${leadsIn.length}</td>
+              <td class="num">${leadsIn.length ? money(spend.total / leadsIn.length) : '—'}</td><td class="num">${wonIn.length}</td>
+              <td class="num">${money(sum(jobsIn, 'contract_value'))}</td><td class="num">${roas(sum(jobsIn, 'contract_value'), spend.total)}</td></tr></tfoot>
+          </table></div>
+          <p class="hint">Revenue = contract value of jobs that aren't cancelled, credited to the customer's lead source.
+            Which sources count as <b>paid</b> is set on the <a href="#/settings">Settings</a> page.</p>
+        </section>
+
+        <section class="form-section">
+          <h2>Monthly spend</h2>
+          <div class="inline-add">
+            <input type="month" id="spendMonth" value="${thisMonth}" aria-label="Month">
+            <select id="spendSource" aria-label="Source">${sources.filter(s => s.is_paid).concat(sources.filter(s => !s.is_paid))
+              .map(s => `<option value="${esc(s.key)}">${esc(s.label)}${s.is_paid ? '' : ' (free)'}</option>`).join('')}</select>
+            <input type="number" id="spendAmount" min="0" step="1" placeholder="Amount $" aria-label="Amount">
+            <button type="button" class="btn btn-gold" data-action="save-spend">Save spend</button>
+          </div>
+          <p class="hint">Enter what you spent each month on each source. Saving the same month and source again replaces it.
+            Any month with nothing entered uses your default of <b>${money(defaultMonthlySpend)}/mo</b> (change it on <a href="#/settings">Settings</a>).</p>
+          ${months.length ? `<div class="table-wrap"><table class="mini-table">
+            <thead><tr><th>Month</th><th>Source</th><th class="num">Amount</th><th></th></tr></thead>
+            <tbody>${months.flatMap(m => spendRows.filter(s => localDay(s.month) === m).map(s => `<tr>
+              <td>${toDate(m).toLocaleDateString([], { month: 'long', year: 'numeric' })}</td>
+              <td>${esc(sourceLabel(s.source))}</td>
+              <td class="num"><input class="cell-input" type="number" min="0" step="1" value="${s.amount}" data-spend-id="${esc(s.id)}"
+                data-month="${esc(m)}" data-source="${esc(s.source)}" aria-label="Amount" style="text-align:right;max-width:140px"></td>
+              <td class="num"><button type="button" class="icon-btn" data-action="del-spend" data-id="${esc(s.id)}" aria-label="Delete">×</button></td>
+            </tr>`)).join('')}</tbody>
+          </table></div>` : '<p class="muted-cell" style="margin-top:12px">No monthly spend entered yet — every month uses the default.</p>'}
+        </section>`;
+    }
+
+    // ============================================================
+    // SETTINGS PAGE — default spend, lead sources, extra statuses
+    // ============================================================
+    function renderSettings() {
+      const used = key => data.leads.filter(l => l.source === key).length + data.customers.filter(c => c.source === key).length;
+      const statusBlock = (type, title) => {
+        const [statuses, core] = STATUS_SETS[type];
+        const pending = pendingStatusDelete?.type === type ? pendingStatusDelete.key : null;
+        const inUse = pending ? data[type].filter(r => r.status === pending).length : 0;
+        return `<div style="margin-bottom:22px"><label class="kpi-label" style="display:block;margin-bottom:8px">${title}</label>
+          <div class="pill-list">${Object.entries(statuses).map(([k, s]) => `<span class="status-pill" style="background:${s.bg};color:${s.fg}">
+            ${esc(s.label)}${LOCKED_STATUSES[type].includes(k)
+              ? ' <span title="The dashboard needs this status, so it can’t be deleted" aria-label="Locked">🔒</span>'
+              : ` <button type="button" data-action="del-status" data-type="${type}" data-key="${esc(k)}" aria-label="Delete ${esc(s.label)}">×</button>`}</span>`).join('')}</div>
+          ${pending ? `<div class="move-box">
+            <span><b>${inUse}</b> ${type} have the status <b>${esc(statusInfo(statuses, pending).label)}</b>. Move them to</span>
+            <select id="moveTo_${type}" aria-label="Move to status">${Object.entries(statuses).filter(([k]) => k !== pending)
+              .map(([k, s]) => `<option value="${esc(k)}">${esc(s.label)}</option>`).join('')}</select>
+            <button type="button" class="btn btn-danger" data-action="confirm-del-status" data-type="${type}" data-key="${esc(pending)}">Move &amp; delete</button>
+            <button type="button" class="btn btn-ghost" data-action="cancel-del-status">Cancel</button>
+          </div>` : ''}
+          ${hiddenStatuses[type].length ? `<div class="hint">Deleted built-in statuses: ${hiddenStatuses[type].map(k =>
+            `${esc(core[k].label)} <button type="button" class="btn-clear" data-action="restore-status" data-type="${type}" data-key="${k}">Restore</button>`).join(' · ')}</div>` : ''}
+          <div class="inline-add"><input type="text" id="newStatus_${type}" placeholder="New status name" aria-label="New status">
+            <button type="button" class="btn btn-ghost" data-action="add-status" data-type="${type}">Add status</button></div></div>`;
+      };
+
+      $('recordView').innerHTML = `<a class="back-link" href="#/">← Back to dashboard</a>
+        <div class="record-head"><div><div class="record-type">Settings</div><h1>Dashboard settings</h1></div></div>
+
+        <section class="form-section">
+          <h2>Default monthly lead spend</h2>
+          <div class="inline-add">
+            <input type="number" id="defaultSpend" min="0" step="100" value="${defaultMonthlySpend}" aria-label="Default monthly spend">
+            <button type="button" class="btn btn-gold" data-action="save-default-spend">Save</button>
+          </div>
+          <p class="hint">Used for any month where you haven't entered spend on the <a href="#/marketing">Marketing</a> page.</p>
+        </section>
+
+        <section class="form-section">
+          <h2>Lead sources</h2>
+          <div class="table-wrap"><table class="mini-table">
+            <thead><tr><th>Name shown</th><th>Paid source?</th><th class="hide-sm">Code (sent by website)</th><th class="num">Used by</th><th></th></tr></thead>
+            <tbody>${sources.map(s => `<tr>
+              <td><input class="cell-input" type="text" value="${esc(s.label)}" data-source-key="${esc(s.key)}" data-field="label" aria-label="Source name"></td>
+              <td><input type="checkbox" ${s.is_paid ? 'checked' : ''} data-source-key="${esc(s.key)}" data-field="is_paid" aria-label="Paid source"></td>
+              <td class="hide-sm muted-cell">${esc(s.key)}</td>
+              <td class="num">${used(s.key)}</td>
+              <td class="num"><button type="button" class="icon-btn" data-action="del-source" data-key="${esc(s.key)}" aria-label="Delete source">×</button></td>
+            </tr>`).join('')}</tbody>
+          </table></div>
+          <div class="inline-add">
+            <input type="text" id="newSourceLabel" placeholder="New source, e.g. Angi" aria-label="New source name">
+            <label class="check" style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" id="newSourcePaid"> Paid</label>
+            <button type="button" class="btn btn-ghost" data-action="add-source">Add source</button>
+          </div>
+          <p class="hint"><b>Paid</b> sources count toward ROAS and cost per lead. Renaming a source is safe; the code stays the same,
+            so website forms keep working.</p>
+        </section>
+
+        <section class="form-section">
+          <h2>Statuses</h2>
+          ${statusBlock('leads', 'Lead statuses')}
+          ${statusBlock('jobs', 'Job statuses')}
+          <p class="hint">Click × to delete a status. If any records still use it, you'll choose which status to move them to first.
+            🔒 statuses can't be deleted because the dashboard depends on them (website leads arrive as New, Won creates the customer,
+            Lost feeds the close rate, new jobs start as Scheduled, Completed feeds revenue). Deleting Quoted or In progress also hides
+            its KPI card; Restore brings it back.</p>
+        </section>`;
+    }
+
+    // ============================================================
+    // EVENTS — record, marketing & settings pages
+    // ============================================================
+    const recordView = $('recordView');
+    const afterChange = async msg => { await loadData(); route(); if (msg) toast(msg + (PREVIEW_MODE ? ' (preview)' : '')); };
+
+    recordView.addEventListener('submit', e => {
+      e.preventDefault();
+      if (e.target.id === 'recordForm') submitRecord(e.target);
+    });
+
+    recordView.addEventListener('keydown', e => {
+      // Enter in the payment row adds the payment instead of saving the whole job
+      if (e.key === 'Enter' && e.target.closest('.pay-add')) { e.preventDefault(); addPayment(e.target.form); }
+    });
+
+    recordView.addEventListener('click', async e => {
+      const linkRow = e.target.closest('tr[data-href]');
+      if (linkRow) { location.hash = linkRow.dataset.href; return; }
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const form = $('recordForm');
+      const { action, id, key, type } = btn.dataset;
+
+      if (action === 'delete') {
+        const { type: t, rec } = currentRecord;
+        if (!confirm(`Delete this ${FORMS[t].singular.toLowerCase()}? This cannot be undone.`)) return;
+        const { error } = await deleteRecord(t, rec.id);
+        if (error) return toast('Delete failed: ' + error.message);
+        await loadData();
+        toast(`${FORMS[t].singular} deleted`);
+        location.hash = '#/';
+      }
+      else if (action === 'convert') submitRecord(form, true);
+      else if (action === 'add-payment') addPayment(form);
+      else if (action === 'del-payment') {
+        if (!confirm('Delete this payment?')) return;
+        const { error } = await deleteRecord('payments', id);
+        if (error) return toast('Delete failed: ' + error.message);
+        await refreshJobMoney(form);
+        toast('Payment deleted');
+      }
+      else if (action === 'save-spend') {
+        const month = $('spendMonth').value, amount = Number($('spendAmount').value);
+        if (!month || $('spendAmount').value === '' || amount < 0) return toast('Pick a month and enter an amount');
+        const { error } = await upsertSpend(month + '-01', $('spendSource').value, amount);
+        if (error) return toast('Could not save spend: ' + error.message);
+        afterChange('Spend saved');
+      }
+      else if (action === 'del-spend') {
+        const { error } = await deleteRecord('marketing_spend', id);
+        if (error) return toast('Delete failed: ' + error.message);
+        afterChange('Spend entry deleted');
+      }
+      else if (action === 'save-default-spend') {
+        const v = Number($('defaultSpend').value);
+        if (!(v >= 0)) return toast('Enter an amount');
+        const { error } = await saveSetting('monthly_lead_spend', v);
+        if (error) return toast('Could not save: ' + error.message);
+        afterChange('Default monthly spend saved');
+      }
+      else if (action === 'add-source') {
+        const label = $('newSourceLabel').value.trim();
+        if (!label) return toast('Enter a name for the source');
+        let k = slug(label) || 'source', n = 2;
+        while (sources.some(s => s.key === k)) k = slug(label) + '_' + n++;
+        const { error } = await saveSource({ key: k, label, is_paid: $('newSourcePaid').checked,
+          sort: Math.max(0, ...sources.map(s => s.sort || 0)) + 10 });
+        if (error) return toast('Could not add source: ' + error.message);
+        afterChange('Source added');
+      }
+      else if (action === 'del-source') {
+        const n = data.leads.filter(l => l.source === key).length + data.customers.filter(c => c.source === key).length
+          + spendRows.filter(s => s.source === key).length;
+        if (n) return toast(`Used by ${n} record${n > 1 ? 's' : ''} — rename it instead of deleting`);
+        if (!confirm(`Delete the source "${sourceLabel(key)}"?`)) return;
+        const { error } = await deleteSource(key);
+        if (error) return toast('Delete failed: ' + error.message);
+        afterChange('Source deleted');
+      }
+      else if (action === 'add-status') {
+        const label = $('newStatus_' + type).value.trim();
+        const k = slug(label);
+        if (!k) return toast('Enter a status name');
+        if (STATUS_SETS[type][0][k]) return toast('That status already exists');
+        if (STATUS_SETS[type][1][k]) return toast(`"${STATUS_SETS[type][1][k].label}" is a built-in status you deleted — click Restore instead`);
+        const { error } = await saveSetting(`extra_${type.slice(0, -1)}_statuses`, [...extraStatuses[type], { key: k, label }]);
+        if (error) return toast('Could not add status: ' + error.message);
+        filterBarView = null;  // redraw the status filter with the new option
+        afterChange('Status added');
+      }
+      else if (action === 'del-status') {
+        // In use → ask where to move those records first; otherwise just confirm
+        if (data[type].some(r => r.status === key)) { pendingStatusDelete = { type, key }; return renderSettings(); }
+        if (!confirm(`Delete the status "${statusInfo(STATUS_SETS[type][0], key).label}"?`)) return;
+        removeStatus(type, key);
+      }
+      else if (action === 'confirm-del-status') {
+        const to = $('moveTo_' + type).value;
+        const { error } = await moveStatus(type, key, to);
+        if (error) return toast('Could not move records: ' + error.message);
+        removeStatus(type, key);
+      }
+      else if (action === 'cancel-del-status') { pendingStatusDelete = null; renderSettings(); }
+      else if (action === 'restore-status') {
+        const { error } = await saveSetting(`hidden_${type.slice(0, -1)}_statuses`, hiddenStatuses[type].filter(k => k !== key));
+        if (error) return toast('Could not restore status: ' + error.message);
+        filterBarView = null;
+        afterChange('Status restored');
+      }
+    });
+
+    let pendingStatusDelete = null;  // { type, key } while choosing where to move records
+
+    // Built-in statuses are hidden (so they can be restored); added ones are removed
+    async function removeStatus(type, key) {
+      const one = type.slice(0, -1);
+      const { error } = STATUS_SETS[type][1][key]
+        ? await saveSetting(`hidden_${one}_statuses`, [...hiddenStatuses[type], key])
+        : await saveSetting(`extra_${one}_statuses`, extraStatuses[type].filter(s => s.key !== key));
+      if (error) return toast('Could not delete status: ' + error.message);
+      pendingStatusDelete = null;
+      filterBarView = null;  // redraw the status filter without it
+      afterChange('Status deleted');
+    }
+
+    // Move every record with one status to another (moving leads to Won also creates their customers)
+    async function moveStatus(type, from, to) {
+      if (PREVIEW_MODE) {
+        raw[type].filter(r => r.status === from).forEach(r => {
+          const before = { ...r };
+          r.status = to;
+          if (type === 'leads') previewLeadRules(r, before);
+        });
+        return { error: null };
+      }
+      return db.from(type).update({ status: to }).eq('status', from);
+    }
+
+    recordView.addEventListener('change', async e => {
+      const t = e.target;
+      // Show / hide the new-customer fields on the job form (disabled fields are skipped by validation)
+      if (t.name === 'customer_id') {
+        const box = $('ncBox');
+        const open = t.value === NEW_CUSTOMER;
+        box.classList.toggle('hidden', !open);
+        box.disabled = !open;
+        if (open) box.querySelector('input').focus();
+      }
+      // Edit an amount in the monthly spend list
+      else if (t.dataset.spendId) {
+        const { error } = await upsertSpend(t.dataset.month, t.dataset.source, Math.max(Number(t.value) || 0, 0));
+        if (error) return toast('Could not save: ' + error.message);
+        afterChange('Spend updated');
+      }
+      // Rename a source / mark it paid
+      else if (t.dataset.sourceKey) {
+        const s = sources.find(x => x.key === t.dataset.sourceKey);
+        const row = { ...s, [t.dataset.field]: t.type === 'checkbox' ? t.checked : t.value.trim() || s.label };
+        const { error } = await saveSource(row);
+        if (error) return toast('Could not save: ' + error.message);
+        afterChange('Source updated');
+      }
+    });
+
+    // Keep calculated fields (balance, profit) up to date while typing
+    recordView.addEventListener('input', e => {
+      const form = e.target.form;
+      if (form && form.id === 'recordForm' && !e.target.closest('.pay-add')) updateLive(form);
+    });
+
+    // ============================================================
+    // ROUTING — #/ dashboard · #/marketing · #/settings · #/<leads|customers|jobs>/<id or new>
+    // ============================================================
+    let dashScroll = 0;
+
+    function route() {
+      if ($('dashView').classList.contains('hidden')) return;
+      const rec = location.hash.match(/^#\/(leads|customers|jobs)\/([^?]+)(?:\?(.*))?$/);
+      const page = location.hash.match(/^#\/(marketing|settings)$/);
+      const dash = $('dashMain');
+      document.querySelectorAll('#topnav a').forEach(a =>
+        a.classList.toggle('active', a.dataset.nav === (page ? page[1] : rec ? '' : 'dashboard')));
+      if (!rec && !page) {
+        recordView.classList.add('hidden');
+        if (dash.classList.contains('hidden')) {
+          dash.classList.remove('hidden');
+          render();
+          window.scrollTo(0, dashScroll);
+        }
+        return;
+      }
+      if (!dash.classList.contains('hidden')) dashScroll = window.scrollY;
+      dash.classList.add('hidden');
+      recordView.classList.remove('hidden');
+      if (page) page[1] === 'marketing' ? renderMarketing() : renderSettings();
+      else renderRecord(rec[1], decodeURIComponent(rec[2]), new URLSearchParams(rec[3] || ''));
+      window.scrollTo(0, 0);
+    }
+    window.addEventListener('hashchange', route);
+
+    // ============================================================
+    // SAMPLE DATA (preview mode only)
+    // ============================================================
+    function makeSampleData() {
+      let seed = 7;
+      const rand = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+      const pick = arr => arr[Math.floor(rand() * arr.length)];
+      const weighted = pairs => {
+        let n = rand() * pairs.reduce((s, p) => s + p[1], 0);
+        for (const [v, w] of pairs) { if ((n -= w) < 0) return v; }
+      };
+      const daysAgo = d => new Date(Date.now() - d * 86400000).toISOString();
+      const dayAgo = d => localDay(daysAgo(d));
+      const first = ['Maria', 'James', 'Priya', 'Tom', 'Aisha', 'Kevin', 'Laura', 'Daniel', 'Sofia', 'Mike', 'Grace', 'Raj', 'Elena', 'Chris', 'Nina', 'Omar', 'Beth', 'Sam', 'Hannah', 'Luis'];
+      const last = ['Lopez', 'Kim', 'Patel', 'Novak', 'Johnson', 'Murphy', 'Chen', 'Kowalski', 'Rossi', 'Brennan'];
+      const towns = ['Naperville', 'Burr Ridge', 'Oak Brook', 'Hinsdale', 'Downers Grove', 'Schaumburg', 'Evanston', 'Chicago'];
+      const projects = ['Full bathroom remodel', 'Tub to shower conversion', 'Walk-in shower', 'Vanity replacement', 'Master bath remodel'];
+      const crews = ['Crew A — Marco', 'Crew B — Steve', 'Crew C — Andre'];
+      const addons = ['Niche shelf', 'Rain shower head', 'Glass door', 'Heated floor', 'LED mirror × 2', 'Grab bars'];
+      const person = () => {
+        const f = pick(first), l = pick(last), city = pick(towns);
+        return { name: `${f} ${l}`, phone: `630-555-${1000 + Math.floor(rand() * 9000)}`,
+          email: `${f}.${l}@example.com`.toLowerCase(), city,
+          address: `${100 + Math.floor(rand() * 900)} Oak St, ${city}, IL` };
+      };
+
+      const leads = Array.from({ length: 45 }, (_, i) => {
+        const p = person(), age = Math.floor(rand() * 200);
+        const status = weighted([['new', 8], ['contacted', 8], ['quoted', 9], ['won', 11], ['lost', 6]]);
+        const source = weighted([['google_ads_landing', 10], ['google', 3], ['facebook', 4], ['price_estimator', 8], ['bathroom_remodel_page', 6],
+          ['homepage_hero_form', 4], ['workshop_hero_form', 2], ['referral', 3], ['phone', 3]]);
+        // New leads have no appointment yet; others got one a few days after the lead came in
+        const appt = status === 'new' ? null : daysAgo(Math.max(age - 2 - Math.floor(rand() * 7), -14));
+        const fromEstimator = source === 'price_estimator';
+        return { id: 'L' + i, ...p, status, source, appointment_date: appt,
+          won_at: status === 'won' ? daysAgo(Math.max(age - 5 - Math.floor(rand() * 15), 0)) : null,
+          project_type: pick(projects),
+          timeline: pick(['ASAP', '1-3 months', '3-6 months', 'Just researching']),
+          material_grade: fromEstimator ? pick(['Basic finishes', 'Mid-grade finishes', 'High-end finishes']) : null,
+          selected_addons: fromEstimator ? addons.filter(() => rand() > .6) : [],
+          photo_urls: [],
+          estimate_total: 8000 + Math.round(rand() * 320) * 100,
+          follow_up: dayAgo(-Math.floor(rand() * 10)),
+          message: 'Looking to update our bathroom — would love an estimate.',
+          created_at: daysAgo(age) };
+      });
+
+      // Won leads became customers (as the database trigger does), plus a few customers from before
+      const customers = leads.filter(l => l.status === 'won').map((l, i) => ({
+        id: 'C' + i, lead_id: l.id, name: l.name, phone: l.phone, email: l.email, address: l.address, city: l.city,
+        source: l.source, customer_since: localDay(l.won_at), reviewed: rand() > .55,
+        notes: rand() > .5 ? 'Prefers text over calls.' : '', created_at: l.won_at }));
+      for (let i = 0; i < 8; i++) {
+        const p = person(), since = 200 + Math.floor(rand() * 200);
+        customers.push({ id: 'CX' + i, lead_id: null, ...p, source: pick(['referral', 'phone', 'walk_in']),
+          customer_since: dayAgo(since), reviewed: rand() > .4, notes: '', created_at: daysAgo(since) });
+      }
+
+      const jobs = [], payments = [];
+      customers.forEach((c, i) => {
+        const sinceDays = Math.round((Date.now() - toDate(c.customer_since)) / 86400000);
+        const status = weighted([['scheduled', 5], ['in_progress', 5], ['completed', 18], ['cancelled', 2]]);
+        const start = status === 'scheduled' ? -Math.floor(rand() * 30)
+          : status === 'in_progress' ? Math.min(sinceDays, Math.floor(rand() * 14)) : Math.max(sinceDays - 10, 15);
+        const value = 9000 + Math.round(rand() * 300) * 100;
+        const end = status === 'completed' ? Math.max(start - 12, 0) : null;
+        const job = { id: 'J' + i, job_no: 'WOW-' + (1001 + i), customer_id: c.id,
+          project_type: pick(projects), crew: pick(crews), status,
+          start_date: dayAgo(start), end_date: end == null ? null : dayAgo(end), contract_value: value,
+          materials_cost: Math.round(value * (.25 + rand() * .1)), labor_cost: Math.round(value * (.25 + rand() * .1)),
+          notes: rand() > .6 ? 'Customer selected tile on site visit.' : '', created_at: daysAgo(Math.max(start, 0) + 10) };
+        jobs.push(job);
+        const pay = (share, d, method, note) => payments.push({ id: 'P' + payments.length, job_id: job.id,
+          paid_on: dayAgo(Math.max(d, 0)), amount: Math.round(value * share), method, note });
+        if (status !== 'cancelled') pay(.3, Math.max(start, 0) + 10, 'Check', 'Deposit');
+        if (status === 'in_progress' || status === 'completed') pay(.4, Math.max(start - 5, 0), 'Zelle', 'Progress payment');
+        if (status === 'completed' && rand() > .2) pay(.3, end, pick(['Check', 'Card', 'Financing']), 'Final payment');
+      });
+
+      // Last 6 months entered by source; older months fall back to the default
+      const marketing_spend = [];
+      for (let m = 0; m < 6; m++) {
+        const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - m);
+        const month = localDay(d);
+        marketing_spend.push({ id: 'S' + m + 'a', month, source: 'google_ads_landing', amount: 1800 });
+        marketing_spend.push({ id: 'S' + m + 'b', month, source: 'bathroom_remodel_page', amount: 700 });
+      }
+
+      return { leads, customers, jobs, payments, marketing_spend,
+        lead_sources: DEFAULT_SOURCES.map(s => ({ ...s })),
+        settings: { monthly_lead_spend: 2500, extra_lead_statuses: [], extra_job_statuses: [] } };
+    }
+
+    init();
+  </script>
+</body>
+</html>
