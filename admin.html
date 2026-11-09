@@ -354,8 +354,8 @@
     const STATUS_SETS = { leads: [LEAD_STATUSES, CORE_LEAD_STATUSES], jobs: [JOB_STATUSES, CORE_JOB_STATUSES] };
     let extraStatuses = { leads: [], jobs: [] };   // [{ key, label }] from app_settings
     let hiddenStatuses = { leads: [], jobs: [] };  // built-in statuses deleted on the Settings page
-    // These can't be deleted: website leads arrive as New, Won creates the customer, Lost feeds
-    // the close rate, new jobs start as Scheduled, Completed feeds the revenue cards.
+    // These can't be deleted: website leads arrive as New, Won creates the customer and feeds
+    // the close rate, Lost marks dead leads, new jobs start as Scheduled, Completed feeds the revenue cards.
     const LOCKED_STATUSES = { leads: ['new', 'won', 'lost'], jobs: ['scheduled', 'completed'] };
     const statusExists = (type, key) => key in STATUS_SETS[type][0];
 
@@ -555,8 +555,8 @@
           value: rows => money(sum(rows, 'estimate_total')), sub: rows => rows.length + ' quotes waiting' },
         { id: 'leads_won', label: 'Leads won', dot: '#1E8E3E', view: 'leads', dateKey: 'won_at', filter: r => r.status === 'won',
           value: rows => rows.length, sub: () => 'By date won' },
-        { id: 'leads_conv', label: 'Close rate', dot: '#6B3FC4', view: 'leads', filter: r => r.status === 'won' || r.status === 'lost',
-          value: rows => pct(rows.filter(r => r.status === 'won').length, rows.length), sub: () => 'Won ÷ (won + lost), by lead date' },
+        { id: 'leads_conv', label: 'Close rate', dot: '#6B3FC4', view: 'leads', filter: r => !['cancelled', 'canceled'].includes(r.status),
+          value: rows => pct(rows.filter(r => r.status === 'won').length, rows.length), sub: () => 'Won ÷ (all leads − cancelled), by lead date' },
       ]},
       { title: 'Customers', kpis: [
         { id: 'cust_all', label: 'Customers', dot: '#1E8E3E', view: 'customers', filter: r => true,
@@ -1616,7 +1616,7 @@
           ${statusBlock('jobs', 'Job statuses')}
           <p class="hint">Click × to delete a status. If any records still use it, you'll choose which status to move them to first.
             🔒 statuses can't be deleted because the dashboard depends on them (website leads arrive as New, Won creates the customer,
-            Lost feeds the close rate, new jobs start as Scheduled, Completed feeds revenue). Deleting Quoted or In progress also hides
+            Won feeds the close rate, Lost marks dead leads, new jobs start as Scheduled, Completed feeds revenue). Deleting Quoted or In progress also hides
             its KPI card; Restore brings it back.</p>
         </section>`;
     }
